@@ -4,27 +4,69 @@
 
     $controlador = new UsuarioControlador();
     $usuarios = $controlador->mostrarUsuarios();
+
+    if (isset($_POST['submit'])) {
+        $nombres = $_POST['nombres'];
+        $apellidos = $_POST['apellidos'];
+        $email = $_POST['email'];
+        $celular = $_POST['celular'];
+        $tipo = $_POST['tipo'];
+        $dni_ruc = $_POST['dni_ruc'];
+
+        $controlador->registrar($nombres, $apellidos, $email, $password, $celular, $tipo, $dni_ruc);
+
+        // Redirigir para evitar reenvío del formulario al refrescar la página
+        header("Location: " . $_SERVER['PHP_SELF']);
+        exit;
+    }
 ?>
 
 <div>
     <h1>Usuarios</h1>
-    <button type="button" class="btn btn-primary mb-2" data-bs-toggle="modal" data-bs-target="#agregarModal">Agregar</button>
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        Agregar
+    </button>
 
     <!-- Modal -->
-    <div class="modal fade" id="agregarModal" tabindex="-1" aria-labelledby="agregarModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="agregarModalLabel">Agregar Usuario</h5>
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Registrar Usuario</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <!-- Aquí puedes colocar el contenido del formulario para agregar un usuario -->
-                    <!-- Por ejemplo: Campos de nombre, apellidos, email, etc. -->
+                    <form id="registerForm" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+                        <div class="mb-3">
+                            <label for="nombres" class="form-label">Nombres</label>
+                            <input type="text" class="form-control" id="nombres" name="nombres" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="apellidos" class="form-label">Apellidos</label>
+                            <input type="text" class="form-control" id="apellidos" name="apellidos" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="email" name="email" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="celular" class="form-label">Celular</label>
+                            <input type="text" class="form-control" id="celular" name="celular" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="tipo" class="form-label">Tipo</label>
+                            <input type="text" class="form-control" id="tipo" name="tipo" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="dni_ruc" class="form-label">DNI / RUC</label>
+                            <input type="text" class="form-control" id="dni_ruc" name="dni_ruc" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary" name="submit">Registrar</button>
+                    </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                    <button type="button" class="btn btn-primary">Guardar</button>
                 </div>
             </div>
         </div>
@@ -73,4 +115,6 @@
     </div>
 </div>
 
-
+<?php
+    require_once "../layouts/footer.php";
+?>
