@@ -1,6 +1,6 @@
 <?php
 
-require_once "Conn.php";
+require_once "Conexion.php";
 
 class Inconveniente {
     private $id;
@@ -13,7 +13,7 @@ class Inconveniente {
     }
 
     public function obtenerTodoslosInconvenientes() {
-        $conn = new Conn();
+        $conn = new Conexion();
         $conexion = $conn->conectar();
         $sql = "SELECT * FROM Inconveniente";
         $resultado = $conexion->query($sql);
@@ -22,7 +22,7 @@ class Inconveniente {
     }
 
     public function obtenerPorId($id) {
-        $conn = new Conn();
+        $conn = new Conexion();
         $conexion = $conn->conectar();
         $sql = "SELECT * FROM Inconveniente WHERE id = $id";
         $resultado = $conexion->query($sql);
@@ -31,7 +31,7 @@ class Inconveniente {
     }
 
     public function crearInconveniente() {
-        $conn = new Conn();
+        $conn = new Conexion();
         $conexion = $conn->conectar();
         $sql = "INSERT INTO Inconveniente(descripcion, foto_prueba) VALUES ('$this->descripcion', '$this->foto_prueba')";
         $result = $conexion->exec($sql);
@@ -45,7 +45,7 @@ class Inconveniente {
     }
 
     public function actualizarInconveniente($id) {
-        $conn = new Conn();
+        $conn = new Conexion();
         $conexion = $conn->conectar();
         $sql = "UPDATE Inconveniente SET descripcion = '$this->descripcion', foto_prueba = '$this->foto_prueba' WHERE id = $id";
         $result = $conexion->exec($sql);
@@ -59,7 +59,7 @@ class Inconveniente {
     }
 
     public function eliminarInconveniente($id) {
-        $conn = new Conn();
+        $conn = new Conexion();
         $conexion = $conn->conectar();
         $sql = "DELETE FROM Inconveniente WHERE id = $id";
         $result = $conexion->exec($sql);

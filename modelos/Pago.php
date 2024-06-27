@@ -1,5 +1,5 @@
 <?php
-require_once "Conn.php";
+require_once "Conexion.php";
 
 class Pago
 {
@@ -11,7 +11,7 @@ class Pago
     }
 
     public function guardar($monto, $estado, $metodo) {
-        $conn = new Conn();
+        $conn = new Conexion();
         $conexion = $conn->conectar();
         $sql = "INSERT INTO pago (monto, estado, metodo) VALUES ('$monto', '$estado', '$metodo')";
         $resultado = $conexion->exec($sql);
@@ -20,7 +20,7 @@ class Pago
     }
 
     public function mostrar() {
-        $conn = new Conn();
+        $conn = new Conexion();
         $conexion = $conn->conectar();
         $sql = "SELECT * FROM pago";
         $resultado = $conexion->query($sql);
@@ -29,7 +29,7 @@ class Pago
     }
 
     public function eliminar($id) {
-        $conn = new Conn();
+        $conn = new Conexion();
         $conexion = $conn->conectar();
         $sql = "DELETE FROM pago WHERE id = '$id'";
         $resultado = $conexion->exec($sql);
@@ -38,7 +38,7 @@ class Pago
     }
 
     public function buscar($id) {
-        $conn = new Conn();
+        $conn = new Conexion();
         $conexion = $conn->conectar();
         $sql = "SELECT * FROM pago WHERE id = :id";
         $stmt = $conexion->prepare($sql);
@@ -50,7 +50,7 @@ class Pago
     }
 
     public function editar($id, $monto, $estado, $metodo) {
-        $conn = new Conn();
+        $conn = new Conexion();
         $conexion = $conn->conectar();
         $sql = "UPDATE pago SET monto = '$monto', estado = '$estado', metodo = '$metodo' WHERE id = '$id'";
         $resultado = $conexion->exec($sql);
