@@ -4,14 +4,19 @@ require_once "Conexion.php";
 require_once "Usuario.php";
 
 class Administrador extends Usuario {
-    public function __construct($nombres = "", $apellidos = "", $email = "", $password = "", $celular = "", $tipo = "", $dni_ruc = "") {
+    private $cod_admin;
+
+    public function __construct($nombres = "", $apellidos = "", $email = "", $password = "", $celular = "", $tipo = "", $dni_ruc = "", $cod_admin = "") {
         parent::__construct($nombres, $apellidos, $email, $password, $celular, $tipo, $dni_ruc);
+        $this->cod_admin = $cod_admin;
     }
 
     public function obtenerTodos() {
         $conn = new Conexion();
         $conexion = $conn->conectar();
-        $sql = "SELECT * FROM Usuario WHERE tipo = 'administrador'";
+        $sql = "SELECT Usuario.*, Administrador.cod_admin 
+                FROM Usuario 
+                JOIN Administrador ON Usuario.id = Administrador.id";
         $resultado = $conexion->query($sql);
         $conn->cerrar();
         return $resultado;
@@ -20,7 +25,10 @@ class Administrador extends Usuario {
     public function obtenerPorId($id) {
         $conn = new Conexion();
         $conexion = $conn->conectar();
-        $sql = "SELECT * FROM Usuario WHERE id = $id";
+        $sql = "SELECT Usuario.*, Administrador.cod_admin 
+                FROM Usuario 
+                JOIN Administrador ON Usuario.id = Administrador.id 
+                WHERE Usuario.id = $id";
         $resultado = $conexion->query($sql);
         $conn->cerrar();
         return $resultado;
@@ -34,10 +42,10 @@ class Administrador extends Usuario {
         parent::crear();
 
         // Obtener el id del último usuario insertado
-        $lastInsertId = $conexion->lastInsertId();
+        $id_usuario = $conexion->lastInsertId();
 
-        // Asignar tipo administrador
-        $sql = "UPDATE Usuario SET tipo = 'administrador' WHERE id = $lastInsertId";
+        // Crear Administrador
+        $sql = "INSERT INTO Administrador(id, cod_admin) VALUES ('$id_usuario', '$this->cod_admin')";
         $result = $conexion->exec($sql);
 
         if($result > 0) {
@@ -55,7 +63,8 @@ class Administrador extends Usuario {
         // Actualizar Usuario
         parent::actualizar($id);
 
-        $sql = "UPDATE Usuario SET nombres = 'Nuevo Nombre' WHERE id = $id";
+        // Actualizar Administrador
+        $sql = "UPDATE Administrador SET cod_admin = '$this->cod_admin' WHERE id = $id";
         $result = $conexion->exec($sql);
 
         if($result > 0) {
@@ -70,12 +79,13 @@ class Administrador extends Usuario {
         $conn = new Conexion();
         $conexion = $conn->conectar();
 
-        // Eliminar Usuario
-        $sql = "DELETE FROM Usuario WHERE id = $id";
+        // Eliminar Administrador
+        $sql = "DELETE FROM Administrador WHERE id = $id";
         $result = $conexion->exec($sql);
 
         if($result > 0) {
-            echo "Administrador eliminado exitosamente";
+            // Eliminar Usuario
+            parent::eliminar($id);
         } else {
             echo "Ocurrió un error, vuelva a intentarlo";
         }
