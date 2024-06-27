@@ -1,6 +1,6 @@
 <?php
 
-require_once "Conn.php";
+require_once "Conexion.php";
 
 class Calificacion{
     private $puntaje;
@@ -11,7 +11,7 @@ class Calificacion{
     }
 
     public function guardar($puntaje,$comentario){
-        $conn = new Conn();
+        $conn = new Conexion();
         $conexion = $conn->conectar();
         $sql = "INSERT INTO calificacion (puntaje, comentario) VALUES ('$puntaje', '$comentario')";
         $resultado = $conexion->exec($sql);
@@ -21,7 +21,7 @@ class Calificacion{
     }
 
     public function mostrar(){
-        $conn = new Conn();
+        $conn = new Conexion();
         $conexion = $conn->conectar();
         $sql = "SELECT * FROM calificacion";
         $resultado = $conexion->query($sql);
@@ -30,7 +30,7 @@ class Calificacion{
     }
 
     public function eliminar($id){
-        $conn = new Conn();
+        $conn = new Conexion();
         $conexion = $conn->conectar();
         $sql = "DELETE FROM calificacion WHERE id = '$id'";
         $resultado = $conexion->exec($sql);
@@ -39,7 +39,7 @@ class Calificacion{
     }
 
     public function buscar($id) {
-        $conn = new Conn();
+        $conn = new Conexion();
         $conexion = $conn->conectar();
         $sql = "SELECT * FROM calificacion WHERE id = :id";
         $stmt = $conexion->prepare($sql);
@@ -51,7 +51,7 @@ class Calificacion{
     }
 
     public function editar($id,$puntaje,$comentario){
-        $conn = new Conn();
+        $conn = new Conexion();
         $conexion = $conn->conectar();
         $sql = "UPDATE calificacion SET puntaje = '$puntaje', comentario = '$comentario' WHERE id = '$id'";
         $resultado = $conexion->exec($sql);

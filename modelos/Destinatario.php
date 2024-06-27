@@ -1,6 +1,6 @@
 <?php
 
-require_once "Conn.php";
+require_once "Conexion.php";
 
 class Destinatario {
     protected $id;
@@ -17,7 +17,7 @@ class Destinatario {
     }
 
     public function obtenerTodos() {
-        $conn = new Conn();
+        $conn = new Conexion();
         $conexion = $conn->conectar();
         $sql = "SELECT * FROM Destinatario";
         $resultado = $conexion->query($sql);
@@ -26,7 +26,7 @@ class Destinatario {
     }
     
     public function obtenerPorId($id) {
-        $conn = new Conn();
+        $conn = new Conexion();
         $conexion = $conn->conectar();
         $sql = "SELECT * FROM Destinatario WHERE id = $id";
         $resultado = $conexion->query($sql);
@@ -35,7 +35,7 @@ class Destinatario {
     }
 
     public function crear() {
-        $conn = new Conn();
+        $conn = new Conexion();
         $conexion = $conn->conectar();
         $sql = "INSERT INTO Destinatario(nombresDesti, apellidosDesti, emailDesti, numeroDesti) VALUES ('$this->nombresDesti', '$this->apellidosDesti', '$this->emailDesti', '$this->numeroDesti')";
         $result = $conexion->exec($sql);
@@ -48,7 +48,7 @@ class Destinatario {
     }
 
     public function actualizar($id) {
-    $conn = new Conn();
+    $conn = new Conexion();
     $conexion = $conn->conectar();
     $sql = "UPDATE Destinatario SET nombresDesti = '$this->nombresDesti', apellidosDesti = '$this->apellidosDesti', emailDesti = '$this->emailDesti', numeroDesti = '$this->numeroDesti' WHERE id = $id";
     $result = $conexion->exec($sql);
@@ -61,7 +61,7 @@ class Destinatario {
     }
     /*
     public function eliminar($id) {
-        $conn = new Conn();
+        $conn = new Conexion();
         $conexion = $conn->conectar();
         $sql = "DELETE FROM Destinatario WHERE id = $id";
         $result = $conexion->exec($sql);
