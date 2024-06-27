@@ -18,11 +18,13 @@ class Repartidor extends Usuario {
         $conexion = $conn->conectar();
         $sql = "SELECT Usuario.*, Repartidor.tipo_transporte, Repartidor.placa 
                 FROM Usuario 
-                JOIN Repartidor ON Usuario.id = Repartidor.id";
+                JOIN Repartidor ON Usuario.id = Repartidor.id 
+                WHERE Usuario.tipo = 'repartidor'";
         $resultado = $conexion->query($sql);
         $conn->cerrar();
         return $resultado;
     }
+    
 
     public function obtenerPorId($id) {
         $conn = new Conexion();
