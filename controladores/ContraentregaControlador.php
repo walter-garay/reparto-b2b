@@ -13,6 +13,20 @@ class ContraentregaControlador {
         return $contraentrega->obtenerPorId($id);
     }
 
+    public function mostrarContraentregas() {
+        $contraentrega = new Contraentrega();
+        $contraentregas = $contraentrega->obtenerTodos();
+        return $contraentregas;
+    }
 
+    public function actualizarContraentrega($id, $costo_delivery, $costo_pedido) {
+        $contraentrega = new Contraentrega($costo_delivery, $costo_pedido);
+        $contraentrega->actualizar($id);
+    }
+
+    public function eliminarContraentrega($id) {
+        $contraentrega = new Contraentrega();
+        $contraentrega->eliminar($id);
+    }
 }
 ?>
