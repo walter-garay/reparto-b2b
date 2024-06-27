@@ -20,11 +20,11 @@ class DestinatarioControlador{
         $destinatario = new Destinatario($nombres, $apellidos, $email, $numero);
         $destinatario->actualizar($id);
     }
-    /*
+    
     public function eliminarDestinatario($id) {
         $destinatario = new Destinatario();
         $destinatario->eliminar($id);
-    }*/
+    }
 
     public function obtenerDestinatarioPorId($id) {
         $destinatario = new Destinatario();
