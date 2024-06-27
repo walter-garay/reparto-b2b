@@ -1,6 +1,6 @@
 <?php
 
-class Conn{
+class Conexion{
 
     private $dsn;
     private $usuario;
