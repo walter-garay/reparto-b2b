@@ -5,13 +5,29 @@ class UsuarioControlador {
 
     public function login($email, $password) {
         $usuario = new Usuario();
-        $resultado = $usuario->obtenerPorEmail($email);
-        if ($resultado) {
-            $row = $resultado->fetch(PDO::FETCH_ASSOC);
-            if (password_verify($password, $row['password'])) {
+        $usuarioValidado = $usuario->obtenerPorEmail($email);
+        $contador = 0;
+        $usuario_id = null;
+        $usuario_nombre = null;
+        $password_bd = null;
+        $tipo = null;
+    
+        foreach($usuarioValidado as $item){
+            $usuario_id = $item["id"];
+            $usuario_nombre = $item["nombres"] . " " . $item["apellidos"];
+            $password_bd = $item["password"];
+            $tipo = $item["tipo"];
+            $contador++;
+        }
+    
+        if($contador > 0){
+            if(password_verify($password, $password_bd)){
                 session_start();
-                $_SESSION['usuario'] = $row;
+                $_SESSION["id"] = $usuario_id;
+                $_SESSION["usuario"] = $usuario_nombre;
+                $_SESSION["tipo"] = $tipo;
                 header("Location: main.php");
+                exit();
             } else {
                 echo "Contraseña incorrecta";
             }
@@ -32,15 +48,19 @@ class UsuarioControlador {
         $usuario->crear();
     }
 
+    public function obtenerUsuarioPorId($id) {
+        $usuario = new Usuario();
+        return $usuario->obtenerPorId($id);
+    }
+
     public function mostrarUsuarios() {
         $usuario = new Usuario();
         $usuarios = $usuario->obtenerTodos();
         return $usuarios;
     }
 
-    public function actualizarUsuario($id, $nombres, $apellidos, $email, $password, $celular, $tipo, $dni_ruc) {
-        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-        $usuario = new Usuario($nombres, $apellidos, $email, $hashed_password, $celular, $tipo, $dni_ruc);
+    public function actualizarUsuario($id, $nombres, $apellidos, $email, $celular, $tipo, $dni_ruc) {
+        $usuario = new Usuario($nombres, $apellidos, $email, $celular, $tipo, $dni_ruc);
         $usuario->actualizar($id);
     }
 

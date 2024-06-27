@@ -49,15 +49,6 @@ class Usuario {
         return $resultado;
     }
 
-    public function obtenerPorUsername($username) {
-        $conn = new Conexion();
-        $conexion = $conn->conectar();
-        $sql = "SELECT * FROM Usuario WHERE username = '$username'";
-        $resultado = $conexion->query($sql);
-        $conn->cerrar();
-        return $resultado;
-    }
-
     public function crear() {
         $conn = new Conexion();
         $conexion = $conn->conectar();
