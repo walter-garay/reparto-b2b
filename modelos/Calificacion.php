@@ -45,7 +45,7 @@ class Calificacion{
         $stmt = $conexion->prepare($sql);
         $stmt->bindParam(':id', $id);
         $stmt->execute();
-        $calificacion = $stmt->fetch(PDO::FETCH_ASSOC); // Corrección aquí
+        $calificacion = $stmt->fetch(PDO::FETCH_ASSOC);
         $conn->cerrar();
         return $calificacion;
     }
