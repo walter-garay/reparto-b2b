@@ -1,37 +1,35 @@
 <?php
 
-require_once "Conexion.php";
 require_once "Usuario.php";
+require_once "Conexion.php";
 
-class Repartidor extends Usuario {
-    private $tipo_transporte;
-    private $placa;
+class EmpresaCliente extends Usuario {
+    private $direccion;
+    private $razon_social;
 
-    public function __construct($nombres = "", $apellidos = "", $email = "", $password = "", $celular = "", $tipo = "", $dni_ruc = "", $tipo_transporte = "", $placa = "") {
+    public function __construct($nombres = "", $apellidos = "", $email = "", $password = "", $celular = "", $tipo = "", $dni_ruc = "", $direccion = "", $razon_social = "") {
         parent::__construct($nombres, $apellidos, $email, $password, $celular, $tipo, $dni_ruc);
-        $this->tipo_transporte = $tipo_transporte;
-        $this->placa = $placa;
+        $this->direccion = $direccion;
+        $this->razon_social = $razon_social;
     }
 
     public function obtenerTodos() {
         $conn = new Conexion();
         $conexion = $conn->conectar();
-        $sql = "SELECT Usuario.*, Repartidor.tipo_transporte, Repartidor.placa 
+        $sql = "SELECT Usuario.*, EmpresaCliente.direccion, EmpresaCliente.razon_social 
                 FROM Usuario 
-                JOIN Repartidor ON Usuario.id = Repartidor.id 
-                WHERE Usuario.tipo = 'repartidor'";
+                JOIN EmpresaCliente ON Usuario.id = EmpresaCliente.id";
         $resultado = $conexion->query($sql);
         $conn->cerrar();
         return $resultado;
     }
-    
 
     public function obtenerPorId($id) {
         $conn = new Conexion();
         $conexion = $conn->conectar();
-        $sql = "SELECT Usuario.*, Repartidor.tipo_transporte, Repartidor.placa 
+        $sql = "SELECT Usuario.*, EmpresaCliente.direccion, EmpresaCliente.razon_social 
                 FROM Usuario 
-                JOIN Repartidor ON Usuario.id = Repartidor.id 
+                JOIN EmpresaCliente ON Usuario.id = EmpresaCliente.id 
                 WHERE Usuario.id = $id";
         $resultado = $conexion->query($sql);
         $conn->cerrar();
@@ -39,21 +37,16 @@ class Repartidor extends Usuario {
     }
 
     public function crear() {
+        parent::crear();
         $conn = new Conexion();
         $conexion = $conn->conectar();
-
-        // Crear Usuario primero
-        parent::crear();
-
-        // Obtener el id del último usuario insertado
         $id_usuario = $conexion->lastInsertId();
 
-        // Crear Repartidor
-        $sql = "INSERT INTO Repartidor(id, tipo_transporte, placa) VALUES ('$id_usuario', '$this->tipo_transporte', '$this->placa')";
+        $sql = "INSERT INTO EmpresaCliente(id, direccion, razon_social) VALUES ($id_usuario, '$this->direccion', '$this->razon_social')";
         $result = $conexion->exec($sql);
 
         if($result > 0) {
-            echo "Repartidor creado exitosamente";
+            echo "EmpresaCliente creado exitosamente";
         } else {
             echo "Ocurrió un error, vuelva a intentarlo";
         }
@@ -61,18 +54,14 @@ class Repartidor extends Usuario {
     }
 
     public function actualizar($id) {
+        parent::actualizar($id);
         $conn = new Conexion();
         $conexion = $conn->conectar();
-
-        // Actualizar Usuario
-        parent::actualizar($id);
-
-        // Actualizar Repartidor
-        $sql = "UPDATE Repartidor SET tipo_transporte = '$this->tipo_transporte', placa = '$this->placa' WHERE id = $id";
+        $sql = "UPDATE EmpresaCliente SET direccion = '$this->direccion', razon_social = '$this->razon_social' WHERE id = $id";
         $result = $conexion->exec($sql);
 
         if($result > 0) {
-            echo "Repartidor actualizado exitosamente";
+            echo "EmpresaCliente actualizado exitosamente";
         } else {
             echo "Ocurrió un error, vuelva a intentarlo";
         }
@@ -80,16 +69,14 @@ class Repartidor extends Usuario {
     }
 
     public function eliminar($id) {
+        parent::eliminar($id);
         $conn = new Conexion();
         $conexion = $conn->conectar();
-
-        // Eliminar Repartidor
-        $sql = "DELETE FROM Repartidor WHERE id = $id";
+        $sql = "DELETE FROM EmpresaCliente WHERE id = $id";
         $result = $conexion->exec($sql);
 
         if($result > 0) {
-            // Eliminar Usuario
-            parent::eliminar($id);
+            echo "EmpresaCliente eliminado exitosamente";
         } else {
             echo "Ocurrió un error, vuelva a intentarlo";
         }

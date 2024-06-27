@@ -90,4 +90,8 @@ class Usuario {
         }
         $conn->cerrar();
     }
+
+    public function getEmail() {
+        return $this->email;
+    }
 }
