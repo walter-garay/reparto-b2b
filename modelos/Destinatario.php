@@ -59,6 +59,7 @@ class Destinatario {
     }
     $conn->cerrar();
     }
+    /*
     public function eliminar($id) {
         $conn = new Conn();
         $conexion = $conn->conectar();
@@ -71,5 +72,7 @@ class Destinatario {
             echo "Ocurrió un error, vuelva a intentarlo";
         }
         $conn->cerrar();
+    }*/
+
     }
-}
+

@@ -25,6 +25,11 @@ class DestinatarioControlador{
         $destinatario = new Destinatario();
         $destinatario->eliminar($id);
     }
+    /*
+    public function eliminarDestinatario($id) {
+        $destinatario = new Destinatario();
+        $destinatario->eliminar($id);
+    }*/
 
     public function obtenerDestinatarioPorId($id) {
         $destinatario = new Destinatario();
