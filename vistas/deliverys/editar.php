@@ -24,6 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 $delivery = $dc->obtenerDeliveryPorId($id);
 ?>
 
+<h1 class="mb-4 fs-4">Editar delivery</h1>
 <!-- Formulario de edición -->
 <form method="POST" action="">
     <div class="mb-3">

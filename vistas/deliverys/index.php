@@ -16,13 +16,13 @@
 
 <div class="container">
     <div class="d-flex justify-content-between align-items-center mb-3">
-        <h2 class="mb-0">Deliverys</h2>
+        <h1 class="fs-4 mb-0">Deliverys</h1>
         <a href="crear.php" class="btn btn-primary">Agregar Delivery</a>
     </div>
 
     <div class="table-responsive">
-        <table class="table table-bordered table-striped">
-            <thead class="table-dark">
+        <table class="table ">
+            <thead class="table">
                 <tr>
                     <th class="text-center" scope="col">#</th>
                     <th class="text-center" scope="col">Descripción</th>

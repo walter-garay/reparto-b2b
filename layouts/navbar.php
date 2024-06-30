@@ -12,7 +12,7 @@
                         <a class="nav-link active" aria-current="page" href="solicitud.php">Solicitar delivery</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Deliverys</a>
+                        <a class="nav-link active" aria-current="page" href="index.php">Deliverys</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Repartidores</a>
@@ -27,4 +27,3 @@
             </div>
         </div>
     </nav>
-</header>
