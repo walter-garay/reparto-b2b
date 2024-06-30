@@ -1,56 +1,127 @@
 <?php
 
-require_once "../modelos/Delivery.php"; // Incluir la clase Delivery y la clase Conexion si es necesario
+require_once "../../modelos/Delivery.php";
+require_once "../../modelos/Recojo.php";
+require_once "../../modelos/Entrega.php";
+require_once "../../modelos/Destinatario.php";
+require_once "../../modelos/Pago.php";
+require_once "../../modelos/Contraentrega.php";
 
-class DeliveryControlador {
 
-    public function listarDeliverys() {
+class DeliveryControlador
+{
+    private $delivery;
+
+    public function __construct()
+    {
+        $this->delivery = new Delivery();
+    }
+
+    public function obtenerDeliverys()
+    {
+        return $this->delivery->obtenerTodos();
+    }
+
+    public function obtenerDeliveryPorId($id)
+    {
+        return $this->delivery->obtenerPorId($id);
+    }
+
+    // public function crearDelivery($datos)
+    // {
+    //     $delivery = new Delivery(
+    //         $datos['descripcion'],
+    //         $datos['cod_seguimiento'],
+    //         new DateTime($datos['fecha_solicitud']),
+    //         $datos['id_cliente'],
+    //         $datos['id_pago'],
+    //         $datos['id_contraentrega'],
+    //         $datos['id_destinatario']
+    //     );
+    //     return $delivery->crear();
+    // }
+
+    public function crearDelivery($datos) {
         $delivery = new Delivery();
-        $resultados = $delivery->obtenerTodos();
+        $recojo = new Recojo();
+        $entrega = new Entrega();
+        $destinatario = new Destinatario();
+        $pago = new Pago();
+        $contraentrega = new Contraentrega();
 
-        // Aquí puedes procesar los resultados como desees (por ejemplo, mostrar en una vista)
-        return $resultados;
+        try {
+            // Insertar datos en las tablas relacionadas
+            $recojo->setDireccion($datos['direccion_recojo']);
+            $recojo->setFecha($datos['fecha_recojo']);
+            $recojo->setHora($datos['hora_recojo']);
+            $id_recojo = $recojo->crear();
+
+            $entrega->setDireccion($datos['direccion_entrega']);
+            $entrega->setFecha($datos['fecha_entrega']);
+            $entrega->setHora($datos['hora_entrega']);
+            $id_entrega = $entrega->crear();
+
+            $destinatario->setDni($datos['dni_destinatario']);
+            $destinatario->setNombres($datos['nombres_destinatario']);
+            $destinatario->setApellidos($datos['apellidos_destinatario']);
+            $destinatario->setCelular($datos['celular_destinatario']);
+            $id_destinatario = $destinatario->crear();
+
+            $pago->setMonto($datos['monto_pago']);
+            $pago->setEstado('Pendiente');
+            $pago->setMetodo($datos['metodo_pago']);
+            $id_pago = $pago->crear();
+
+            $contraentrega->setCostoDelivery($datos['costo_delivery']);
+            $contraentrega->setCostoPedido($datos['costo_pedido']);
+            $id_contraentrega = $contraentrega->crear();
+
+            // Insertar el delivery
+            $delivery->setDescripcion($datos['descripcion']);
+            $delivery->setCodSeguimiento($this->generarCodigoSeguimiento());
+            $delivery->setFechaSolicitud(date('Y-m-d H:i:s'));
+            $delivery->setIdCliente($datos['id_cliente']);
+            $delivery->setIdRecojo($id_recojo);
+            $delivery->setIdEntrega($id_entrega);
+            $delivery->setIdDestinatario($id_destinatario);
+            $delivery->setIdPago($id_pago);
+            $delivery->setIdContraentrega($id_contraentrega);
+            $delivery->crear();
+
+            echo 'Registro completo';
+
+        } catch (Exception $e) {
+            // Revertir transacción en caso de error
+            echo''. $e->getMessage() .'';
+            throw $e;
+        }
     }
 
-    public function crearDelivery($descripcion, $cod_seguimiento, $fecha_solicitud, $id_cliente, $id_repartidor, $id_pago, $id_contraentrega, $id_destinatario) {
-        $delivery = new Delivery($descripcion, $cod_seguimiento, $fecha_solicitud, $id_cliente, $id_repartidor, $id_pago, $id_contraentrega, $id_destinatario);
-        $delivery->crear();
+    private function generarCodigoSeguimiento() {
+        return uniqid();
     }
 
-    public function actualizarDelivery($id, $descripcion, $cod_seguimiento, $fecha_solicitud, $id_cliente, $id_repartidor, $id_pago, $id_contraentrega, $id_destinatario) {
-        $delivery = new Delivery($descripcion, $cod_seguimiento, $fecha_solicitud, $id_cliente, $id_repartidor, $id_pago, $id_contraentrega, $id_destinatario);
-        $delivery->actualizar($id);
+    public function actualizarDelivery($id, $datos)
+    {
+        $delivery = $this->obtenerDeliveryPorId($id);
+        if (!$delivery) {
+            return false;
+        }
+
+        $delivery->setDescripcion($datos['descripcion']);
+        $delivery->setCodSeguimiento($datos['cod_seguimiento']);
+        $delivery->setIdCliente($datos['id_cliente']);
+        $delivery->setIdPago($datos['id_pago']);
+        $delivery->setIdContraentrega($datos['id_contraentrega']);
+        $delivery->setIdDestinatario($datos['id_destinatario']);
+
+        return $delivery->actualizar();
     }
 
-    public function eliminarDelivery($id) {
-        $delivery = new Delivery();
-        $delivery->eliminar($id);
+    public function eliminarDelivery($id)
+    {
+        return $this->delivery->eliminar($id);
     }
 
-    public function obtenerDeliveryPorId($id) {
-        $delivery = new Delivery();
-        $resultado = $delivery->obtenerPorId($id);
-
-        // Aquí puedes procesar el resultado como desees (por ejemplo, mostrar en una vista)
-        return $resultado;
-    }
+    
 }
-
-// Ejemplo de uso del controlador
-
-$controller = new DeliveryControlador();
-
-// Listar todos los deliveries
-$resultados = $controller->listarDeliverys();
-
-// Crear un nuevo delivery
-$controller->crearDelivery("Descripción de ejemplo", "ABC123", "2024-06-28", 1, 2, 1, 0, 1);
-
-// Actualizar un delivery existente
-$controller->actualizarDelivery(1, "Nueva descripción", "XYZ789", "2024-06-29", 2, 3, 1, 0, 1);
-
-// Eliminar un delivery por ID
-$controller->eliminarDelivery(2);
-
-// Obtener un delivery por ID
-$delivery = $controller->obtenerDeliveryPorId(1);

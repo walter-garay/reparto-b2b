@@ -40,9 +40,9 @@ class EmpresaCliente extends Usuario {
         parent::crear();
         $conn = new Conexion();
         $conexion = $conn->conectar();
-        $id_usuario = $conexion->lastInsertId();
+        $id_ = $conexion->lastInsertId();
 
-        $sql = "INSERT INTO EmpresaCliente(id, direccion, razon_social) VALUES ($id_usuario, '$this->direccion', '$this->razon_social')";
+        $sql = "INSERT INTO EmpresaCliente(id, direccion, razon_social) VALUES ($, '$this->direccion', '$this->razon_social')";
         $result = $conexion->exec($sql);
 
         if($result > 0) {

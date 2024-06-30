@@ -1,32 +1,51 @@
 <?php
-require_once "../modelos/Contraentrega.php";
 
-class ContraentregaControlador {
+require_once __DIR__ . '/../modelos/Contraentrega.php';
 
-    public function registrar($costo_delivery, $costo_pedido) {
-        $contraentrega = new Contraentrega($costo_delivery, $costo_pedido);
-        $contraentrega->crear();
+class ContraentregaControlador
+{
+    private $contraentrega;
+
+    public function __construct()
+    {
+        $this->contraentrega = new Contraentrega();
     }
 
-    public function obtenerContraentregaPorId($id) {
-        $contraentrega = new Contraentrega();
-        return $contraentrega->obtenerPorId($id);
+    public function obtenerContraentregas()
+    {
+        return $this->contraentrega->obtenerTodos();
     }
 
-    public function mostrarContraentregas() {
-        $contraentrega = new Contraentrega();
-        $contraentregas = $contraentrega->obtenerTodos();
-        return $contraentregas;
+    public function obtenerContraentregaPorId($id)
+    {
+        return $this->contraentrega->obtenerPorId($id);
     }
 
-    public function actualizarContraentrega($id, $costo_delivery, $costo_pedido) {
-        $contraentrega = new Contraentrega($costo_delivery, $costo_pedido);
-        $contraentrega->actualizar($id);
+    public function crearContraentrega($datos)
+    {
+        $contraentrega = new Contraentrega(
+            $datos['costo_delivery'],
+            $datos['costo_pedido']
+        );
+        return $contraentrega->crear();
     }
 
-    public function eliminarContraentrega($id) {
-        $contraentrega = new Contraentrega();
-        $contraentrega->eliminar($id);
+    public function actualizarContraentrega($id, $datos)
+    {
+        $contraentrega = $this->obtenerContraentregaPorId($id);
+        if (!$contraentrega) {
+            return false;
+        }
+
+        $contraentrega->setCostoDelivery($datos['costo_delivery']);
+        $contraentrega->setCostoPedido($datos['costo_pedido']);
+
+        return $contraentrega->actualizar();
+    }
+
+    public function eliminarContraentrega($id)
+    {
+        return $this->contraentrega->eliminar($id);
     }
 }
 ?>

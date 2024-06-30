@@ -1,75 +1,30 @@
-<?php
-
-require_once "Conexion.php";
-
-class Contraentrega {
-    private $id;
-    private $costo_delivery;
-    private $costo_pedido;
-
-    public function __construct($costo_delivery = 0.00, $costo_pedido = 0.00) {
-        $this->costo_delivery = $costo_delivery;
-        $this->costo_pedido = $costo_pedido;
-    }
-
-    public function obtenerTodos() {
-        $conn = new Conexion();
-        $conexion = $conn->conectar();
-        $sql = "SELECT * FROM Contraentrega";
-        $resultado = $conexion->query($sql);
-        $conn->cerrar();
-        return $resultado;
-    }
-
-    public function obtenerPorId($id) {
-        $conn = new Conexion();
-        $conexion = $conn->conectar();
-        $sql = "SELECT * FROM Contraentrega WHERE id = $id";
-        $resultado = $conexion->query($sql);
-        $conn->cerrar();
-        return $resultado;
-    }
-
-    public function crear() {
-        $conn = new Conexion();
-        $conexion = $conn->conectar();
-        $sql = "INSERT INTO Contraentrega(costo_delivery, costo_pedido) VALUES ('$this->costo_delivery', '$this->costo_pedido')";
-        $result = $conexion->exec($sql);
-
-        if ($result > 0) {
-            echo "Contraentrega creada exitosamente";
-        } else {
-            echo "Ocurrió un error, vuelva a intentarlo";
-        }
-        $conn->cerrar();
-    }
-
-    public function actualizar($id) {
-        $conn = new Conexion();
-        $conexion = $conn->conectar();
-        $sql = "UPDATE Contraentrega SET costo_delivery = '$this->costo_delivery', costo_pedido = '$this->costo_pedido' WHERE id = $id";
-        $result = $conexion->exec($sql);
-
-        if ($result > 0) {
-            echo "Contraentrega actualizada exitosamente";
-        } else {
-            echo "Ocurrió un error, vuelva a intentarlo";
-        }
-        $conn->cerrar();
-    }
-
-    public function eliminar($id) {
-        $conn = new Conexion();
-        $conexion = $conn->conectar();
-        $sql = "DELETE FROM Contraentrega WHERE id = $id";
-        $result = $conexion->exec($sql);
-
-        if ($result > 0) {
-            echo "Contraentrega eliminada exitosamente";
-        } else {
-            echo "Ocurrió un error, vuelva a intentarlo";
-        }
-        $conn->cerrar();
-    }
-}
-?>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarText">
+                <a class="" href="../main.php">
+                    <img src="https://www.altokeperu.com/wp-content/uploads/2020/07/ico-3.png" alt="Logo de Confi Courier" width="35px"> 
+                </a>
+                <ul class="nav w-100 justify-content-end">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="solicitud.php">Solicitar delivery</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">Deliverys</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Repartidores</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Clientes</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link disabled">Log out</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>

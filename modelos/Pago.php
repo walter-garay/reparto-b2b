@@ -1,61 +1,162 @@
 <?php
+
 require_once "Conexion.php";
 
 class Pago
 {
+    private $id = null;
     private $monto;
     private $estado;
     private $metodo;
 
-    public function __construct() {
+    public function __construct($monto = 0.0, $estado = "", $metodo = "")
+    {
+        $this->monto = $monto;
+        $this->estado = $estado;
+        $this->metodo = $metodo;
     }
 
-    public function guardar($monto, $estado, $metodo) {
+    public function obtenerTodos()
+    {
         $conn = new Conexion();
         $conexion = $conn->conectar();
-        $sql = "INSERT INTO pago (monto, estado, metodo) VALUES ('$monto', '$estado', '$metodo')";
-        $resultado = $conexion->exec($sql);
-        $conn->cerrar();
-        return $resultado;
-    }
-
-    public function mostrar() {
-        $conn = new Conexion();
-        $conexion = $conn->conectar();
-        $sql = "SELECT * FROM pago";
+        $sql = "SELECT * FROM Pago";
         $resultado = $conexion->query($sql);
+        $data = $resultado->fetchAll();
         $conn->cerrar();
-        return $resultado;
+
+        $pagos = [];
+        foreach ($data as $item) {
+            $pago = new self(
+                $item['monto'],
+                $item['estado'],
+                $item['metodo']
+            );
+            $pago->id = $item['id'];
+            $pagos[] = $pago;
+        }
+
+        return $pagos;
     }
 
-    public function eliminar($id) {
+    public function obtenerPorId($id)
+    {
         $conn = new Conexion();
         $conexion = $conn->conectar();
-        $sql = "DELETE FROM pago WHERE id = '$id'";
-        $resultado = $conexion->exec($sql);
+        $sql = "SELECT * FROM Pago WHERE id = $id";
+        $resultado = $conexion->query($sql);
+        $data = $resultado->fetch();
         $conn->cerrar();
-        return $resultado;
-    }
 
-    public function buscar($id) {
-        $conn = new Conexion();
-        $conexion = $conn->conectar();
-        $sql = "SELECT * FROM pago WHERE id = :id";
-        $stmt = $conexion->prepare($sql);
-        $stmt->bindParam(':id', $id);
-        $stmt->execute();
-        $pago = $stmt->fetch(PDO::FETCH_ASSOC);
-        $conn->cerrar();
+        if (!$resultado) {
+            return null;
+        }
+
+        $pago = new self(
+            $data['monto'],
+            $data['estado'],
+            $data['metodo']
+        );
+        $pago->id = $data['id'];
+
         return $pago;
     }
 
-    public function editar($id, $monto, $estado, $metodo) {
+    public function crear()
+    {
         $conn = new Conexion();
         $conexion = $conn->conectar();
-        $sql = "UPDATE pago SET monto = '$monto', estado = '$estado', metodo = '$metodo' WHERE id = '$id'";
+        
+        $sql = "INSERT INTO Pago(monto, estado, metodo) 
+                VALUES ($this->monto, 
+                        '$this->estado', 
+                        '$this->metodo')";
+        
+        try {
+            $resultado = $conexion->exec($sql);
+
+            if ($resultado === 1) {  
+                $id_insertado = $conexion->lastInsertId();
+                $conn->cerrar();
+                return $id_insertado;
+            } else {
+                $conn->cerrar();
+                return null;  
+            }
+        } catch (PDOException $e) {
+            $mensaje_error = "Error al insertar pago: " . $e->getMessage();
+            error_log($mensaje_error);
+            $conn->cerrar();
+        }
+    }
+
+
+    public function actualizar()
+    {
+        if ($this->id === null) {
+            return false;
+        }
+
+        $conn = new Conexion();
+        $conexion = $conn->conectar();
+        $sql = "UPDATE Pago SET 
+                monto = $this->monto, 
+                estado = '$this->estado', 
+                metodo = '$this->metodo' 
+                WHERE id = $this->id";
+        $resultado = $conexion->exec($sql);
+
+        $conn->cerrar();
+
+        return $resultado;
+    }
+
+    public function eliminar($id)
+    {
+        $conn = new Conexion();
+        $conexion = $conn->conectar();
+        $sql = "DELETE FROM Pago WHERE id = $id";
         $resultado = $conexion->exec($sql);
         $conn->cerrar();
+
         return $resultado;
+    }
+
+    // Getters y setters
+
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    public function getMonto()
+    {
+        return $this->monto;
+    }
+
+    public function setMonto($monto)
+    {
+        $this->monto = $monto;
+    }
+
+    public function getEstado()
+    {
+        return $this->estado;
+    }
+
+    public function setEstado($estado)
+    {
+        $this->estado = $estado;
+    }
+
+    public function getMetodo()
+    {
+        return $this->metodo;
+    }
+
+    public function setMetodo($metodo)
+    {
+        $this->metodo = $metodo;
     }
 }
 ?>

@@ -15,8 +15,12 @@ class Conexion{
     }
 
     public function conectar(){
-        $this->conexion = new PDO($this->dsn, $this->usuario, $this->pass);
-        return $this->conexion;
+        try {
+            $this->conexion = new PDO($this->dsn, $this->usuario, $this->pass);
+            return $this->conexion;
+        } catch (PDOException $e) {
+            return $e->getMessage();
+        }
     }
 
     public function cerrar(){
