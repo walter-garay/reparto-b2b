@@ -37,7 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 ?>
 
 
-<div class="container mt-5 w-50">
+<div class="container mt-5 col-lg-6 col-md-12">
     <h2 class="mb-4 fs-5">Solicitud de delivery</h2>
     <form method="POST" action="" id="stepForm">
         <ul class="nav nav-tabs mb-3" id="myTab" role="tablist">
@@ -85,14 +85,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     </div>
                 </div>
                 <div class="mb-3 contraentrega-fields">
-                    <label for="costo_delivery">¿Cuánto debemos cobrar por el delivery?</label>
+                    <label for="costo_delivery">¿Cuánto debemos cobrarle por el delivery?</label>
                     <div class="input-group">
                         <span class="input-group-text">S/.</span>
                         <input type="number" step="0.1" placeholder="0.00" class="form-control" id="costo_delivery" name="costo_delivery" required>
                     </div>
                 </div>
                 <div class="mb-3 contraentrega-fields">
-                    <label for="costo_pedido">¿Cuánto debemos cobrar por el pedido?</label>
+                    <label for="costo_pedido">¿Cuánto debemos cobrarle por el pedido?</label>
                     <div class="input-group">
                         <span class="input-group-text">S/.</span>
                         <input type="number" step="0.1" placeholder="0.00" class="form-control" id="costo_pedido" name="costo_pedido" required >
@@ -164,7 +164,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <div class="mb-3">
                     <label for="monto_pago">Seleccione el servicio</label>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="monto_pago" id="tarifa_1" value="6">
+                        <input class="form-check-input" type="radio" name="monto_pago" id="tarifa_1" value="6" checked>
                         <label class="form-check-label text-secondary" for="tarifa_1">Cercado de Huánuco - S/. 6,00</label>
                     </div>
                     <div class="form-check">
