@@ -24,38 +24,43 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 $delivery = $dc->obtenerDeliveryPorId($id);
 ?>
 
-<h1 class="mb-4 fs-4">Editar delivery</h1>
-<!-- Formulario de edición -->
-<form method="POST" action="">
-    <div class="mb-3">
-        <label for="descripcion" class="form-label">Descripción</label>
-        <input type="text" class="form-control" id="descripcion" name="descripcion" value="<?php echo $delivery->getDescripcion(); ?>" required>
+<div class="d-flex justify-content-center align-items-center w-100 h-100">
+    <div class="container m-10 rounded-4 shadow-sm col-lg-6 col-md-12 p-4" style="background-color: white;">
+        <h1 class="mb-4 fs-5">Editar delivery #<?php echo $id?></h1>
+        <!-- Formulario de edición -->
+        <form method="POST" action="">
+            <div class="mb-3">
+                <label for="descripcion" class="form-label">Descripción</label>
+                <input type="text" class="form-control" id="descripcion" name="descripcion" value="<?php echo $delivery->getDescripcion(); ?>" required>
+            </div>
+            <div class="mb-3">
+                <label for="cod_seguimiento" class="form-label">Código de Seguimiento</label>
+                <input type="text" class="form-control" id="cod_seguimiento" name="cod_seguimiento" value="<?php echo $delivery->getCodSeguimiento(); ?>" required>
+            </div>
+            <div class="mb-3">
+                <label for="id_cliente" class="form-label">ID Cliente</label>
+                <input type="number" class="form-control" id="id_cliente" name="id_cliente" value="<?php echo $delivery->getIdCliente(); ?>" required>
+            </div>
+            <div class="mb-3">
+                <label for="id_pago" class="form-label">ID Pago</label>
+                <input type="number" class="form-control" id="id_pago" name="id_pago" value="<?php echo $delivery->getIdPago(); ?>" required>
+            </div>
+            <div class="mb-3">
+                <label for="id_contraentrega" class="form-label">ID Contraentrega</label>
+                <input type="number" class="form-control" id="id_contraentrega" name="id_contraentrega" value="<?php echo $delivery->getIdContraentrega(); ?>">
+            </div>
+            <div class="mb-3">
+                <label for="id_destinatario" class="form-label">ID Destinatario</label>
+                <input type="number" class="form-control" id="id_destinatario" name="id_destinatario" value="<?php echo $delivery->getIdDestinatario(); ?>">
+            </div>
+            <div class="d-flex justify-content-end pt-2 gap-2">
+                <a href="index.php" type="submit" class="btn btn-secondary">Cancelar</a>
+                <button type="submit" class="btn btn-primary">Guardar cambios</button>
+            </div>
+        </form>
     </div>
-    <div class="mb-3">
-        <label for="cod_seguimiento" class="form-label">Código de Seguimiento</label>
-        <input type="text" class="form-control" id="cod_seguimiento" name="cod_seguimiento" value="<?php echo $delivery->getCodSeguimiento(); ?>" required>
-    </div>
-    <div class="mb-3">
-        <label for="id_cliente" class="form-label">ID Cliente</label>
-        <input type="number" class="form-control" id="id_cliente" name="id_cliente" value="<?php echo $delivery->getIdCliente(); ?>" required>
-    </div>
-    <div class="mb-3">
-        <label for="id_pago" class="form-label">ID Pago</label>
-        <input type="number" class="form-control" id="id_pago" name="id_pago" value="<?php echo $delivery->getIdPago(); ?>" required>
-    </div>
-    <div class="mb-3">
-        <label for="id_contraentrega" class="form-label">ID Contraentrega</label>
-        <input type="number" class="form-control" id="id_contraentrega" name="id_contraentrega" value="<?php echo $delivery->getIdContraentrega(); ?>">
-    </div>
-    <div class="mb-3">
-        <label for="id_destinatario" class="form-label">ID Destinatario</label>
-        <input type="number" class="form-control" id="id_destinatario" name="id_destinatario" value="<?php echo $delivery->getIdDestinatario(); ?>">
-    </div>
-    <div class="d-flex justify-content-end mt-2 gap-2">
-        <a href="index.php" type="submit" class="btn btn-secondary">Cancelar</a>
-        <button type="submit" class="btn btn-primary">Guardar cambios</button>
-    </div>
-</form>
+</div>
+
 
 <?php
     require_once "../../layouts/footer.php";

@@ -1,6 +1,5 @@
-            </main>
-        </div>
-        <footer class="mt-auto p-2">
+        </main>
+        <footer  style="background-color: white;">
             <p class="text-center">Derechos Reservados</p>
         </footer>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
