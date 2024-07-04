@@ -27,20 +27,6 @@ class DeliveryControlador
         return $this->delivery->obtenerPorId($id);
     }
 
-    // public function crearDelivery($datos)
-    // {
-    //     $delivery = new Delivery(
-    //         $datos['descripcion'],
-    //         $datos['cod_seguimiento'],
-    //         new DateTime($datos['fecha_solicitud']),
-    //         $datos['id_cliente'],
-    //         $datos['id_pago'],
-    //         $datos['id_contraentrega'],
-    //         $datos['id_destinatario']
-    //     );
-    //     return $delivery->crear();
-    // }
-
     public function crearDelivery($datos) {
         $delivery = new Delivery();
         $recojo = new Recojo();

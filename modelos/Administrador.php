@@ -3,94 +3,98 @@
 require_once "Conexion.php";
 require_once "Usuario.php";
 
-class Administrador extends Usuario {
+class Administrador extends Usuario
+{
     private $cod_admin;
 
-    public function __construct($nombres = "", $apellidos = "", $email = "", $password = "", $celular = "", $tipo = "", $dni_ruc = "", $cod_admin = "") {
-        parent::__construct($nombres, $apellidos, $email, $password, $celular, $tipo, $dni_ruc);
+    public function __construct($id = null, $cod_admin = "")
+    {
+        $this->id = $id;
         $this->cod_admin = $cod_admin;
     }
 
-    public function obtenerTodos() {
+    public function crear()
+    {
         $conn = new Conexion();
         $conexion = $conn->conectar();
-        $sql = "SELECT Usuario.*, Administrador.cod_admin 
-                FROM Usuario 
-                JOIN Administrador ON Usuario.id = Administrador.id";
-        $resultado = $conexion->query($sql);
+
+        $sql = "INSERT INTO Administrador (id, cod_admin) 
+                VALUES ({$this->id}, '{$this->cod_admin}')";
+
+        $resultado = $conexion->exec($sql);
         $conn->cerrar();
+
         return $resultado;
     }
 
-    public function obtenerPorId($id) {
+    public function obtenerPorId($id)
+    {
         $conn = new Conexion();
         $conexion = $conn->conectar();
-        $sql = "SELECT Usuario.*, Administrador.cod_admin 
-                FROM Usuario 
-                JOIN Administrador ON Usuario.id = Administrador.id 
-                WHERE Usuario.id = $id";
+        $sql = "SELECT * FROM Administrador WHERE id = $id";
         $resultado = $conexion->query($sql);
+        $data = $resultado->fetch();
         $conn->cerrar();
+
+        if ($data) {
+            $this->id = $data['id'];
+            $this->cod_admin = $data['cod_admin'];
+            
+            // Obtener los datos del usuario
+            parent::obtenerPorId($id);
+            
+            return $this;
+        }
+
+        return null;
+    }
+
+    public function actualizar()
+    {
+        $conn = new Conexion();
+        $conexion = $conn->conectar();
+
+        $sql = "UPDATE Administrador SET 
+                cod_admin = '{$this->cod_admin}'
+                WHERE id = {$this->id}";
+
+        $resultado = $conexion->exec($sql);
+        $conn->cerrar();
+
+        // Actualizar los datos del usuario
+        parent::actualizar();
+
         return $resultado;
     }
 
-    public function crear() {
+    public function eliminar($id)
+    {
         $conn = new Conexion();
         $conexion = $conn->conectar();
-
-        // Crear Usuario primero
-        parent::crear();
-
-        // Obtener el id del último usuario insertado
-        $id_usuario = $conexion->lastInsertId();
-
-        // Crear Administrador
-        $sql = "INSERT INTO Administrador(id, cod_admin) VALUES ('$id_usuario', '$this->cod_admin')";
-        $result = $conexion->exec($sql);
-
-        if($result > 0) {
-            echo "Administrador creado exitosamente";
-        } else {
-            echo "Ocurrió un error, vuelva a intentarlo";
-        }
-        $conn->cerrar();
-    }
-
-    public function actualizar($id) {
-        $conn = new Conexion();
-        $conexion = $conn->conectar();
-
-        // Actualizar Usuario
-        parent::actualizar($id);
-
-        // Actualizar Administrador
-        $sql = "UPDATE Administrador SET cod_admin = '$this->cod_admin' WHERE id = $id";
-        $result = $conexion->exec($sql);
-
-        if($result > 0) {
-            echo "Administrador actualizado exitosamente";
-        } else {
-            echo "Ocurrió un error, vuelva a intentarlo";
-        }
-        $conn->cerrar();
-    }
-
-    public function eliminar($id) {
-        $conn = new Conexion();
-        $conexion = $conn->conectar();
-
-        // Eliminar Administrador
+        
+        // Primero eliminamos el registro de Administrador
         $sql = "DELETE FROM Administrador WHERE id = $id";
-        $result = $conexion->exec($sql);
-
-        if($result > 0) {
-            // Eliminar Usuario
-            parent::eliminar($id);
-        } else {
-            echo "Ocurrió un error, vuelva a intentarlo";
-        }
+        $resultado = $conexion->exec($sql);
+        
         $conn->cerrar();
+
+        if ($resultado) {
+            // Si se eliminó correctamente el Administrador, eliminamos el Usuario
+            return parent::eliminar($id);
+        }
+
+        return false;
+    }
+
+    // Getter y setter
+
+    public function getCodAdmin()
+    {
+        return $this->cod_admin;
+    }
+
+    public function setCodAdmin($cod_admin)
+    {
+        $this->cod_admin = $cod_admin;
     }
 }
-
-?>

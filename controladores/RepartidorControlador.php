@@ -1,33 +1,48 @@
 <?php
-require_once "../modelos/Repartidor.php";
+    require_once __DIR__ . '/../modelos/Repartidor.php';
+    class RepartidorControlador
+    {
+        private $repartidor;
 
-class RepartidorControlador {
+        public function __construct()
+        {
+            $this->repartidor = new Repartidor();
+        }
 
-    public function registrar($nombres, $apellidos, $email, $password, $celular, $tipo, $dni_ruc, $tipo_transporte, $placa) {
-        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-        $repartidor = new Repartidor($nombres, $apellidos, $email, $hashed_password, $celular, $tipo, $dni_ruc, $tipo_transporte, $placa);
-        $repartidor->crear();
+        public function obtenerRepartidores()
+        {
+            return $this->repartidor->obtenerTodos();
+        }
+
+        public function obtenerRepartidorPorId($id)
+        {
+            return $this->repartidor->obtenerPorId($id);
+        }
+
+        public function crearRepartidor($datos) 
+        {
+            $repartidor = new Repartidor();        
+            try {
+                $repartidor->setTipo("Repartidor");
+
+                $repartidor->setNombres($datos['nombres']);
+                $repartidor->setApellidos($datos['apellidos']);
+                $repartidor->setEmail($datos['email']);
+                $repartidor->setPassword(password_hash($datos['password'], PASSWORD_DEFAULT));
+                $repartidor->setCelular($datos['celular']);
+                $repartidor->setDniRuc($datos['dni_ruc']);
+                $repartidor->setTipoTransporte($datos['tipo_transporte']);
+                $repartidor->setPlaca($datos['placa']);
+                $repartidor->crear();
+        
+            } catch (Exception $e) {
+                echo '<script>console.log('. $e->getMessage() .');</script>';
+                throw $e;
+            }
+        }
+
+        public function eliminarRepartidor($id)
+        {
+            return $this->repartidor->eliminar($id);
+        }
     }
-
-    public function obtenerRepartidorPorId($id) {
-        $repartidor = new Repartidor();
-        return $repartidor->obtenerPorId($id);
-    }
-
-    public function mostrarRepartidores() {
-        $repartidor = new Repartidor();
-        $repartidores = $repartidor->obtenerTodos();
-        return $repartidores;
-    }
-
-    public function actualizarRepartidor($id, $nombres, $apellidos, $email, $celular, $tipo, $dni_ruc, $tipo_transporte, $placa) {
-        $repartidor = new Repartidor($nombres, $apellidos, $email, $celular, $tipo, $dni_ruc, $tipo_transporte, $placa);
-        $repartidor->actualizar($id);
-    }
-
-    public function eliminarRepartidor($id) {
-        $repartidor = new Repartidor();
-        $repartidor->eliminar($id);
-    }
-}
-?>
