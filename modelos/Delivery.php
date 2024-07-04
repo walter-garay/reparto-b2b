@@ -77,22 +77,18 @@ class Delivery
 
         if (!$resultado) {
             return null;
+        } else {
+            $this->descripcion = $data['descripcion'];
+            $this->cod_seguimiento = $data['cod_seguimiento'];
+            $this->fecha_solicitud = new DateTime($data['fecha_solicitud']);
+            $this->id_cliente = $data['id_cliente'];
+            $this->id_recojo = $data['id_recojo'];
+            $this->id_entrega = $data['id_entrega'];
+            $this->id_pago = $data['id_pago'];
+            $this->id_contraentrega = $data['id_contraentrega'];
+            $this->id_destinatario = $data['id_destinatario'];
+            return $this;
         }
-
-        $delivery = new self(
-            $data['descripcion'],
-            $data['cod_seguimiento'],
-            new DateTime($data['fecha_solicitud']),
-            $data['id_cliente'],
-            $data['id_recojo'],
-            $data['id_entrega'],
-            $data['id_pago'],
-            $data['id_contraentrega'],
-            $data['id_destinatario']
-        );
-        $delivery->id = $data['id'];
-
-        return $delivery;
     }
 
     public function crear()

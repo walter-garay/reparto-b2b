@@ -16,5 +16,5 @@
         <header class="">
             <?php require_once "navbar.php"; ?>
         </header>
-        <main class=" w-100 h-100" style="background-color: #F8F9FA;">
+        <main class=" w-100 h-100 py-4" style="background-color: #F8F9FA;">
 

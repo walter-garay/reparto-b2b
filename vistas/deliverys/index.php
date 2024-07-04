@@ -48,16 +48,12 @@
                         <td class="fw-light"><?php echo $delivery->getIdDestinatario(); ?></td>
                         <td class="d-flex gap-1">
                             <a href="editar.php?id=<?php echo $delivery->getId(); ?>" class="btn rounded-circle p-0 btn-custom edit">
-                                <i class="icon edit d-flex justify-content-center align-items-center">
-                                    <?php require "../../assets/img/pencil.svg" ?>
-                                </i>
+                                <i class="bi bi-pencil icon edit d-flex justify-content-center align-items-center"></i>                                
                             </a>
                             <form method="POST" action="index.php" class="d-flex">
                                 <input type="hidden" name="eliminar_id" value="<?php echo $delivery->getId(); ?>">
                                 <button type="submit" class="btn p-0 btn-custom delete rounded-circle " onclick="return confirm('¿Está seguro de que desea eliminar este delivery?');">
-                                    <i class="icon delete d-flex justify-content-center align-items-center">
-                                        <?php require "../../assets/img/trash.svg" ?>
-                                    </i>
+                                    <i class="bi bi-trash3 icon delete d-flex justify-content-center align-items-center"></i>                                
                                 </button>
                             </form>
                         </td>

@@ -25,7 +25,7 @@ $delivery = $dc->obtenerDeliveryPorId($id);
 ?>
 
 <div class="d-flex justify-content-center align-items-center w-100 h-100">
-    <div class="container m-10 rounded-4 shadow-sm col-lg-6 col-md-12 p-4" style="background-color: white;">
+    <div class="container rounded-4 shadow-sm col-lg-6 col-md-12 p-4" style="background-color: white;">
         <h1 class="mb-4 fs-5">Editar delivery #<?php echo $id?></h1>
         <!-- Formulario de edición -->
         <form method="POST" action="">

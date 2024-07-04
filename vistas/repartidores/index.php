@@ -45,12 +45,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['eliminar_id'])) {
                         <td><?php echo $repartidor->getPlaca(); ?></td>
                         <td class="d-flex gap-1">
                             <a href="editar.php?id=<?php echo $repartidor->getId(); ?>" class="btn rounded-circle p-0 btn-custom edit">
-                                <i class="bi bi-pencil icon edit"></i>                                
+                                <i class="bi bi-pencil icon edit d-flex justify-content-center align-items-center"></i>                                
                             </a>
                             <form method="POST" action="index.php" class="d-flex">
                                 <input type="hidden" name="eliminar_id" value="<?php echo $repartidor->getId(); ?>">
                                 <button type="submit" class="btn p-0 btn-custom delete rounded-circle" onclick="return confirm('¿Está seguro de que desea eliminar este repartidor?');">
-                                    <i class="bi bi-trash3 icon delete"></i>                                
+                                    <i class="bi bi-trash3 icon delete d-flex justify-content-center align-items-center"></i>                                
                                 </button>
                             </form>
                         </td>

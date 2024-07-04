@@ -29,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $repartidor = $rc->obtenerRepartidorPorId($id);
 ?>
 
-<div class="d-flex justify-content-center align-items-center w-100 h-100 ">
+<div class="d-flex justify-content-center align-items-center w-100 h-100 " >
     <div class="container rounded-4 shadow-sm col-lg-6 col-md-12 p-4" style="background-color: white;">
         <h1 class="mb-4 fs-5">Editar repartidor #<?php echo $id?></h1>
         <!-- Formulario de edición -->
