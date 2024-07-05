@@ -24,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 ?>
 
 <div class="d-flex justify-content-center align-items-center w-100 h-100">
-    <div class="container m-10 rounded-4 shadow-sm col-lg-6 col-md-12 p-4" style="background-color: white;">
+    <div class="container rounded-4 shadow-sm col-lg-6 col-md-12 p-4" style="background-color: white;">
         <h1 class="mb-4 fs-5 ">Agregar delivery</h1>
         <form method="POST" action="">
             <div class="mb-3">
@@ -32,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <input type="text" class="form-control" id="descripcion" name="descripcion" required>
             </div>
             <div class="mb-3">
-                <label for="cod_seguimiento">Código de Seguimiento</label>
+                <label for="cod_seguimiento">Código de seguimiento</label>
                 <input type="text" class="form-control" id="cod_seguimiento" name="cod_seguimiento" required>
             </div>
             <div class="mb-3">

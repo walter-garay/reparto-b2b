@@ -12,9 +12,20 @@
         <link rel="stylesheet" href="../../assets/css/footer.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     </head>
-    <body class="d-flex flex-column justify-content-between vh-100">
+    <style>
+        html, body {
+            height: 100%;
+        }
+        main {
+            background-color: #F8F9FA;
+            height: calc(100% - 55.97px) !important;
+        }
+    </style>
+
+    <body class="min-vh-100">
         <header class="">
             <?php require_once "navbar.php"; ?>
         </header>
-        <main class=" w-100 h-100 py-4" style="background-color: #F8F9FA;">
+        <main class="" >
+    
 
