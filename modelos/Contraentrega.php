@@ -47,15 +47,12 @@ class Contraentrega
 
         if (!$resultado) {
             return null;
+        } else {
+            $this->costo_delivery = $data['costo_delivery'];
+            $this->costo_pedido = $data['costo_pedido'];
+            $this->id = $data['id'];
+            return $this;
         }
-
-        $contraentrega = new self(
-            $data['costo_delivery'],
-            $data['costo_pedido']
-        );
-        $contraentrega->id = $data['id'];
-
-        return $contraentrega;
     }
 
     public function crear()
