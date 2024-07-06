@@ -2,9 +2,20 @@
 session_start();
 require_once "../../controladores/DeliveryControlador.php";
 require_once "../../layouts/header.php";
+session_start();
+require_once "../../controladores/DeliveryControlador.php";
+require_once "../../layouts/header.php";
 
 $dc = new DeliveryControlador();
 $deliverys = $dc->obtenerDeliverysDetallados();
+$dc = new DeliveryControlador();
+$deliverys = $dc->obtenerDeliverysDetallados();
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['eliminar_id'])) {
+    $id = $_POST['eliminar_id'];
+    $dc->eliminarDelivery($id);
+    header('Location: index.php');
+}
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['eliminar_id'])) {
     $id = $_POST['eliminar_id'];
@@ -27,8 +38,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['eliminar_id'])) {
                     <th class="fw-medium" scope="col">#</th>
                     <th class="fw-medium" scope="col">Descripción</th>
                     <th class="fw-medium" scope="col">Tracking</th>
+                    <th class="fw-medium" scope="col">Descripción</th>
+                    <th class="fw-medium" scope="col">Tracking</th>
                     <th class="fw-medium" scope="col">Fecha de Solicitud</th>
                     <th class="fw-medium" scope="col">Cliente</th>
+                    <th class="fw-medium" scope="col">Costo</th>
+                    <th class="fw-medium" scope="col">Contraentrega</th>
                     <th class="fw-medium" scope="col">Costo</th>
                     <th class="fw-medium" scope="col">Contraentrega</th>
                     <th class="fw-medium" scope="col">Destinatario</th>
@@ -67,9 +82,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['eliminar_id'])) {
                         <td class="fw-light"><?php echo $delivery['destinatario']['nombres'] . " " . $delivery['destinatario']['apellidos']; ?></td>
                         <td class="d-flex gap-1">
                             <a href="editar.php?id=<?php echo $delivery['delivery']["id"]; ?>" class="btn rounded-circle p-0 btn-custom edit">
+                            <a href="editar.php?id=<?php echo $delivery['delivery']["id"]; ?>" class="btn rounded-circle p-0 btn-custom edit">
                                 <i class="bi bi-pencil icon edit d-flex justify-content-center align-items-center"></i>                                
                             </a>
                             <form method="POST" action="index.php" class="d-flex">
+                                <input type="hidden" name="eliminar_id" value="<?php echo $delivery['delivery']["id"]; ?>">
+                                <button type="submit" class="btn p-0 btn-custom delete rounded-circle" onclick="return confirm('¿Está seguro de que desea eliminar este delivery?');">
                                 <input type="hidden" name="eliminar_id" value="<?php echo $delivery['delivery']["id"]; ?>">
                                 <button type="submit" class="btn p-0 btn-custom delete rounded-circle" onclick="return confirm('¿Está seguro de que desea eliminar este delivery?');">
                                     <i class="bi bi-trash3 icon delete d-flex justify-content-center align-items-center"></i>                                
@@ -85,4 +103,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['eliminar_id'])) {
 
 <?php 
 require_once "../../layouts/footer.php"; 
+require_once "../../layouts/footer.php"; 
 ?>
+
