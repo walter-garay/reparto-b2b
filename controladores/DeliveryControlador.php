@@ -22,6 +22,11 @@ class DeliveryControlador
         return $this->delivery->obtenerTodos();
     }
 
+    public function obtenerDeliverysDetallados()
+    {
+        return $this->delivery->obtenerTodosDetallados();
+    }
+
     public function obtenerDeliveryPorId($id)
     {
         return $this->delivery->obtenerPorId($id);

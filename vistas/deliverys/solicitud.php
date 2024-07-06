@@ -6,7 +6,7 @@ $dc = new DeliveryControlador();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $datos = [
-        'id_cliente' => 2,
+        'id_cliente' => 1,
         'descripcion' => $_POST['descripcion'],
 
         'direccion_recojo' => $_POST['direccion_recojo'],
@@ -183,7 +183,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     </div>
                     <div class="mb-3">
                         <label for="metodo_pago">Método de pago</label>
-                        <select class="form-select" aria-label="Default select example">
+                        <select name="metodo_pago"  class="form-select" aria-label="Seleccionar tu método de pago preferido">
                             <option selected>Yape / Plin</option>
                             <option value="BCP">Transferencia (BCP)</option>
                             <option value="Interbank">Transferencia (Interbank)</option>
