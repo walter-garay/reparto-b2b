@@ -3,7 +3,7 @@
     require_once "../layouts/header.php";
 
     $controlador = new UsuarioControlador();
-    $usuarios = $controlador->mostrarUsuarios();
+    $usuarios = $controlador->obtenerUsuarios();
 
     if (isset($_POST['submit'])) {
         $nombres = $_POST['nombres'];
@@ -13,7 +13,7 @@
         $tipo = $_POST['tipo'];
         $dni_ruc = $_POST['dni_ruc'];
 
-        $controlador->registrar($nombres, $apellidos, $email, $password, $celular, $tipo, $dni_ruc);
+        $controlador->crearUsuario($nombres, $apellidos, $email, $password, $celular, $tipo, $dni_ruc);
 
         header("Location: " . $_SERVER['PHP_SELF']);
         exit;

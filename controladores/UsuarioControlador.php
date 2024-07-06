@@ -1,71 +1,109 @@
 <?php
-require_once "../modelos/Usuario.php";
 
-class UsuarioControlador {
+require_once "../../modelos/Usuario.php";
+require_once "../../modelos/Repartidor.php";
+require_once "../../modelos/EmpresaCliente.php";
+require_once "../../modelos/Administrador.php";
 
-    public function login($email, $password) {
+class UsuarioControlador
+{
+    private $usuario;
+
+    public function __construct()
+    {
+        $this->usuario = new Usuario();
+    }
+
+    public function obtenerUsuarios()
+    {
+        return $this->usuario->obtenerTodos();
+    }
+
+    public function obtenerRepartidores()
+    {
+        $repartidor = new Repartidor();
+        return $repartidor->obtenerTodos();
+    }
+
+    public function obtenerUsuarioPorId($id)
+    {
+        return $this->usuario->obtenerPorId($id);
+    }
+
+    public function crearUsuario($datos) {
         $usuario = new Usuario();
-        $usuarioValidado = $usuario->obtenerPorEmail($email);
-        $contador = 0;
-        $usuario_id = null;
-        $usuario_nombre = null;
-        $password_bd = null;
-        $tipo = null;
     
-        foreach($usuarioValidado as $item){
-            $usuario_id = $item["id"];
-            $usuario_nombre = $item["nombres"] . " " . $item["apellidos"];
-            $password_bd = $item["password"];
-            $tipo = $item["tipo"];
-            $contador++;
-        }
+        try {
+            // Insertar datos en la tabla Usuario
+            $usuario->setNombres($datos['nombres']);
+            $usuario->setApellidos($datos['apellidos']);
+            $usuario->setEmail($datos['email']);
+            $usuario->setPassword(password_hash($datos['password'], PASSWORD_DEFAULT));
+            $usuario->setCelular($datos['celular']);
+            $usuario->setTipo($datos['tipo']);
+            $usuario->setDniRuc($datos['dni_ruc']);
+            $id_usuario = $usuario->crear();
     
-        if($contador > 0){
-            if(password_verify($password, $password_bd)){
-                session_start();
-                $_SESSION["id"] = $usuario_id;
-                $_SESSION["usuario"] = $usuario_nombre;
-                $_SESSION["tipo"] = $tipo;
-                header("Location: main.php");
-                exit();
-            } else {
-                echo "Contraseña incorrecta";
+            // Dependiendo del tipo de usuario, crear e insertar en la tabla correspondiente
+            switch ($datos['tipo']) {
+                case 'repartidor':
+                    $repartidor = new Repartidor();
+                    $repartidor->setId($id_usuario);
+                    $repartidor->setTipoTransporte($datos['tipo_transporte']);
+                    $repartidor->setPlaca($datos['placa']);
+                    $repartidor->crear();
+                    break;
+                case 'empresa_cliente':
+                    $empresaCliente = new EmpresaCliente();
+                    $empresaCliente->setId($id_usuario);
+                    $empresaCliente->setDireccion($datos['direccion']);
+                    $empresaCliente->setRazonSocial($datos['razon_social']);
+                    $empresaCliente->crear();
+                    break;
+                case 'administrador':
+                    $administrador = new Administrador();
+                    $administrador->setId($id_usuario);
+                    $administrador->setCodAdmin($this->generarCodigoAdmin());
+                    $administrador->crear();
+                    break;
+                default:
+                    throw new Exception("Tipo de usuario no válido");
             }
-        } else {
-            echo "Usuario no encontrado";
+        
+        } catch (Exception $e) {
+            // Revertir transacción en caso de error
+            echo '<script>console.log('. $e->getMessage() .');</script>';
+            throw $e;
         }
     }
 
-    public function logout() {
-        session_start();
-        session_destroy();
-        header("Location: login.php");
+    public function actualizarUsuario($id, $datos)
+    {
+        $usuario = $this->obtenerUsuarioPorId($id);
+        if (!$usuario) {
+            return false;
+        }
+
+        $usuario->setNombres($datos['nombres']);
+        $usuario->setApellidos($datos['apellidos']);
+        $usuario->setEmail($datos['email']);
+        $usuario->setCelular($datos['celular']);
+        $usuario->setDniRuc($datos['dni_ruc']);
+
+        // Si se proporciona una nueva contraseña, actualizarla
+        if (!empty($datos['password'])) {
+            $usuario->setPassword(password_hash($datos['password'], PASSWORD_DEFAULT));
+        }
+
+        return $usuario->actualizar();
     }
 
-    public function registrar($nombres, $apellidos, $email, $password, $celular, $tipo, $dni_ruc) {
-        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-        $usuario = new Usuario($nombres, $apellidos, $email, $hashed_password, $celular, $tipo, $dni_ruc);
-        $usuario->crear();
+    private function generarCodigoAdmin() {
+        return 'ADM' . uniqid();
     }
 
-    public function obtenerUsuarioPorId($id) {
-        $usuario = new Usuario();
-        return $usuario->obtenerPorId($id);
-    }
-
-    public function mostrarUsuarios() {
-        $usuario = new Usuario();
-        $usuarios = $usuario->obtenerTodos();
-        return $usuarios;
-    }
-
-    public function actualizarUsuario($id, $nombres, $apellidos, $email, $celular, $tipo, $dni_ruc) {
-        $usuario = new Usuario($nombres, $apellidos, $email, $celular, $tipo, $dni_ruc);
-        $usuario->actualizar($id);
-    }
-
-    public function eliminarUsuario($id) {
-        $usuario = new Usuario();
-        $usuario->eliminar($id);
+    public function eliminarUsuario($id)
+    {
+        return $this->usuario->eliminar($id);
     }
 }

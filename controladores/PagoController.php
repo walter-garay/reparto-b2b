@@ -1,31 +1,53 @@
 <?php
-require_once "../modelos/pago.php";
 
-class PagoController {
+require_once __DIR__ . '/../modelos/Pago.php';
 
-    public function guardar($monto, $estado, $metodo) {
-        $pago = new Pago();
-        return $pago->guardar($monto, $estado, $metodo);
+class PagoControlador
+{
+    private $pago;
+
+    public function __construct()
+    {
+        $this->pago = new Pago();
     }
 
-    public function mostrar() {
-        $pago = new Pago();
-        return $pago->mostrar();
+    public function obtenerPagos()
+    {
+        return $this->pago->obtenerTodos();
     }
 
-    public function eliminar($id) {
-        $pago = new Pago();
-        return $pago->eliminar($id);
+    public function obtenerPagoPorId($id)
+    {
+        return $this->pago->obtenerPorId($id);
     }
 
-    public function editar($id, $monto, $estado, $metodo) {
-        $pago = new Pago();
-        return $pago->editar($id, $monto, $estado, $metodo);
+    public function crearPago($datos)
+    {
+        $pago = new Pago(
+            $datos['monto'],
+            $datos['estado'],
+            $datos['metodo']
+        );
+        return $pago->crear();
     }
 
-    public function buscar($id) {
-        $pago = new Pago();
-        return $pago->buscar($id);
+    public function actualizarPago($id, $datos)
+    {
+        $pago = $this->obtenerPagoPorId($id);
+        if (!$pago) {
+            return false;
+        }
+
+        $pago->setMonto($datos['monto']);
+        $pago->setEstado($datos['estado']);
+        $pago->setMetodo($datos['metodo']);
+
+        return $pago->actualizar();
+    }
+
+    public function eliminarPago($id)
+    {
+        return $this->pago->eliminar($id);
     }
 }
 ?>

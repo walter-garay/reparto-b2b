@@ -1,86 +1,114 @@
 <?php
 
-require_once "Usuario.php";
 require_once "Conexion.php";
+require_once "Usuario.php";
 
-class EmpresaCliente extends Usuario {
+class EmpresaCliente extends Usuario
+{
     private $direccion;
     private $razon_social;
 
-    public function __construct($nombres = "", $apellidos = "", $email = "", $password = "", $celular = "", $tipo = "", $dni_ruc = "", $direccion = "", $razon_social = "") {
-        parent::__construct($nombres, $apellidos, $email, $password, $celular, $tipo, $dni_ruc);
+    public function __construct($id = null, $direccion = "", $razon_social = "")
+    {
+        $this->id = $id;
         $this->direccion = $direccion;
         $this->razon_social = $razon_social;
     }
 
-    public function obtenerTodos() {
+    public function crear()
+    {
         $conn = new Conexion();
         $conexion = $conn->conectar();
-        $sql = "SELECT Usuario.*, EmpresaCliente.direccion, EmpresaCliente.razon_social 
-                FROM Usuario 
-                JOIN EmpresaCliente ON Usuario.id = EmpresaCliente.id";
-        $resultado = $conexion->query($sql);
+
+        $sql = "INSERT INTO EmpresaCliente (id, direccion, razon_social) 
+                VALUES ({$this->id}, '{$this->direccion}', '{$this->razon_social}')";
+
+        $resultado = $conexion->exec($sql);
         $conn->cerrar();
+
         return $resultado;
     }
 
-    public function obtenerPorId($id) {
+    public function obtenerPorId($id)
+    {
         $conn = new Conexion();
         $conexion = $conn->conectar();
-        $sql = "SELECT Usuario.*, EmpresaCliente.direccion, EmpresaCliente.razon_social 
-                FROM Usuario 
-                JOIN EmpresaCliente ON Usuario.id = EmpresaCliente.id 
-                WHERE Usuario.id = $id";
+        $sql = "SELECT * FROM EmpresaCliente WHERE id = $id";
         $resultado = $conexion->query($sql);
+        $data = $resultado->fetch();
         $conn->cerrar();
+
+        if ($data) {
+            $this->id = $data['id'];
+            $this->direccion = $data['direccion'];
+            $this->razon_social = $data['razon_social'];
+            
+            // Obtener los datos del usuario
+            parent::obtenerPorId($id);
+            
+            return $this;
+        }
+
+        return null;
+    }
+
+    public function actualizar()
+    {
+        $conn = new Conexion();
+        $conexion = $conn->conectar();
+
+        $sql = "UPDATE EmpresaCliente SET 
+                direccion = '{$this->direccion}', 
+                razon_social = '{$this->razon_social}'
+                WHERE id = {$this->id}";
+
+        $resultado = $conexion->exec($sql);
+        $conn->cerrar();
+
+        // Actualizar los datos del usuario
+        parent::actualizar();
+
         return $resultado;
     }
 
-    public function crear() {
-        parent::crear();
+    public function eliminar($id)
+    {
         $conn = new Conexion();
         $conexion = $conn->conectar();
-        $id_usuario = $conexion->lastInsertId();
-
-        $sql = "INSERT INTO EmpresaCliente(id, direccion, razon_social) VALUES ($id_usuario, '$this->direccion', '$this->razon_social')";
-        $result = $conexion->exec($sql);
-
-        if($result > 0) {
-            echo "EmpresaCliente creado exitosamente";
-        } else {
-            echo "Ocurrió un error, vuelva a intentarlo";
-        }
-        $conn->cerrar();
-    }
-
-    public function actualizar($id) {
-        parent::actualizar($id);
-        $conn = new Conexion();
-        $conexion = $conn->conectar();
-        $sql = "UPDATE EmpresaCliente SET direccion = '$this->direccion', razon_social = '$this->razon_social' WHERE id = $id";
-        $result = $conexion->exec($sql);
-
-        if($result > 0) {
-            echo "EmpresaCliente actualizado exitosamente";
-        } else {
-            echo "Ocurrió un error, vuelva a intentarlo";
-        }
-        $conn->cerrar();
-    }
-
-    public function eliminar($id) {
-        parent::eliminar($id);
-        $conn = new Conexion();
-        $conexion = $conn->conectar();
+        
+        // Primero eliminamos el registro de EmpresaCliente
         $sql = "DELETE FROM EmpresaCliente WHERE id = $id";
-        $result = $conexion->exec($sql);
-
-        if($result > 0) {
-            echo "EmpresaCliente eliminado exitosamente";
-        } else {
-            echo "Ocurrió un error, vuelva a intentarlo";
-        }
+        $resultado = $conexion->exec($sql);
+        
         $conn->cerrar();
+
+        if ($resultado) {
+            // Si se eliminó correctamente la EmpresaCliente, eliminamos el Usuario
+            return parent::eliminar($id);
+        }
+
+        return false;
+    }
+
+    // Getters y setters
+
+    public function getDireccion()
+    {
+        return $this->direccion;
+    }
+
+    public function setDireccion($direccion)
+    {
+        $this->direccion = $direccion;
+    }
+
+    public function getRazonSocial()
+    {
+        return $this->razon_social;
+    }
+
+    public function setRazonSocial($razon_social)
+    {
+        $this->razon_social = $razon_social;
     }
 }
-?>

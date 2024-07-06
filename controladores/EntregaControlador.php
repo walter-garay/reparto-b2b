@@ -1,32 +1,66 @@
 <?php
-require_once "../modelos/Entrega.php";
 
-class EntregaControlador {
+require_once __DIR__ . '/../modelos/Entrega.php';
 
-    public function crearEntrega($id_delivery, $id_repartidor, $direccion, $fecha, $hora, $estado, $foto_entrega, $id_inconveniente, $id_calificacion) {
-        $entrega = new Entrega($id_delivery, $id_repartidor, $direccion, $fecha, $hora, $estado, $foto_entrega, $id_inconveniente, $id_calificacion);
-        $entrega->crear();
+class EntregaControlador
+{
+    private $entrega;
+
+    public function __construct()
+    {
+        $this->entrega = new Entrega();
     }
 
-    public function obtenerEntregaPorId($id) {
-        $entrega = new Entrega();
-        return $entrega->obtenerPorId($id);
+    public function obtenerEntregas()
+    {
+        return $this->entrega->obtenerTodos();
     }
 
-    public function mostrarEntregas() {
-        $entrega = new Entrega();
-        $entregas = $entrega->obtenerTodos();
-        return $entregas;
+    public function obtenerEntregaPorId($id)
+    {
+        return $this->entrega->obtenerPorId($id);
     }
 
-    public function actualizarEntrega($id, $id_delivery, $id_repartidor, $direccion, $fecha, $hora, $estado, $foto_entrega, $id_inconveniente, $id_calificacion) {
-        $entrega = new Entrega($id_delivery, $id_repartidor, $direccion, $fecha, $hora, $estado, $foto_entrega, $id_inconveniente, $id_calificacion);
-        $entrega->actualizar($id);
+    public function crearEntrega($datos)
+    {
+        $fecha = date('Y-m-d', strtotime($datos['fecha']));
+        $hora = date('H:i:s', strtotime($datos['hora']));
+
+        $entrega = new Entrega(
+            $datos['id_repartidor'],
+            $datos['direccion'],
+            $fecha,
+            $hora,
+            $datos['estado'],
+            $datos['foto_entrega'],
+            $datos['id_inconveniente'],
+            $datos['id_calificacion']
+        );
+        return $entrega->crear();
     }
 
-    public function eliminarEntrega($id) {
-        $entrega = new Entrega();
-        $entrega->eliminar($id);
+    public function actualizarEntrega($id, $datos)
+    {
+        $entrega = $this->obtenerEntregaPorId($id);
+        if (!$entrega) {
+            return false;
+        }
+
+        $entrega->setIdRepartidor($datos['id_repartidor']);
+        $entrega->setDireccion($datos['direccion']);
+        $entrega->setFecha($datos['fecha']);
+        $entrega->setHora($datos['hora']);
+        $entrega->setEstado($datos['estado']);
+        $entrega->setFotoEntrega($datos['foto_entrega']);
+        $entrega->setIdInconveniente($datos['id_inconveniente']);
+        $entrega->setIdCalificacion($datos['id_calificacion']);
+
+        return $entrega->actualizar();
+    }
+
+    public function eliminarEntrega($id)
+    {
+        return $this->entrega->eliminar($id);
     }
 }
 ?>
