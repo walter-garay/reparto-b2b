@@ -171,13 +171,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </div>
                 <div class="tab-pane fade" id="step5" role="tabpanel" aria-labelledby="step5-tab">
                     <div class="mb-3">
-                        <label for="monto">Costo del delivery</label>
-                        <input value="<?php echo $deliveryDetallado['pago']->getMonto(); ?>" type="text" class="form-control" id="nro_transaccion" name="nro_transaccion">
+                        <label for="monto_pago">Costo del delivery</label>
+                        <input value="<?php echo $deliveryDetallado['pago']->getMonto(); ?>" type="text" class="form-control" id="monto_pago" name="monto_pago">
                     </div>
                     <div class="mb-3">
                         <label for="metodo_pago">Método de pago</label>
-                        <select id="metodo_pago" class="form-select" name="metodo_pago">
-                        </select>
+                        <select name="metodo_pago"  class="form-select" aria-label="Seleccionar tu método de pago preferido">
+                            <option value="Yape / Plin">Yape / Plin</option>
+                            <option value="BCP">Transferencia (BCP)</option>
+                            <option value="Interbank">Transferencia (Interbank)</option>
+                            <option value="BBVA">Transferencia (BBVA)</option>
+                            <option value="Paypal">Paypal</option>
+                        </select> 
                     </div>
                     <div class="d-flex justify-content-end">
                         <button type="button" class="btn btn-outline-secondary prev-step me-2">Anterior</button>
