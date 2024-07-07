@@ -176,13 +176,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     </div>
                     <div class="mb-3">
                         <label for="metodo_pago">Método de pago</label>
+                        <?php $metodo_pago = $deliveryDetallado['pago']->getMetodo(); ?>
                         <select name="metodo_pago"  class="form-select" aria-label="Seleccionar tu método de pago preferido">
-                            <option value="Yape / Plin">Yape / Plin</option>
-                            <option value="BCP">Transferencia (BCP)</option>
-                            <option value="Interbank">Transferencia (Interbank)</option>
-                            <option value="BBVA">Transferencia (BBVA)</option>
-                            <option value="Paypal">Paypal</option>
-                        </select> 
+                            <option value="Yape / Plin" <?= $metodo_pago == "Yape / Plin" ? 'selected' : ''; ?>>Yape / Plin</option>
+                            <option value="BCP" <?= $metodo_pago == "BCP" ? 'selected' : ''; ?>>Transferencia (BCP)</option>
+                            <option value="Interbank" <?= $metodo_pago == "Interbank" ? 'selected' : ''; ?>>Transferencia (Interbank)</option>
+                            <option value="BBVA" <?= $metodo_pago == "BBVA" ? 'selected' : ''; ?>>Transferencia (BBVA)</option>
+                            <option value="Paypal" <?= $metodo_pago == "Paypal" ? 'selected' : ''; ?>>Paypal</option>
+                        </select>                
                     </div>
                     <div class="d-flex justify-content-end">
                         <button type="button" class="btn btn-outline-secondary prev-step me-2">Anterior</button>

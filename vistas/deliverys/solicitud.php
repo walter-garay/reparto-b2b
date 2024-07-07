@@ -184,7 +184,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <div class="mb-3">
                         <label for="metodo_pago">Método de pago</label>
                         <select name="metodo_pago"  class="form-select" aria-label="Seleccionar tu método de pago preferido">
-                            <option value="Yape / Plin">Yape / Plin</option>
+                            <option value="Yape / Plin" >Yape / Plin</option>
                             <option value="BCP">Transferencia (BCP)</option>
                             <option value="Interbank">Transferencia (Interbank)</option>
                             <option value="BBVA">Transferencia (BBVA)</option>
