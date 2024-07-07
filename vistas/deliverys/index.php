@@ -13,7 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['eliminar_id'])) {
 }
 ?>
 
-<div class="container pt-4">
+<div class="py-4 px-5">
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h1 class="fs-5 mb-0">Deliverys</h1>
         <a href="crear.php" class="rounded-2 btn btn-primary btn-sm">Agregar delivery</a>
@@ -24,8 +24,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['eliminar_id'])) {
                 <tr>
                     <th class="fw-medium" scope="col">#</th>
                     <th class="fw-medium" scope="col">Descripción</th>
-                    <th class="fw-medium" scope="col">Estado</th>
-                    <th class="fw-medium" scope="col">Fecha de Solicitud</th>
+                    <th class="fw-medium" scope="col">Recojo</th>
+                    <th class="fw-medium" scope="col">Entrega</th>
+                    <th class="fw-medium" scope="col">Solicitado</th>
                     <th class="fw-medium" scope="col">Cliente</th>
                     <th class="fw-medium" scope="col">Costo</th>
                     <th class="fw-medium" scope="col">Contraentrega</th>
@@ -35,6 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['eliminar_id'])) {
             </thead>
             <tbody>
                 <?php foreach ($deliverys as $delivery): 
+                    // Contraentrega styling
                     $costo_delivery = $delivery['contraentrega']->getCostoDelivery();
                     $costo_pedido = $delivery['contraentrega']->getCostoPedido();
                     $contraentrega_text = '';
@@ -53,14 +55,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['eliminar_id'])) {
                         $contraentrega_text = 'No cobrar';
                         $contraentrega_class = 'badge text-bg-secondary';
                     }
+
+                    // Recojo and Entrega styling
+                    $estado_classes = [
+                        'Repartidor asignado' => 'badge text-bg-success',
+                        'Sin repartidor asignado' => 'badge text-bg-warning',
+                        'Completado' => 'badge text-bg-secondary'
+                    ];
+
+                    $recojo_estado = $delivery['recojo']->getEstado();
+                    $recojo_class = $estado_classes[$recojo_estado] ?? '';
+
+                    $entrega_estado = $delivery['entrega']->getEstado();
+                    $entrega_class = $estado_classes[$entrega_estado] ?? '';
                 ?>
                     <tr>
                         <td><?php echo $delivery['delivery']->getId(); ?></td>
-                        <td><?php echo $delivery['delivery']->getDescripcion(); ?></td>
-
-                        <?php $recojo_estado = $delivery['recojo']->getEstado(); ?>
-
-                        <td class="fw-light"><?php echo $delivery['recojo']->getEstado();; ?></td>
+                        <td class="fw-light"><?php echo $delivery['delivery']->getDescripcion(); ?></td>
+                        <td class="fw-light"><span class="<?php echo $recojo_class; ?>"><?php echo $recojo_estado; ?></span></td>
+                        <td class="fw-light"><span class="<?php echo $entrega_class; ?>"><?php echo $entrega_estado; ?></span></td>
                         <td class="fw-light"><?php echo $delivery['delivery']->getFechaSolicitud()->format('d/m/Y H:i'); ?></td>
                         <td class="fw-light"><?php echo $delivery['cliente']->getRazonSocial() ?></td>
                         <td class="fw-light"><?php echo $delivery['pago']->getMonto(); ?></td>
@@ -87,4 +100,3 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['eliminar_id'])) {
 <?php 
     require_once "../../layouts/footer.php"; 
 ?>
-

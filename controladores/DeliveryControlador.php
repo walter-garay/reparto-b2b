@@ -121,11 +121,13 @@ class DeliveryControlador
             $recojo->setDireccion($datos['direccion_recojo']);
             $recojo->setFecha($datos['fecha_recojo']);
             $recojo->setHora($datos['hora_recojo']);
+            $recojo->setEstado("Sin repartidor asignado");
             $id_recojo = $recojo->crear();
 
             $entrega->setDireccion($datos['direccion_entrega']);
             $entrega->setFecha($datos['fecha_entrega']);
             $entrega->setHora($datos['hora_entrega']);
+            $entrega->setEstado("Sin repartidor asignado");
             $id_entrega = $entrega->crear();
 
             $destinatario->setDni($datos['dni_destinatario']);
