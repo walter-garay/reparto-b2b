@@ -73,7 +73,7 @@ class Delivery
         $conexion = $conn->conectar();
         $sql = "SELECT id FROM Delivery";
         $resultado = $conexion->query($sql);
-        $data = $resultado->fetchAll(PDO::FETCH_ASSOC);
+        $data = $resultado->fetchAll();
         $conn->cerrar();
 
         $deliverys = [];
@@ -111,7 +111,7 @@ class Delivery
                 WHERE d.id = $id";
         
         $resultado = $conexion->query($sql);
-        $data = $resultado->fetch(PDO::FETCH_ASSOC);
+        $data = $resultado->fetch();
         $conn->cerrar();
 
         if (!$data) {
@@ -182,9 +182,7 @@ class Delivery
         $data = $resultado->fetch();
         $conn->cerrar();
 
-        if (!$resultado) {
-            return null;
-        } else {
+        if ($data) {
             $this->descripcion = $data['descripcion'];
             $this->cod_seguimiento = $data['cod_seguimiento'];
             $this->fecha_solicitud = new DateTime($data['fecha_solicitud']);
@@ -195,6 +193,8 @@ class Delivery
             $this->id_contraentrega = $data['id_contraentrega'];
             $this->id_destinatario = $data['id_destinatario'];
             return $this;
+        } else {
+            return null;
         }
     }
 

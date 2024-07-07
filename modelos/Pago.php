@@ -48,18 +48,15 @@ class Pago
         $data = $resultado->fetch();
         $conn->cerrar();
 
-        if (!$resultado) {
+        if ($data) {
+            $this->monto = $data['monto'];
+            $this->estado = $data['estado'];
+            $this->metodo = $data['metodo'];
+            $this->id = $data['id'];
+            return $this;
+        } else {
             return null;
         }
-
-        $pago = new self(
-            $data['monto'],
-            $data['estado'],
-            $data['metodo']
-        );
-        $pago->id = $data['id'];
-
-        return $pago;
     }
 
     public function crear()

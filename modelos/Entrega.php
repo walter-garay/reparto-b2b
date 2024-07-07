@@ -63,23 +63,20 @@ class Entrega
         $data = $resultado->fetch();
         $conn->cerrar();
 
-        if (!$resultado) {
-            return null;
+        if ($data) {
+            $this->id_repartidor = $data['id_repartidor'];
+            $this->direccion = $data['direccion'];
+            $this->fecha = $data['fecha'];
+            $this->hora = $data['hora'];
+            $this->estado = $data['estado'];
+            $this->foto_entrega = $data['foto_entrega'];
+            $this->id_inconveniente = $data['id_inconveniente'];
+            $this->id_calificacion = $data['id_calificacion'];
+            $this->id = $data['id'];
+            return $this;
+        } else {
+            return null;            
         }
-
-        $entrega = new self(
-            $data['id_repartidor'],
-            $data['direccion'],
-            $data['fecha'],
-            $data['hora'],
-            $data['estado'],
-            $data['foto_entrega'],
-            $data['id_inconveniente'],
-            $data['id_calificacion']
-        );
-        $entrega->id = $data['id'];
-
-        return $entrega;
     }
 
     public function crear()

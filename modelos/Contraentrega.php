@@ -45,13 +45,13 @@ class Contraentrega
         $data = $resultado->fetch();
         $conn->cerrar();
 
-        if (!$resultado) {
-            return null;
-        } else {
+        if ($data) {
             $this->costo_delivery = $data['costo_delivery'];
             $this->costo_pedido = $data['costo_pedido'];
             $this->id = $data['id'];
             return $this;
+        } else {            
+            return null;
         }
     }
 

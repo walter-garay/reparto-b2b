@@ -25,8 +25,46 @@ class DeliveryControlador
 
     public function obtenerDeliverysDetallados()
     {
-        return $this->delivery->obtenerTodosDetallados();
+        $deliveryModel = new Delivery();
+        $deliveries = $deliveryModel->obtenerTodos();
+
+        $deliveriesDetallados = [];
+
+        foreach ($deliveries as $delivery) {
+            $empresaCliente = new EmpresaCliente();
+            $empresaCliente->obtenerPorId($delivery->getIdCliente());
+
+            $recojo = new Recojo();
+            $recojo->obtenerPorId($delivery->getIdRecojo());
+
+            $entrega = new Entrega();
+            $entrega->obtenerPorId($delivery->getIdEntrega());
+
+            $pago = new Pago();
+            $pago->obtenerPorId($delivery->getIdPago());
+
+            $contraentrega = new Contraentrega();
+            $contraentrega->obtenerPorId($delivery->getIdContraentrega());
+
+            $destinatario = new Destinatario();
+            $destinatario->obtenerPorId($delivery->getIdDestinatario());
+
+            $deliveryDetallado = [
+                'delivery' => $delivery,
+                'cliente' => $empresaCliente,
+                'recojo' => $recojo,
+                'entrega' => $entrega,
+                'pago' => $pago,
+                'contraentrega' => $contraentrega,
+                'destinatario' => $destinatario
+            ];
+
+            $deliveriesDetallados[] = $deliveryDetallado;
+        }
+
+        return $deliveriesDetallados;
     }
+
 
     public function obtenerDeliveryPorId($id)
     {
@@ -166,7 +204,7 @@ class DeliveryControlador
             $recojo->setDireccion($deliveryDetalles['recojo']['direccion']);
             $recojo->setFecha($deliveryDetalles['recojo']['fecha']);
             $recojo->setHora($deliveryDetalles['recojo']['hora']);
-            $recojo->setEstado($deliveryDetalles['recojo']['estado']);
+            $recojo->setEstado("Pendiente");
             $recojo->actualizar();
 
             // Actualizar Entrega
@@ -175,7 +213,7 @@ class DeliveryControlador
             $entrega->setDireccion($deliveryDetalles['entrega']['direccion']);
             $entrega->setFecha($deliveryDetalles['entrega']['fecha']);
             $entrega->setHora($deliveryDetalles['entrega']['hora']);
-            $entrega->setEstado($deliveryDetalles['entrega']['estado']);
+            $entrega->setEstado("Pendiente");
             $entrega->actualizar();
 
             // Actualizar Pago

@@ -42,14 +42,12 @@ class EmpresaCliente extends Usuario
             $this->id = $data['id'];
             $this->direccion = $data['direccion'];
             $this->razon_social = $data['razon_social'];
-            
-            // Obtener los datos del usuario
-            parent::obtenerPorId($id);
-            
+            parent::obtenerPorId($id);            
             return $this;
+        } else {
+            return null;
         }
 
-        return null;
     }
 
     public function actualizar()

@@ -51,19 +51,16 @@ class Destinatario
         $data = $resultado->fetch();
         $conn->cerrar();
 
-        if (!$resultado) {
+        if ($data) {
+            $this->id = $data['id'];
+            $this->dni = $data['dni'];
+            $this->nombres = $data['nombres'];
+            $this->apellidos = $data['apellidos'];
+            $this->celular = $data['celular'];
+            return $this;
+        } else {
             return null;
         }
-
-        $destinatario = new self(
-            $data['dni'],
-            $data['nombres'],
-            $data['apellidos'],
-            $data['celular']
-        );
-        $destinatario->id = $data['id'];
-
-        return $destinatario;
     }
 
     public function crear()

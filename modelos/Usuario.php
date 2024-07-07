@@ -67,19 +67,20 @@ class Usuario
         $data = $resultado->fetch();
         $conn->cerrar();
 
-        if (!$resultado) {
-            return null;
-        } else {
+        if ($data) {
             $this->nombres = $data['nombres'];
             $this->apellidos = $data['apellidos'];
             $this->email = $data['email'];
             $this->password = $data['password'];
             $this->celular = $data['celular'];
-            $this ->tipo =$data['tipo'];
+            $this->tipo = $data['tipo'];
             $this->dni_ruc = $data['dni_ruc'];
             return $this;
-        }
+        } else {
+            return null;
+        }   
     }
+
 
     public function crear()
     {

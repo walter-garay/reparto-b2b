@@ -76,11 +76,8 @@ class Repartidor extends Usuario
     public function obtenerPorId($id)
     {
         $conn = new Conexion();
-        $conexion = $conn->conectar();
-        
-        // Obtener los datos del usuario
+        $conexion = $conn->conectar();        
         $sql = "SELECT * FROM Repartidor WHERE id = $id";
-        
         $resultado = $conexion->query($sql);
         $data = $resultado->fetch();
         $conn->cerrar();
@@ -90,12 +87,12 @@ class Repartidor extends Usuario
             $this->tipo_transporte = $data['tipo_transporte'];
             $this->placa = $data['placa'];
             parent::obtenerPorId($id);
-
             return $this;
+        } else {
+            return null;
         }
-
-        return null;
     }
+
 
     public function actualizar()
     {

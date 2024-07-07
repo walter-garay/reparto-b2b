@@ -5,7 +5,7 @@ require_once "../modelos/Calificacion.php";
 
 class CalificacionController {
     public function guardar($puntaje, $comentario) {
-        $calificacion = new Calificacion();
+        $calificacion = new Calificacion($puntaje, $comentario);
         return $calificacion->guardar($puntaje, $comentario);
     }
 

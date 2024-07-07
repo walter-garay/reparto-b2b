@@ -39,14 +39,11 @@ class Administrador extends Usuario
         if ($data) {
             $this->id = $data['id'];
             $this->cod_admin = $data['cod_admin'];
-            
-            // Obtener los datos del usuario
-            parent::obtenerPorId($id);
-            
+            parent::obtenerPorId($id);        
             return $this;
+        } else {
+            return null;
         }
-
-        return null;
     }
 
     public function actualizar()

@@ -114,7 +114,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <div class="tab-pane fade" id="step2" role="tabpanel" aria-labelledby="step2-tab">
                     <div class="mb-3">
                         <label for="direccion_recojo">Dónde lo recogemos</label>
-                        <input type="text" class="form-control" id="direccion_recojo" name="direccion_recojo" required>
+                        <input value="<?php echo $deliveryDetallado['recojo']->getDireccion() ?>" type="text" class="form-control" id="direccion_recojo" name="direccion_recojo" required>
                     </div>
                     <div class="mb-3">
                         <label for="fecha_recojo">Cuándo lo recogemos</label>

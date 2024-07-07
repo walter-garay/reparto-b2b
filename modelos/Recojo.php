@@ -57,21 +57,18 @@ class Recojo
         $data = $resultado->fetch();
         $conn->cerrar();
 
-        if (!$resultado) {
+        if ($data) {
+            $this->id_repartidor = $data['id_repartidor'];
+            $this->direccion = $data['direccion'];
+            $this->fecha = $data['fecha'];
+            $this->hora = $data['hora'];
+            $this->estado = $data['estado'];
+            $this->id_inconveniente = $data['id_inconveniente'];
+            $this->id = $data['id'];
+            return $this;
+        } else {
             return null;
-        }
-
-        $recojo = new self(
-            $data['id_repartidor'],
-            $data['direccion'],
-            $data['fecha'],
-            $data['hora'],
-            $data['estado'],
-            $data['id_inconveniente']
-        );
-        $recojo->id = $data['id'];
-
-        return $recojo;
+        }   
     }
 
     public function crear()

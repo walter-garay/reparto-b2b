@@ -26,9 +26,19 @@ class Inconveniente {
         $conexion = $conn->conectar();
         $sql = "SELECT * FROM Inconveniente WHERE id = $id";
         $resultado = $conexion->query($sql);
+        $data = $resultado->fetch();
         $conn->cerrar();
-        return $resultado;
+    
+        if ($data) {
+            $this->id = $data['id'];
+            $this->descripcion = $data['descripcion'];
+            $this->foto_prueba = $data['foto_prueba'];
+            return $this;
+        } else {
+            return null;
+        }
     }
+    
 
     public function crearInconveniente() {
         $conn = new Conexion();
