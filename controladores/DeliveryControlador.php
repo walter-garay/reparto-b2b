@@ -25,12 +25,10 @@ class DeliveryControlador
 
     public function obtenerDeliverysDetallados()
     {
-        $deliveryModel = new Delivery();
-        $deliveries = $deliveryModel->obtenerTodos();
+        $deliverys = $this->delivery->obtenerTodos();
+        $deliverysDetallados = [];
 
-        $deliveriesDetallados = [];
-
-        foreach ($deliveries as $delivery) {
+        foreach ($deliverys as $delivery) {
             $empresaCliente = new EmpresaCliente();
             $empresaCliente->obtenerPorId($delivery->getIdCliente());
 
@@ -59,10 +57,10 @@ class DeliveryControlador
                 'destinatario' => $destinatario
             ];
 
-            $deliveriesDetallados[] = $deliveryDetallado;
+            $deliverysDetallados[] = $deliveryDetallado;
         }
 
-        return $deliveriesDetallados;
+        return $deliverysDetallados;
     }
 
 
