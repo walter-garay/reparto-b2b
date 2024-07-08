@@ -1,7 +1,7 @@
 <?php
 session_start();
-require_once "../../controladores/DeliveryControlador.php";
-require_once "../../layouts/header.php";
+require_once "../controladores/DeliveryControlador.php";
+require_once "../layouts/header.php";
 
 $dc = new DeliveryControlador();
 $deliverys = $dc->obtenerDeliverysDetallados();
@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['eliminar_id'])) {
 <div class="py-4 px-5">
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h1 class="fs-5 mb-0">Deliverys</h1>
-        <a href="crear.php" class="rounded-2 btn btn-primary btn-sm">Agregar delivery</a>
+        <a href="solicitud.php" class="rounded-2 btn btn-primary btn-sm">Agregar delivery</a>
     </div>
     <div class="table-responsive table-bordered">
         <table class="table rounded-circle">
@@ -98,5 +98,5 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['eliminar_id'])) {
 </div>
 
 <?php 
-    require_once "../../layouts/footer.php"; 
+    require_once "../layouts/footer.php"; 
 ?>

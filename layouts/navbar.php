@@ -4,7 +4,7 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <a class="ms-2" href="../main.php">
-                <img src="../../assets/img/logo.png"  alt="Logo de Confi Courier" width="60px"> 
+                <img src="../assets/img/logo.png"  alt="Logo de Confi Courier" width="60px"> 
             </a>
             <div class="collapse navbar-collapse" id="navbarText">
                 

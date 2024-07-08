@@ -1,5 +1,5 @@
 <?php
-require_once '../controladores/InconvenienteController.php';
+require_once 'controladores/InconvenienteController.php';
 $ic = new InconvenienteController();
 $inconvenientes = $ic->mostrarInconvenientes();
 

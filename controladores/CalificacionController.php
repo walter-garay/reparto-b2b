@@ -1,6 +1,6 @@
 <?php
 
-require_once "../../modelos/Calificacion.php";
+require_once "../modelos/Calificacion.php";
 
 
 class CalificacionController {

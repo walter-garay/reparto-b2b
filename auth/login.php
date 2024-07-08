@@ -6,7 +6,7 @@
    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
    <link rel="stylesheet" href="css/bootstrap.css">
-   <link rel="stylesheet" type="text/css" href="css/style.css">
+   <link rel="stylesheet" type="text/css" href="../assets/css/auth/style.css">
    <link href="https://fonts.googleapis.com/css?family=Poppins:600&display=swap" rel="stylesheet">
    <!-- <link rel="stylesheet" href="css/all.min.css"> -->
    <!-- <link rel="stylesheet" href="css/fontawesome.min.css"> -->
@@ -15,14 +15,14 @@
 </head>
 
 <body>
-   <img class="wave" src="img/wave.png">
+   <img class="wave" src="../assets/img/auth/wave.png">
    <div class="container">
       <div class="img">
-         <img src="img/bg.webp">
+         <img src="../assets/img/auth/bg.webp">
       </div>
       <div class="login-content">
          <form method="post" action="">
-            <img src="img/avatar.svg">
+            <img src="../assets/img/auth/avatar.svg">
             <h2 class="title">BIENVENIDO</h2>
             <?php 
             ?>
@@ -56,12 +56,12 @@
          </form>
       </div>
    </div>
-   <script src="js/fontawesome.js"></script>
-   <script src="js/main.js"></script>
-   <script src="js/main2.js"></script>
-   <script src="js/jquery.min.js"></script>
-   <script src="js/bootstrap.js"></script>
-   <script src="js/bootstrap.bundle.js"></script>
+   <script src="../assets/js/fontawesome.js"></script>
+   <script src="../assets/js/main.js"></script>
+   <script src="../assets/js/main2.js"></script>
+   <script src="../assets/js/jquery.min.js"></script>
+   <script src="../assets/js/bootstrap.js"></script>
+   <script src="../assets/js/bootstrap.bundle.js"></script>
 
 </body>
 

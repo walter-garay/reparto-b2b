@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__ . '/../modelos/Contraentrega.php';
+require_once __DIR__ . '../modelos/Contraentrega.php';
 
 class ContraentregaControlador
 {

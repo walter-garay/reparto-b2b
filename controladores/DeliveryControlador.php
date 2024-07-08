@@ -1,12 +1,12 @@
 <?php
 
-require_once "../../modelos/Delivery.php";
-require_once "../../modelos/Recojo.php";
-require_once "../../modelos/Entrega.php";
-require_once "../../modelos/Destinatario.php";
-require_once "../../modelos/Pago.php";
-require_once "../../modelos/Contraentrega.php";
-require_once "../../modelos/EmpresaCliente.php";
+require_once "../modelos/Delivery.php";
+require_once "../modelos/Recojo.php";
+require_once "../modelos/Entrega.php";
+require_once "../modelos/Destinatario.php";
+require_once "../modelos/Pago.php";
+require_once "../modelos/Contraentrega.php";
+require_once "../modelos/EmpresaCliente.php";
 
 
 class DeliveryControlador
