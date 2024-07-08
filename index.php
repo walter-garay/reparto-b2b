@@ -35,6 +35,12 @@
                     <li class="nav-item">
                         <a class="nav-link" href="#contacto">Contacto</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#registrar">Registrar</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#iniciar_sesion">Iniciar Sesión</a>
+                    </li>
                 </ul>
             </div>
         </div>
