@@ -3,7 +3,6 @@ require_once "../../layouts/header.php";
 require_once "../../controladores/DeliveryControlador.php";
 
 $dc = new DeliveryControlador();
-$delivery = null;
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['id'])) {
     $deliveryDetallado = $dc->obtenerDeliveryDetalladoPorId($_GET['id']);
@@ -44,7 +43,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <div class="d-flex flex-column justify-content-center align-items-center w-100 h-100">
     <div class="container m-10 rounded-4 shadow-sm col-lg-6 col-md-12 p-4" style="background-color: white;">
-        <h2 class="mb-4 fs-5 ">Solicitud de delivery</h2>
+        <div class="d-flex justify-content-between ">
+            <h2 class="mb-4 fs-5 ">Solicitud de delivery</h2>
+            <a href=".">
+                <i class="bi bi-x-lg text-black fs-5 d-flex"></i>
+            </a>
+        </div>
         <form method="POST" action="" id="stepForm">
             <ul class="nav nav-tabs mb-3" id="myTab" role="tablist">
                 <li class="nav-item" role="presentation">
@@ -68,43 +72,44 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <div class="tab-pane fade show active" id="step1" role="tabpanel" aria-labelledby="step1-tab">
                     <div class="mb-3">
                         <label for="descripcion">Qué contiene el paquete (pedido)</label>
-                        <input value="<?php echo $deliveryDetallado['delivery']->getDescripcion(); ?>" type="text" class="form-control" id="descripcion" name="descripcion" required>
+                        <input value="<?= $deliveryDetallado['delivery']->getDescripcion() ?>" type="text" class="form-control" id="descripcion" name="descripcion" required>
                     </div>
                     <div class="mb-3 d-flex flex-column">
-                        <label for="descripcion">¿Debemos cobrar al destinatario?</label>
                         <?php
                             $costo_delivery = $deliveryDetallado['contraentrega']->getCostoDelivery();
                             $costo_pedido = $deliveryDetallado['contraentrega']->getCostoPedido();
                         ?>
-                        <div>
-                            <input type="radio" id="no_cobrar" name="opcion_cobro" value="no_cobrar" <?= ($costo_delivery == 0 && $costo_pedido == 0) ? 'checked' : ''; ?>>
-                            <label for="no_cobrar">No cobrar</label>
+                        
+                        <label for="descripcion">¿Debemos cobrar al destinatario?</label>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="contraentrega" id="no_cobrar" value="no_cobrar" <?= ($costo_delivery == 0 && $costo_pedido == 0) ? 'checked' : ''; ?> >
+                            <label class="form-check-label text-secondary" for="no_cobrar">No cobrar</label>
                         </div>
-                        <div>
-                            <input type="radio" id="cobrar_solo_delivery" name="opcion_cobro" value="cobrar_solo_delivery" <?= ($costo_delivery > 0 && ($costo_pedido == 0 || $costo_pedido === null)) ? 'checked' : ''; ?>>
-                            <label for="cobrar_solo_delivery">Cobrar solo delivery</label>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="contraentrega" id="solo_pedido" value="solo_pedido" <?= ($costo_pedido > 0 && ($costo_delivery == 0 || $costo_delivery === null)) ? 'checked' : ''; ?> >
+                            <label class="form-check-label text-secondary" for="solo_pedido">Solo valor del pedido</label>
                         </div>
-                        <div>
-                            <input type="radio" id="cobrar_solo_pedido" name="opcion_cobro" value="cobrar_solo_pedido" <?= ($costo_pedido > 0 && ($costo_delivery == 0 || $costo_delivery === null)) ? 'checked' : ''; ?>>
-                            <label for="cobrar_solo_pedido">Cobrar solo pedido</label>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="contraentrega" id="solo_delivery" value="solo_delivery" <?= ($costo_delivery > 0 && ($costo_pedido == 0 || $costo_pedido === null)) ? 'checked' : ''; ?> >
+                            <label class="form-check-label text-secondary" for="solo_delivery">Solo delivery</label>
                         </div>
-                        <div>
-                            <input type="radio" id="cobrar_ambos" name="opcion_cobro" value="cobrar_ambos" <?= ($costo_delivery > 0 && $costo_pedido > 0) ? 'checked' : ''; ?>>
-                            <label for="cobrar_ambos">Cobrar ambos</label>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="contraentrega" id="cobrar_ambos" value="cobrar_ambos" <?= ($costo_delivery > 0 && $costo_pedido > 0) ? 'checked' : ''; ?> >
+                            <label class="form-check-label text-secondary" for="cobrar_ambos">Cobrar ambos</label>
                         </div>
                     </div>
                     <div class="mb-3 contraentrega-fields">
                         <label for="costo_delivery">¿Cuánto debemos cobrarle por el delivery?</label>
                         <div class="input-group">
                             <span class="input-group-text">S/.</span>
-                            <input value="<?php echo $deliveryDetallado['contraentrega']->getCostoDelivery(); ?>" type="number" step="0.1" placeholder="0.00" class="form-control" id="costo_delivery" name="costo_delivery" required>
+                            <input value="<?= $deliveryDetallado['contraentrega']->getCostoDelivery() ?>" type="number" step="0.1" placeholder="0.00" class="form-control" id="costo_delivery" name="costo_delivery" required>
                         </div>
                     </div>
                     <div class="mb-3 contraentrega-fields">
                         <label for="costo_pedido">¿Cuánto debemos cobrarle por el pedido?</label>
                         <div class="input-group">
                             <span class="input-group-text">S/.</span>
-                            <input value="<?php echo $deliveryDetallado['contraentrega']->getCostoPedido(); ?>" type="number" step="0.1" placeholder="0.00" class="form-control" id="costo_pedido" name="costo_pedido" required >
+                            <input value="<?= $deliveryDetallado['contraentrega']->getCostoPedido() ?>" type="number" step="0.1" placeholder="0.00" class="form-control" id="costo_pedido" name="costo_pedido" required >
                         </div>
                     </div>
                     <div class="d-flex justify-content-end">
@@ -114,15 +119,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <div class="tab-pane fade" id="step2" role="tabpanel" aria-labelledby="step2-tab">
                     <div class="mb-3">
                         <label for="direccion_recojo">Dónde lo recogemos</label>
-                        <input value="<?php echo $deliveryDetallado['recojo']->getDireccion(); ?>" type="text" class="form-control" id="direccion_recojo" name="direccion_recojo" required>
+                        <input value="<?= $deliveryDetallado['recojo']->getDireccion() ?>" type="text" class="form-control" id="direccion_recojo" name="direccion_recojo" required>
                     </div>
                     <div class="mb-3">
                         <label for="fecha_recojo">Cuándo lo recogemos</label>
-                        <input type="date" class="form-control" id="fecha_recojo" name="fecha_recojo" value="<?php echo $deliveryDetallado['recojo']->getFecha(); ?>">
+                        <input value="<?= $deliveryDetallado['recojo']->getFecha() ?>" type="date" class="form-control" id="fecha_recojo" name="fecha_recojo" >
                     </div>
                     <div class="mb-3">
                         <label for="hora_recojo">A qué hora lo recogemos (considere 5min de retraso)</label>
-                        <input type="time" class="form-control" id="hora_recojo" name="hora_recojo" value="<?php echo $deliveryDetallado['recojo']->getHora(); ?>">
+                        <input value="<?= $deliveryDetallado['recojo']->getHora() ?>" type="time" class="form-control" id="hora_recojo" name="hora_recojo">
                     </div>
                     <div class="d-flex justify-content-end">
                         <button type="button" class="btn btn-outline-secondary prev-step me-2">Anterior</button>
@@ -132,15 +137,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <div class="tab-pane fade" id="step3" role="tabpanel" aria-labelledby="step3-tab">
                     <div class="mb-3">
                         <label for="direccion_entrega">Dirección (Huánuco)</label>
-                        <input value="<?php echo $deliveryDetallado['entrega']->getDireccion(); ?>" type="text" class="form-control" id="direccion_entrega" name="direccion_entrega" required>
+                        <input value="<?= $deliveryDetallado['entrega']->getDireccion() ?>" type="text" class="form-control" id="direccion_entrega" name="direccion_entrega" required>
                     </div>
                     <div class="mb-3">
                         <label for="fecha_entrega">Fecha</label>
-                        <input type="date" class="form-control" id="fecha_entrega" name="fecha_entrega" value="<?php echo $deliveryDetallado['entrega']->getFecha(); ?>">
+                        <input value="<?= $deliveryDetallado['entrega']->getFecha() ?>" type="date" class="form-control" id="fecha_entrega" name="fecha_entrega">
                     </div>
                     <div class="mb-3">
                         <label for="hora_entrega">Hora</label>
-                        <input type="time" class="form-control" id="hora_entrega" name="hora_entrega" value="<?php echo $deliveryDetallado['entrega']->getHora(); ?>">
+                        <input value="<?= $deliveryDetallado['entrega']->getHora() ?>" type="time" class="form-control" id="hora_entrega" name="hora_entrega">
                     </div>
                     <div class="d-flex justify-content-end">
                         <button type="button" class="btn btn-outline-secondary prev-step me-2">Anterior</button>
@@ -150,19 +155,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <div class="tab-pane fade" id="step4" role="tabpanel" aria-labelledby="step4-tab">
                     <div class="mb-3">
                         <label for="dni_destinatario">DNI</label>
-                        <input value="<?php echo $deliveryDetallado['destinatario']->getDni(); ?>" type="text" class="form-control" id="dni_destinatario" name="dni_destinatario">
+                        <input value="<?= $deliveryDetallado['destinatario']->getDni() ?>" type="text" class="form-control" id="dni_destinatario" name="dni_destinatario">
                     </div>
                     <div class="mb-3">
                         <label for="nombres_destinatario">Nombres</label>
-                        <input value="<?php echo $deliveryDetallado['destinatario']->getNombres(); ?>" type="text" class="form-control" id="nombres_destinatario" name="nombres_destinatario" required>
+                        <input value="<?= $deliveryDetallado['destinatario']->getNombres() ?>" type="text" class="form-control" id="nombres_destinatario" name="nombres_destinatario">
                     </div>
                     <div class="mb-3">
                         <label for="apellidos_destinatario">Apellidos</label>
-                        <input value="<?php echo $deliveryDetallado['destinatario']->getApellidos(); ?>" type="text" class="form-control" id="apellidos_destinatario" name="apellidos_destinatario">
+                        <input value="<?= $deliveryDetallado['destinatario']->getApellidos() ?>" type="text" class="form-control" id="apellidos_destinatario" name="apellidos_destinatario">
                     </div>
                     <div class="mb-3">
-                        <label for="telefono_destinatario">Teléfono</label>
-                        <input value="<?php echo $deliveryDetallado['destinatario']->getCelular(); ?>" type="text" class="form-control" id="telefono_destinatario" name="telefono_destinatario" required>
+                        <label for="celular_destinatario">Celular</label>
+                        <input value="<?= $deliveryDetallado['destinatario']->getCelular() ?>" type="tel" class="form-control" id="celular_destinatario" name="celular_destinatario" required>
                     </div>
                     <div class="d-flex justify-content-end">
                         <button type="button" class="btn btn-outline-secondary prev-step me-2">Anterior</button>
@@ -175,6 +180,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <input value="<?php echo $deliveryDetallado['pago']->getMonto(); ?>" type="text" class="form-control" id="monto_pago" name="monto_pago">
                     </div>
                     <div class="mb-3">
+                        
                         <label for="metodo_pago">Método de pago</label>
                         <?php $metodo_pago = $deliveryDetallado['pago']->getMetodo(); ?>
                         <select name="metodo_pago"  class="form-select" aria-label="Seleccionar tu método de pago preferido">
@@ -185,9 +191,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <option value="Paypal" <?= $metodo_pago == "Paypal" ? 'selected' : ''; ?>>Paypal</option>
                         </select>                
                     </div>
+                    <p class="text-sm text-secondary">Una vez envíes tu solicitud, nuestro equipo se pondrá en contacto para coordinar el pago.</p>
                     <div class="d-flex justify-content-end">
                         <button type="button" class="btn btn-outline-secondary prev-step me-2">Anterior</button>
-                        <button type="submit" class="btn btn-primary">Solicitar delivery</button>
+                        <button type="submit" class="btn btn-primary">Guardar cambios</button>
                     </div>
                 </div>
             </div>
@@ -200,6 +207,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 require_once "../../layouts/footer.php";
 ?>
 
+
 <style>
 .nav-link.completed {
     color: #55C800 !important;
@@ -208,100 +216,105 @@ require_once "../../layouts/footer.php";
 
 <!-- Funcionalidad para el formulario en pasos -->
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    const form = document.getElementById('stepForm');
-    const contraentregaFields = document.querySelectorAll('.contraentrega-fields');
-    const costoDelivery = document.getElementById('costo_delivery');
-    const costoPedido = document.getElementById('costo_pedido');
+    document.addEventListener('DOMContentLoaded', function() {
+        const form = document.getElementById('stepForm');
+        const contraentregaFields = document.querySelectorAll('.contraentrega-fields');
+        const costoDelivery = document.getElementById('costo_delivery');
+        const costoPedido = document.getElementById('costo_pedido');
 
-    function showFields(option) {
-        contraentregaFields.forEach(field => field.style.display = 'none');
-        costoDelivery.value = costoPedido.value = '0';
+        function showFields(option) {
+            contraentregaFields.forEach(field => field.style.display = 'none');
 
-        if (option === 'solo_pedido' || option === 'cobrar_ambos') {
-            costoPedido.value = '';
-            costoPedido.parentNode.parentNode.style.display = 'block';
-        }
-        if (option === 'solo_delivery' || option === 'cobrar_ambos') {
-            costoDelivery.value = '';
-            costoDelivery.parentNode.parentNode.style.display = 'block';
-        }
-    }
-
-    document.querySelectorAll('input[name="contraentrega"]').forEach(radio => {
-        radio.addEventListener('change', () => showFields(radio.value));
-    });
-
-    showFields(document.querySelector('input[name="contraentrega"]:checked').value);
-
-    function validateStep(tab) {
-        const inputs = tab.querySelectorAll('input[required]');
-        return Array.from(inputs).every(input => {
-            const isValid = input.value.trim() !== '';
-            input.classList.toggle('is-invalid', !isValid);
-            const feedback = input.nextElementSibling;
-            if (!isValid && (!feedback || !feedback.classList.contains('invalid-feedback'))) {
-                const newFeedback = document.createElement('div');
-                newFeedback.className = 'invalid-feedback';
-                newFeedback.textContent = 'Este campo es requerido.';
-                input.parentNode.insertBefore(newFeedback, input.nextSibling);
-            } else if (isValid && feedback && feedback.classList.contains('invalid-feedback')) {
-                feedback.remove();
+            if (option === 'solo_pedido' || option === 'cobrar_ambos') {
+                costoPedido.parentNode.parentNode.style.display = 'block';
             }
-            return isValid;
-        });
-    }
-
-    function updateTabStatus(tab, isValid) {
-        const tabButton = document.querySelector(`[data-bs-target="#${tab.id}"]`);
-        tabButton.classList.toggle('completed', isValid);
-    }
-
-    function handleTabChange(direction) {
-        const currentTab = document.querySelector('.tab-pane.active');
-        const currentTabButton = document.querySelector(`[data-bs-target="#${currentTab.id}"]`);
-        
-        if (direction === 'next') {
-            if (!validateStep(currentTab)) return;
-            currentTabButton.classList.add('completed');
-        } else {
-            currentTabButton.classList.remove('completed');
+            if (option === 'solo_delivery' || option === 'cobrar_ambos') {
+                costoDelivery.parentNode.parentNode.style.display = 'block';
+            }
+            // if (option === 'no_cobrar') {
+            //     costoDelivery.value = costoPedido.value = '0';
+            // }
         }
 
-        const targetTab = direction === 'next' ? currentTab.nextElementSibling : currentTab.previousElementSibling;
-        new bootstrap.Tab(document.querySelector(`[data-bs-target="#${targetTab.id}"]`)).show();
-    }
+        document.querySelectorAll('input[name="contraentrega"]').forEach(radio => {
+            radio.addEventListener('change', () => showFields(radio.value));
+        });
 
-    document.querySelectorAll('.next-step').forEach(btn => btn.addEventListener('click', () => handleTabChange('next')));
-    document.querySelectorAll('.prev-step').forEach(btn => btn.addEventListener('click', () => handleTabChange('prev')));
+        const selectedOption = document.querySelector('input[name="contraentrega"]:checked');
+        if (selectedOption) {
+            showFields(selectedOption.value);
+        }
 
-    form.querySelectorAll('input[required]').forEach(input => {
-        input.addEventListener('input', () => {
-            const tab = input.closest('.tab-pane');
-            const isValid = validateStep(tab);
+        function validateStep(tab) {
+            const inputs = tab.querySelectorAll('input[required]');
+            return Array.from(inputs).every(input => {
+                const isValid = input.value.trim() !== '';
+                input.classList.toggle('is-invalid', !isValid);
+                const feedback = input.nextElementSibling;
+                if (!isValid && (!feedback || !feedback.classList.contains('invalid-feedback'))) {
+                    const newFeedback = document.createElement('div');
+                    newFeedback.className = 'invalid-feedback';
+                    newFeedback.textContent = 'Este campo es requerido.';
+                    input.parentNode.insertBefore(newFeedback, input.nextSibling);
+                } else if (isValid && feedback && feedback.classList.contains('invalid-feedback')) {
+                    feedback.remove();
+                }
+                return isValid;
+            });
+        }
+
+        function updateTabStatus(tab, isValid) {
+            const tabButton = document.querySelector(`[data-bs-target="#${tab.id}"]`);
+            tabButton.classList.toggle('completed', isValid);
+        }
+
+        function handleTabChange(direction) {
+            const currentTab = document.querySelector('.tab-pane.active');
+            const currentTabButton = document.querySelector(`[data-bs-target="#${currentTab.id}"]`);
+            
+            if (direction === 'next') {
+                if (!validateStep(currentTab)) return;
+                currentTabButton.classList.add('completed');
+            } else {
+                currentTabButton.classList.remove('completed');
+            }
+
+            const targetTab = direction === 'next' ? currentTab.nextElementSibling : currentTab.previousElementSibling;
+            new bootstrap.Tab(document.querySelector(`[data-bs-target="#${targetTab.id}"]`)).show();
+        }
+
+        document.querySelectorAll('.next-step').forEach(btn => btn.addEventListener('click', () => handleTabChange('next')));
+        document.querySelectorAll('.prev-step').forEach(btn => btn.addEventListener('click', () => handleTabChange('prev')));
+
+        form.querySelectorAll('input[required]').forEach(input => {
+            input.addEventListener('input', () => {
+                const tab = input.closest('.tab-pane');
+                const isValid = validateStep(tab);
+                if (!isValid) {
+                    const tabButton = document.querySelector(`[data-bs-target="#${tab.id}"]`);
+                    tabButton.classList.remove('completed');
+                }
+            });
+        });
+
+        form.addEventListener('submit', (e) => {
+            const allTabs = document.querySelectorAll('.tab-pane');
+            const isValid = Array.from(allTabs).every(tab => {
+                const valid = validateStep(tab);
+                updateTabStatus(tab, valid);
+                document.querySelector(`[data-bs-target="#${tab.id}"]`).classList.toggle('text-danger', !valid);
+                return valid;
+            });
+
             if (!isValid) {
-                const tabButton = document.querySelector(`[data-bs-target="#${tab.id}"]`);
-                tabButton.classList.remove('completed');
+                e.preventDefault();
+                const firstInvalidTab = document.querySelector('.tab-pane:has(.is-invalid)');
+                if (firstInvalidTab) {
+                    new bootstrap.Tab(document.querySelector(`[data-bs-target="#${firstInvalidTab.id}"]`)).show();
+                }
             }
         });
     });
-
-    form.addEventListener('submit', (e) => {
-        const allTabs = document.querySelectorAll('.tab-pane');
-        const isValid = Array.from(allTabs).every(tab => {
-            const valid = validateStep(tab);
-            updateTabStatus(tab, valid);
-            document.querySelector(`[data-bs-target="#${tab.id}"]`).classList.toggle('text-danger', !valid);
-            return valid;
-        });
-
-        if (!isValid) {
-            e.preventDefault();
-            const firstInvalidTab = document.querySelector('.tab-pane:has(.is-invalid)');
-            if (firstInvalidTab) {
-                new bootstrap.Tab(document.querySelector(`[data-bs-target="#${firstInvalidTab.id}"]`)).show();
-            }
-        }
-    });
-});
 </script>
+
+

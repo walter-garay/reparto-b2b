@@ -38,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 
 <div class="d-flex flex-column justify-content-center align-items-center w-100 h-100">
-    <div class="container m-10 rounded-4 shadow-sm col-lg-6 col-md-12 p-4" style="background-color: white;">    
+    <div class="container m-10 rounded-4 shadow-sm col-lg-6 col-md-12 p-4" style="background-color: white;">
         <h2 class="mb-4 fs-5 ">Solicitud de delivery</h2>
         <form method="POST" action="" id="stepForm">
             <ul class="nav nav-tabs mb-3" id="myTab" role="tablist">
@@ -214,102 +214,105 @@ require_once "../../layouts/footer.php";
 
 <!-- Funcionalidad para el formulario en pasos -->
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    const form = document.getElementById('stepForm');
-    const contraentregaFields = document.querySelectorAll('.contraentrega-fields');
-    const costoDelivery = document.getElementById('costo_delivery');
-    const costoPedido = document.getElementById('costo_pedido');
+    document.addEventListener('DOMContentLoaded', function() {
+        const form = document.getElementById('stepForm');
+        const contraentregaFields = document.querySelectorAll('.contraentrega-fields');
+        const costoDelivery = document.getElementById('costo_delivery');
+        const costoPedido = document.getElementById('costo_pedido');
 
-    function showFields(option) {
-        contraentregaFields.forEach(field => field.style.display = 'none');
-        costoDelivery.value = costoPedido.value = '0';
+        function showFields(option) {
+            contraentregaFields.forEach(field => field.style.display = 'none');
 
-        if (option === 'solo_pedido' || option === 'cobrar_ambos') {
-            costoPedido.value = '';
-            costoPedido.parentNode.parentNode.style.display = 'block';
-        }
-        if (option === 'solo_delivery' || option === 'cobrar_ambos') {
-            costoDelivery.value = '';
-            costoDelivery.parentNode.parentNode.style.display = 'block';
-        }
-    }
-
-    document.querySelectorAll('input[name="contraentrega"]').forEach(radio => {
-        radio.addEventListener('change', () => showFields(radio.value));
-    });
-
-    showFields(document.querySelector('input[name="contraentrega"]:checked').value);
-
-    function validateStep(tab) {
-        const inputs = tab.querySelectorAll('input[required]');
-        return Array.from(inputs).every(input => {
-            const isValid = input.value.trim() !== '';
-            input.classList.toggle('is-invalid', !isValid);
-            const feedback = input.nextElementSibling;
-            if (!isValid && (!feedback || !feedback.classList.contains('invalid-feedback'))) {
-                const newFeedback = document.createElement('div');
-                newFeedback.className = 'invalid-feedback';
-                newFeedback.textContent = 'Este campo es requerido.';
-                input.parentNode.insertBefore(newFeedback, input.nextSibling);
-            } else if (isValid && feedback && feedback.classList.contains('invalid-feedback')) {
-                feedback.remove();
+            if (option === 'solo_pedido' || option === 'cobrar_ambos') {
+                costoPedido.parentNode.parentNode.style.display = 'block';
             }
-            return isValid;
-        });
-    }
-
-    function updateTabStatus(tab, isValid) {
-        const tabButton = document.querySelector(`[data-bs-target="#${tab.id}"]`);
-        tabButton.classList.toggle('completed', isValid);
-    }
-
-    function handleTabChange(direction) {
-        const currentTab = document.querySelector('.tab-pane.active');
-        const currentTabButton = document.querySelector(`[data-bs-target="#${currentTab.id}"]`);
-        
-        if (direction === 'next') {
-            if (!validateStep(currentTab)) return;
-            currentTabButton.classList.add('completed');
-        } else {
-            currentTabButton.classList.remove('completed');
+            if (option === 'solo_delivery' || option === 'cobrar_ambos') {
+                costoDelivery.parentNode.parentNode.style.display = 'block';
+            }
+            // if (option === 'no_cobrar') {
+            //     costoDelivery.value = costoPedido.value = '0';
+            // }
         }
 
-        const targetTab = direction === 'next' ? currentTab.nextElementSibling : currentTab.previousElementSibling;
-        new bootstrap.Tab(document.querySelector(`[data-bs-target="#${targetTab.id}"]`)).show();
-    }
+        document.querySelectorAll('input[name="contraentrega"]').forEach(radio => {
+            radio.addEventListener('change', () => showFields(radio.value));
+        });
 
-    document.querySelectorAll('.next-step').forEach(btn => btn.addEventListener('click', () => handleTabChange('next')));
-    document.querySelectorAll('.prev-step').forEach(btn => btn.addEventListener('click', () => handleTabChange('prev')));
+        const selectedOption = document.querySelector('input[name="contraentrega"]:checked');
+        if (selectedOption) {
+            showFields(selectedOption.value);
+        }
 
-    form.querySelectorAll('input[required]').forEach(input => {
-        input.addEventListener('input', () => {
-            const tab = input.closest('.tab-pane');
-            const isValid = validateStep(tab);
+        function validateStep(tab) {
+            const inputs = tab.querySelectorAll('input[required]');
+            return Array.from(inputs).every(input => {
+                const isValid = input.value.trim() !== '';
+                input.classList.toggle('is-invalid', !isValid);
+                const feedback = input.nextElementSibling;
+                if (!isValid && (!feedback || !feedback.classList.contains('invalid-feedback'))) {
+                    const newFeedback = document.createElement('div');
+                    newFeedback.className = 'invalid-feedback';
+                    newFeedback.textContent = 'Este campo es requerido.';
+                    input.parentNode.insertBefore(newFeedback, input.nextSibling);
+                } else if (isValid && feedback && feedback.classList.contains('invalid-feedback')) {
+                    feedback.remove();
+                }
+                return isValid;
+            });
+        }
+
+        function updateTabStatus(tab, isValid) {
+            const tabButton = document.querySelector(`[data-bs-target="#${tab.id}"]`);
+            tabButton.classList.toggle('completed', isValid);
+        }
+
+        function handleTabChange(direction) {
+            const currentTab = document.querySelector('.tab-pane.active');
+            const currentTabButton = document.querySelector(`[data-bs-target="#${currentTab.id}"]`);
+            
+            if (direction === 'next') {
+                if (!validateStep(currentTab)) return;
+                currentTabButton.classList.add('completed');
+            } else {
+                currentTabButton.classList.remove('completed');
+            }
+
+            const targetTab = direction === 'next' ? currentTab.nextElementSibling : currentTab.previousElementSibling;
+            new bootstrap.Tab(document.querySelector(`[data-bs-target="#${targetTab.id}"]`)).show();
+        }
+
+        document.querySelectorAll('.next-step').forEach(btn => btn.addEventListener('click', () => handleTabChange('next')));
+        document.querySelectorAll('.prev-step').forEach(btn => btn.addEventListener('click', () => handleTabChange('prev')));
+
+        form.querySelectorAll('input[required]').forEach(input => {
+            input.addEventListener('input', () => {
+                const tab = input.closest('.tab-pane');
+                const isValid = validateStep(tab);
+                if (!isValid) {
+                    const tabButton = document.querySelector(`[data-bs-target="#${tab.id}"]`);
+                    tabButton.classList.remove('completed');
+                }
+            });
+        });
+
+        form.addEventListener('submit', (e) => {
+            const allTabs = document.querySelectorAll('.tab-pane');
+            const isValid = Array.from(allTabs).every(tab => {
+                const valid = validateStep(tab);
+                updateTabStatus(tab, valid);
+                document.querySelector(`[data-bs-target="#${tab.id}"]`).classList.toggle('text-danger', !valid);
+                return valid;
+            });
+
             if (!isValid) {
-                const tabButton = document.querySelector(`[data-bs-target="#${tab.id}"]`);
-                tabButton.classList.remove('completed');
+                e.preventDefault();
+                const firstInvalidTab = document.querySelector('.tab-pane:has(.is-invalid)');
+                if (firstInvalidTab) {
+                    new bootstrap.Tab(document.querySelector(`[data-bs-target="#${firstInvalidTab.id}"]`)).show();
+                }
             }
         });
     });
-
-    form.addEventListener('submit', (e) => {
-        const allTabs = document.querySelectorAll('.tab-pane');
-        const isValid = Array.from(allTabs).every(tab => {
-            const valid = validateStep(tab);
-            updateTabStatus(tab, valid);
-            document.querySelector(`[data-bs-target="#${tab.id}"]`).classList.toggle('text-danger', !valid);
-            return valid;
-        });
-
-        if (!isValid) {
-            e.preventDefault();
-            const firstInvalidTab = document.querySelector('.tab-pane:has(.is-invalid)');
-            if (firstInvalidTab) {
-                new bootstrap.Tab(document.querySelector(`[data-bs-target="#${firstInvalidTab.id}"]`)).show();
-            }
-        }
-    });
-});
 </script>
 
 
