@@ -53,6 +53,15 @@
                <a class="font-italic isai5" href="">Registrarse</a>
             </div>
             <input name="btningresar" class="btn" type="submit" value="INICIAR SESION">
+            <?php
+            if(isset($_POST["btningresar"])){
+               $email = $_POST["email"];
+               $password = $_POST["password"];
+               require_once "C://xampp/htdocs/reparto-b2b/controladores/UsuarioControlador.php";
+               $uc = new UsuarioControlador();
+               $uc->login($email, $password);
+            }
+            ?>
          </form>
       </div>
    </div>
