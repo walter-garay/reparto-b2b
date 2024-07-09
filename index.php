@@ -11,7 +11,6 @@
     <link rel="stylesheet" href="../../assets/css/footer.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    
 </head>
 
 <body>
@@ -22,7 +21,7 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
+                <ul class="navbar-nav me-auto">
                     <li class="nav-item">
                         <a class="nav-link" href="#servicios">Servicios</a>
                     </li>
@@ -35,13 +34,11 @@
                     <li class="nav-item">
                         <a class="nav-link" href="#contacto">Contacto</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#registrar">Registrar</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#iniciar_sesion">Iniciar Sesión</a>
-                    </li>
                 </ul>
+                <div class="navbar-nav">
+                    <a class="btn btn-outline-light me-2" href="#">Iniciar Sesión</a>
+                    <a class="btn btn-primary" href="#">Registrarse</a>
+                </div>
             </div>
         </div>
     </nav>
@@ -54,6 +51,7 @@
             <a href="#contacto" class="btn btn-outline-light btn-lg">Solicitar Servicio</a>
         </div>
     </header>
+
     <main>
         <section id="servicios" class="py-5">
             <div class="container">
@@ -171,6 +169,8 @@
                 </div>
             </div>
         </section>
+    </main>
 
     <?php require_once 'layouts/footer.php'; ?>
-  
+</body>
+</html>

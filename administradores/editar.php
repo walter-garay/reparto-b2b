@@ -1,22 +1,21 @@
 <?php
 require_once "../layouts/header.php";
-require_once "../controladores/RepartidorControlador.php";
+require_once "../controladores/AdministradorControlador.php";
 
-$rc = new RepartidorControlador();
+$ac = new AdministradorControlador();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $datos = [
         'nombres' => $_POST['nombres'],
         'apellidos' => $_POST['apellidos'],
         'email' => $_POST['email'],
-        'password' => ($_POST['password']),
+        'password' => $_POST['password'],
         'celular' => $_POST['celular'],
         'dni_ruc' => $_POST['dni_ruc'],
-        'tipo_transporte' => $_POST['tipo_transporte'],
-        'placa' => $_POST['placa']
+        'tipo' => $_POST['tipo']
     ];
 
-    $rc->crearRepartidor($datos);
+    $ac->registrar($datos['nombres'], $datos['apellidos'], $datos['email'], $datos['password'], $datos['celular'], $datos['tipo'], $datos['dni_ruc']);
 
     header("Location: index.php");
     exit;
@@ -25,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <div class="container d-flex justify-content-center align-items-center w-100 h-100">
     <div class="container rounded-4 shadow-sm col-lg-6 col-md-12 p-4" style="background-color: white;">
-        <h1 class="mb-4 fs-5 ">Agregar repartidor</h1>
+        <h1 class="mb-4 fs-5">Agregar administrador</h1>
         <form method="POST" action="">
             <div class="d-flex gap-2">
                 <div class="mb-3 w-100">
@@ -55,19 +54,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
             <div class="d-flex gap-2">
                 <div class="mb-3 w-100">
-                    <label for="tipo_transporte">Tipo de Transporte</label>
-                    <select name="tipo_transporte" class="form-select" aria-label="Seleccionar tipo de transporte">
-                        <option value="Motocicleta">Motocicleta</option>
-                        <option value="Bicicleta">Bicicleta</option>
-                        <option value="A pie">A pie</option>
-                    </select>            
-                </div>
-                <div class="mb-3 w-100">
-                    <label for="placa">Placa</label>
-                    <input type="text" class="form-control" id="placa" name="placa">
+                    <label for="tipo">Tipo</label>
+                    <select name="tipo" class="form-select" aria-label="Seleccionar tipo">
+                        <option value="Administrador">Administrador</option>
+                        <option value="Super Administrador">Super Administrador</option>
+                    </select>
                 </div>
             </div>
-            
             <div class="d-flex justify-content-end pt-2 gap-2">
                 <a href="index.php" class="btn btn-secondary">Cancelar</a>
                 <button type="submit" class="btn btn-primary">Guardar cambios</button>
@@ -76,6 +69,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
 </div>
 
-<?php
-    require_once "../layouts/footer.php";
-?>
+<?php require_once "../layouts/footer.php"; ?>
