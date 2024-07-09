@@ -1,21 +1,21 @@
-<?php 
-require_once "../layouts/header.php"; 
-require_once "../controladores/EmpresaClienteControlador.php"; 
+<?php
+require_once "../layouts/header.php";
+require_once "../controladores/AdministradorControlador.php";
 
-$ecc = new EmpresaClienteControlador();
+$ac = new AdministradorControlador();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $nombres = $_POST['nombres'];
-    $apellidos = $_POST['apellidos'];
-    $email = $_POST['email'];
-    $password = $_POST['password'];
-    $celular = $_POST['celular'];
-    $tipo = 'cliente'; 
-    $dni_ruc = $_POST['dni_ruc'];
-    $direccion = $_POST['direccion'];
-    $razon_social = $_POST['razon_social'];
+    $datos = [
+        'nombres' => $_POST['nombres'],
+        'apellidos' => $_POST['apellidos'],
+        'email' => $_POST['email'],
+        'password' => $_POST['password'],
+        'celular' => $_POST['celular'],
+        'dni_ruc' => $_POST['dni_ruc'],
+        'tipo' => $_POST['tipo']
+    ];
 
-    $ecc->registrar($nombres, $apellidos, $email, $password, $celular, $tipo, $dni_ruc, $direccion, $razon_social);
+    $ac->registrar($datos['nombres'], $datos['apellidos'], $datos['email'], $datos['password'], $datos['celular'], $datos['tipo'], $datos['dni_ruc']);
 
     header("Location: index.php");
     exit;
@@ -24,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <div class="container d-flex justify-content-center align-items-center w-100 h-100">
     <div class="container rounded-4 shadow-sm col-lg-6 col-md-12 p-4" style="background-color: white;">
-        <h1 class="mb-4 fs-5 ">Agregar empresa cliente</h1>
+        <h1 class="mb-4 fs-5">Agregar administrador</h1>
         <form method="POST" action="">
             <div class="d-flex gap-2">
                 <div class="mb-3 w-100">
@@ -52,13 +52,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <label for="dni_ruc">DNI o RUC</label>
                 <input type="text" class="form-control" id="dni_ruc" name="dni_ruc">
             </div>
-            <div class="mb-3 w-100">
-                <label for="direccion">Dirección</label>
-                <input type="text" class="form-control" id="direccion" name="direccion" required>
-            </div>
-            <div class="mb-3 w-100">
-                <label for="razon_social">Razón Social</label>
-                <input type="text" class="form-control" id="razon_social" name="razon_social" required>
+            <div class="d-flex gap-2">
+                <div class="mb-3 w-100">
+                    <label for="tipo">Tipo</label>
+                    <select name="tipo" class="form-select" aria-label="Seleccionar tipo">
+                        <option value="Administrador">Administrador</option>
+                        <option value="Super Administrador">Super Administrador</option>
+                    </select>
+                </div>
             </div>
             <div class="d-flex justify-content-end pt-2 gap-2">
                 <a href="index.php" class="btn btn-secondary">Cancelar</a>
@@ -68,6 +69,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
 </div>
 
-<?php
-    require_once "../layouts/footer.php";
-?>
+<?php require_once "../layouts/footer.php"; ?>
