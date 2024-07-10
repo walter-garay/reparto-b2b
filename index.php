@@ -11,7 +11,6 @@
     <link rel="stylesheet" href="assets/css/footer.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    
 </head>
 
 <body>
@@ -22,7 +21,7 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
+                <ul class="navbar-nav me-auto">
                     <li class="nav-item">
                         <a class="nav-link" href="#servicios">Servicios</a>
                     </li>
@@ -36,6 +35,10 @@
                         <a class="nav-link" href="#contacto">Contacto</a>
                     </li>
                 </ul>
+                <div class="navbar-nav">
+                    <a class="btn btn-outline-light me-2" href="#">Iniciar Sesión</a>
+                    <a class="btn btn-primary" href="#">Registrarse</a>
+                </div>
             </div>
         </div>
     </nav>
@@ -49,43 +52,44 @@
         </div>
     </header>
 
-    <section id="servicios" class="py-5">
-        <div class="container">
-            <h2 class="text-center mb-5">Nuestros Servicios</h2>
-            <div class="row">
-                <div class="col-md-4 mb-4">
-                    <div class="card service-card">
-                        <img src="images/express-delivery.jpg" class="card-img-top" alt="Entrega Express">
-                        <div class="card-body">
-                            <h5 class="card-title">Entrega Express</h5>
-                            <p class="card-text">Entrega en el mismo día para envíos urgentes en la ciudad.</p>
-                            <a href="#" class="btn btn-primary">Más Información</a>
+    <main>
+        <section id="servicios" class="py-5">
+            <div class="container">
+                <h2 class="text-center mb-5">Nuestros Servicios</h2>
+                <div class="row">
+                    <div class="col-md-4 mb-4">
+                        <div class="card service-card">
+                            <img src="images/express-delivery.jpg" class="card-img-top" alt="Entrega Express">
+                            <div class="card-body">
+                                <h5 class="card-title">Entrega Express</h5>
+                                <p class="card-text">Entrega en el mismo día para envíos urgentes en la ciudad.</p>
+                                <a href="#" class="btn btn-primary">Más Información</a>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-md-4 mb-4">
-                    <div class="card service-card">
-                        <img src="images/national-delivery.jpg" class="card-img-top" alt="Entrega Nacional">
-                        <div class="card-body">
-                            <h5 class="card-title">Entrega Nacional</h5>
-                            <p class="card-text">Envíos a todo el país con tiempos de entrega garantizados.</p>
-                            <a href="#" class="btn btn-primary">Más Información</a>
+                    <div class="col-md-4 mb-4">
+                        <div class="card service-card">
+                            <img src="images/national-delivery.jpg" class="card-img-top" alt="Entrega Nacional">
+                            <div class="card-body">
+                                <h5 class="card-title">Entrega Nacional</h5>
+                                <p class="card-text">Envíos a todo el país con tiempos de entrega garantizados.</p>
+                                <a href="#" class="btn btn-primary">Más Información</a>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-md-4 mb-4">
-                    <div class="card service-card">
-                        <img src="images/corporate-services.jpg" class="card-img-top" alt="Servicios Corporativos">
-                        <div class="card-body">
-                            <h5 class="card-title">Servicios Corporativos</h5>
-                            <p class="card-text">Soluciones logísticas personalizadas para empresas.</p>
-                            <a href="#" class="btn btn-primary">Más Información</a>
+                    <div class="col-md-4 mb-4">
+                        <div class="card service-card">
+                            <img src="images/corporate-services.jpg" class="card-img-top" alt="Servicios Corporativos">
+                            <div class="card-body">
+                                <h5 class="card-title">Servicios Corporativos</h5>
+                                <p class="card-text">Soluciones logísticas personalizadas para empresas.</p>
+                                <a href="#" class="btn btn-primary">Más Información</a>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
     <section id="caracteristicas" class="py-5 bg-light">
         <div class="container">
@@ -132,39 +136,41 @@
         </div>
     </section>
 
-    <section id="contacto" class="py-5 bg-light">
-        <div class="container">
-            <h2 class="text-center mb-5">Contáctenos</h2>
-            <div class="row">
-                <div class="col-md-6 mb-4">
-                    <form>
-                        <div class="mb-3">
-                            <input type="text" class="form-control" placeholder="Nombre" required>
+        <section id="contacto" class="py-5 bg-light">
+            <div class="container">
+                <h2 class="text-center mb-5">Contáctenos</h2>
+                <div class="row">
+                    <div class="col-md-6 mb-4">
+                        <form>
+                            <div class="mb-3">
+                                <input type="text" class="form-control" placeholder="Nombre" required>
+                            </div>
+                            <div class="mb-3">
+                                <input type="email" class="form-control" placeholder="Email" required>
+                            </div>
+                            <div class="mb-3">
+                                <textarea class="form-control" rows="5" placeholder="Mensaje" required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Enviar Mensaje</button>
+                        </form>
+                    </div>
+                    <div class="col-md-6">
+                        <h4>Información de Contacto</h4>
+                        <p><strong>Dirección:</strong> Av. Principal 123, Ciudad Logística</p>
+                        <p><strong>Teléfono:</strong> +1 234 567 890</p>
+                        <p><strong>Email:</strong> info@conficourier.com</p>
+                        <div class="mt-4">
+                            <h5>Síguenos en redes sociales</h5>
+                            <a href="#" class="text-dark me-3"><i class="fab fa-facebook-f fa-2x"></i></a>
+                            <a href="#" class="text-dark me-3"><i class="fab fa-twitter fa-2x"></i></a>
+                            <a href="#" class="text-dark me-3"><i class="fab fa-instagram fa-2x"></i></a>
                         </div>
-                        <div class="mb-3">
-                            <input type="email" class="form-control" placeholder="Email" required>
-                        </div>
-                        <div class="mb-3">
-                            <textarea class="form-control" rows="5" placeholder="Mensaje" required></textarea>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Enviar Mensaje</button>
-                    </form>
-                </div>
-                <div class="col-md-6">
-                    <h4>Información de Contacto</h4>
-                    <p><strong>Dirección:</strong> Av. Principal 123, Ciudad Logística</p>
-                    <p><strong>Teléfono:</strong> +1 234 567 890</p>
-                    <p><strong>Email:</strong> info@conficourier.com</p>
-                    <div class="mt-4">
-                        <h5>Síguenos en redes sociales</h5>
-                        <a href="#" class="text-dark me-3"><i class="fab fa-facebook-f fa-2x"></i></a>
-                        <a href="#" class="text-dark me-3"><i class="fab fa-twitter fa-2x"></i></a>
-                        <a href="#" class="text-dark me-3"><i class="fab fa-instagram fa-2x"></i></a>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+    </main>
 
-    <?php require 'layouts/footer.php'; ?>
-
+    <?php require_once 'layouts/footer.php'; ?>
+</body>
+</html>

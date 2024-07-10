@@ -1,33 +1,65 @@
 <?php
-require_once "../modelos/Administrador.php";
+require_once __DIR__ . '/../modelos/Administrador.php';
 
-class AdministradorControlador {
+class AdministradorControlador
+{
+    private $administrador;
 
-    public function registrar($nombres, $apellidos, $email, $password, $celular, $tipo, $dni_ruc) {
-        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-        $administrador = new Administrador($nombres, $apellidos, $email, $hashed_password, $celular, $tipo, $dni_ruc);
-        $administrador->crear();
+    public function __construct()
+    {
+        $this->administrador = new Administrador();
     }
 
-    public function obtenerAdministradorPorId($id) {
+    public function obtenerAdministradores()
+    {
+        return $this->administrador->obtenerTodos();
+    }
+
+    public function obtenerAdministradorPorId($id)
+    {
+        return $this->administrador->obtenerPorId($id);
+    }
+
+    public function crearAdministrador($datos) 
+    {
+        $administrador = new Administrador();        
+        try {
+            $administrador->setNombres($datos['nombres']);
+            $administrador->setApellidos($datos['apellidos']);
+            $administrador->setEmail($datos['email']);
+            $administrador->setPassword(password_hash($datos['password'], PASSWORD_DEFAULT));
+            $administrador->setCelular($datos['celular']);
+            $administrador->setDniRuc($datos['dni_ruc']);
+            $administrador->setTipo("Administrador");
+            $administrador->crear();
+    
+        } catch (Exception $e) {
+            echo '<script>console.log('. $e->getMessage() .');</script>';
+            throw $e;
+        }
+    }
+
+    public function actualizarAdministrador($id, $datos)
+    {
         $administrador = new Administrador();
-        return $administrador->obtenerPorId($id);
+        try {
+            $administrador->setId($id);
+            $administrador->setNombres($datos['nombres']);
+            $administrador->setApellidos($datos['apellidos']);
+            $administrador->setEmail($datos['email']);
+            $administrador->setCelular($datos['celular']);
+            $administrador->setDniRuc($datos['dni_ruc']);
+            $administrador->setTipo("Administrador");
+            $administrador->actualizar($id);
+        } catch (Exception $e) {
+            echo '<script>console.log('. $e->getMessage() .');</script>';
+            throw $e;
+        }
     }
 
-    public function mostrarAdministradores() {
-        $administrador = new Administrador();
-        $administradores = $administrador->obtenerTodos();
-        return $administradores;
-    }
-
-    public function actualizarAdministrador($id, $nombres, $apellidos, $email, $celular, $tipo, $dni_ruc) {
-        $administrador = new Administrador($nombres, $apellidos, $email, $celular, $tipo, $dni_ruc);
-        $administrador->actualizar($id);
-    }
-
-    public function eliminarAdministrador($id) {
-        $administrador = new Administrador();
-        $administrador->eliminar($id);
+    public function eliminarAdministrador($id)
+    {
+        return $this->administrador->eliminar($id);
     }
 }
 ?>
