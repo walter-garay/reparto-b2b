@@ -22,7 +22,17 @@ class DeliveryControlador {
         $delivery->actualizar($id);
     }
 
-    public function eliminarDelivery($id) {
+    public function eliminarDelivery($id) {}
+    
+    public function buscarDeliveryPorCodigo($codigo) {
+        $delivery = $this->delivery->obtenerPorCodigo($codigo);
+        if ($delivery) {
+            return $this->obtenerDeliveryDetalladoPorId($delivery->getId());
+        }
+        return null;
+    }
+
+    public function crearDelivery($datos) {
         $delivery = new Delivery();
         $delivery->eliminar($id);
     }
