@@ -69,6 +69,17 @@ class DeliveryControlador
         return $this->delivery->obtenerPorId($id);
     }
 
+    public function eliminarDelivery($id) {}
+    
+    public function buscarDeliveryPorCodigo($codigo) {
+        $delivery = $this->delivery->obtenerPorCodigo($codigo);
+        if ($delivery) {
+            return $this->obtenerDeliveryDetalladoPorId($delivery->getId());
+        }
+        return null;
+    }
+
+    public function crearDelivery($datos) {
     public function obtenerDeliveryDetalladoPorId($id) {
         $delivery = new Delivery();
         $delivery = $delivery->obtenerPorId($id);

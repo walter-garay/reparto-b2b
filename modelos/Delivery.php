@@ -92,6 +92,31 @@ class Delivery
         }
     }
 
+    public function obtenerPorCodigo($codigo)
+    {
+        $conn = new Conexion();
+        $conexion = $conn->conectar();
+        $sql = "SELECT * FROM Delivery WHERE cod_seguimiento = $codigo";
+        $resultado = $conexion->query($sql);
+        $data = $resultado->fetch();
+        $conn->cerrar();
+
+        if ($data) {
+            $this->id = $data['id'];
+            $this->descripcion = $data['descripcion'];
+            $this->fecha_solicitud = new DateTime($data['fecha_solicitud']);
+            $this->id_cliente = $data['id_cliente'];
+            $this->id_recojo = $data['id_recojo'];
+            $this->id_entrega = $data['id_entrega'];
+            $this->id_pago = $data['id_pago'];
+            $this->id_contraentrega = $data['id_contraentrega'];
+            $this->id_destinatario = $data['id_destinatario'];
+            return $this;
+        } else {
+            return null;
+        }
+    }
+
     public function crear()
     {
         $conn = new Conexion();
