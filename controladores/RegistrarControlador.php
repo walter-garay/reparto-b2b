@@ -8,7 +8,6 @@ if (!empty($_POST["registro"])) {
         $campos_requeridos = ['nombres', 'apellidos', 'email', 'password', 'celular', 'tipo', 'dni_ruc'];
         $datos = [];
         $error = false;
-
         foreach ($campos_requeridos as $campo) {
             if (empty($_POST[$campo])) {
                 $error = true;
@@ -31,7 +30,7 @@ if (!empty($_POST["registro"])) {
                     $datos['razon_social'] = $_POST['razon_social'] ?? '';
                     break;
                 case 'administrador':
-                    // No se necesitan campos adicionales para administrador
+                    // No se colocan campos adicionales a adminitrador
                     break;
             }
 
