@@ -25,7 +25,7 @@ class Delivery  {
     }
 
     public function obtenerTodos() {
-        $conn = new Conn();
+        $conn = new Conexion();
         $conexion = $conn->conectar();
         $sql = "SELECT * FROM Delivery";
         $resultado = $conexion->query($sql);
@@ -34,7 +34,7 @@ class Delivery  {
     }
     
     public function obtenerPorId($id) {
-        $conn = new Conn();
+        $conn = new Conexion();
         $conexion = $conn->conectar();
         $sql = "SELECT * FROM Delivery WHERE id = $id";
         $resultado = $conexion->query($sql);
@@ -43,7 +43,7 @@ class Delivery  {
     }
 
     public function crear() {
-        $conn = new Conn();
+        $conn = new Conexion();
         $conexion = $conn->conectar();
         $sql = "INSERT INTO Delivery(descripcion, cod_seguimiento, fecha_solicitud, id_cliente, id_repartidor, id_pago, id_contraentrega, id_destinatario) VALUES ('$this->descripcion', '$this->cod_seguimiento', '$this->fecha_solicitud', '$this->id_cliente', '$this->id_repartidor', '$this->id_pago', '$this->id_contraentrega', '$this->id_destinatario')";
         $result = $conexion->exec($sql);
@@ -57,7 +57,7 @@ class Delivery  {
     }
 
     public function actualizar($id) {
-        $conn = new Conn();
+        $conn = new Conexion();
         $conexion = $conn->conectar();
         $sql = "UPDATE Delivery SET descripcion = '$this->descripcion', cod_seguimiento = '$this->cod_seguimiento', fecha_solicitud = '$this->fecha_solicitud', id_cliente = $this->id_cliente, id_repartidor = $this->id_repartidor, id_pago = $this->id_pago, id_contraentrega = $this->id_contraentrega, id_destinatario = $this->id_destinatario WHERE id = $id";
         $result = $conexion->exec($sql);
@@ -71,7 +71,7 @@ class Delivery  {
     }
 
     public function eliminar($id) {
-        $conn = new Conn();
+        $conn = new Conexion();
         $conexion = $conn->conectar();
         $sql = "DELETE FROM Delivery WHERE id = $id";
         $result = $conexion->exec($sql);

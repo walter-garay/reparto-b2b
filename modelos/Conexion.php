@@ -1,6 +1,6 @@
 <?php
 
-class Conn{
+class Conexion{
 
     private $dsn;
     private $usuario;
@@ -11,12 +11,16 @@ class Conn{
     {
         $this->dsn = "mysql:host=localhost;dbname=deliverybd";
         $this->usuario = "root";
-        $this->pass = "admin";
+        $this->pass = "";
     }
 
     public function conectar(){
-        $this->conexion = new PDO($this->dsn, $this->usuario, $this->pass);
-        return $this->conexion;
+        try {
+            $this->conexion = new PDO($this->dsn, $this->usuario, $this->pass);
+            return $this->conexion;
+        } catch (PDOException $e) {
+            return $e->getMessage();
+        }
     }
 
     public function cerrar(){
