@@ -108,32 +108,6 @@ class Usuario
             return null;
         }   
     }
-    public function obtenerPorEmail($email)
-{
-    $conn = new Conexion();
-    $conexion = $conn->conectar();
-    
-    $sql = "SELECT * FROM Usuario WHERE email = :email";
-    $stmt = $conexion->prepare($sql);
-    $stmt->bindParam(':email', $email, PDO::PARAM_STR);
-    $stmt->execute();
-    
-    $data = $stmt->fetch(PDO::FETCH_ASSOC);
-    $conn->cerrar();
-
-    if ($data) {
-        $this->id = $data['id'];
-        $this->nombres = $data['nombres'];
-        $this->apellidos = $data['apellidos'];
-        $this->password = $data['password'];
-        $this->celular = $data['celular'];
-        $this->tipo = $data['tipo'];
-        $this->dni_ruc = $data['dni_ruc'];
-        return $this;
-    } else {
-        return null;
-    }   
-}
 
     public function crear()
     {

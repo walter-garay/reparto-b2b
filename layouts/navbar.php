@@ -30,7 +30,6 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="../modelos/Logout.php">Log out</a>
-                        <a class="nav-link">Log out</a>
                     </li>
                 </ul>
             </div>
