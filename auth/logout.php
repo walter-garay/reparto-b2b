@@ -2,4 +2,4 @@
     session_start();
     session_destroy();
 
-    header("Location: login.php");
+    header("Location: /reparto-b2b/index.php");

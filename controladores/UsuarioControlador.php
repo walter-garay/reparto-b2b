@@ -1,9 +1,9 @@
 <?php
 
-require_once "../modelos/Usuario.php";
-require_once "../modelos/Repartidor.php";
-require_once "../modelos/EmpresaCliente.php";
-require_once "../modelos/Administrador.php";
+require_once __DIR__."/../modelos/Usuario.php";
+require_once __DIR__."/../modelos/Repartidor.php";
+require_once __DIR__."/../modelos/EmpresaCliente.php";
+require_once __DIR__."/../modelos/Administrador.php";
 
 class UsuarioControlador
 {
@@ -22,6 +22,12 @@ class UsuarioControlador
     public function obtenerRepartidores()
     {
         $repartidor = new Repartidor();
+        return $repartidor->obtenerTodos();
+    }
+
+    public function obtenerClientes()
+    {
+        $repartidor = new EmpresaCliente();
         return $repartidor->obtenerTodos();
     }
 
@@ -82,7 +88,7 @@ class UsuarioControlador
                         $empresaCliente->setRazonSocial(isset($datos['razon_social']) ? $datos['razon_social'] : null);
                         $empresaCliente->crear();
                         break;
-                    case 'Admin':
+                    case 'Administrador':
                         $administrador = new Administrador();
                         $administrador->setId($id_usuario);
                         $administrador->setCodAdmin($this->generarCodigoAdmin());

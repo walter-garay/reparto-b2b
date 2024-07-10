@@ -108,6 +108,49 @@ class DeliveryControlador
         return $deliveryDetallado;
     }
 
+    public function obtenerDeliverysDetalladosPorCliente($id_cliente)
+    {
+        $deliverys = $this->delivery->obtenerTodos();
+        $deliverysDetallados = [];
+
+        foreach ($deliverys as $delivery) {
+            if ($delivery->getIdCliente() == $id_cliente) {
+                $empresaCliente = new EmpresaCliente();
+                $empresaCliente->obtenerPorId($delivery->getIdCliente());
+
+                $recojo = new Recojo();
+                $recojo->obtenerPorId($delivery->getIdRecojo());
+
+                $entrega = new Entrega();
+                $entrega->obtenerPorId($delivery->getIdEntrega());
+
+                $pago = new Pago();
+                $pago->obtenerPorId($delivery->getIdPago());
+
+                $contraentrega = new Contraentrega();
+                $contraentrega->obtenerPorId($delivery->getIdContraentrega());
+
+                $destinatario = new Destinatario();
+                $destinatario->obtenerPorId($delivery->getIdDestinatario());
+
+                $deliveryDetallado = [
+                    'delivery' => $delivery,
+                    'cliente' => $empresaCliente,
+                    'recojo' => $recojo,
+                    'entrega' => $entrega,
+                    'pago' => $pago,
+                    'contraentrega' => $contraentrega,
+                    'destinatario' => $destinatario
+                ];
+
+                $deliverysDetallados[] = $deliveryDetallado;
+            }
+        }
+
+        return $deliverysDetallados;
+    }
+
+
     public function crearDelivery($datos) {
         $delivery = new Delivery();
         $recojo = new Recojo();
@@ -121,13 +164,13 @@ class DeliveryControlador
             $recojo->setDireccion($datos['direccion_recojo']);
             $recojo->setFecha($datos['fecha_recojo']);
             $recojo->setHora($datos['hora_recojo']);
-            $recojo->setEstado("Sin repartidor asignado");
+            $recojo->setEstado("Sin repartidor");
             $id_recojo = $recojo->crear();
 
             $entrega->setDireccion($datos['direccion_entrega']);
             $entrega->setFecha($datos['fecha_entrega']);
             $entrega->setHora($datos['hora_entrega']);
-            $entrega->setEstado("Sin repartidor asignado");
+            $entrega->setEstado("Sin repartidor");
             $id_entrega = $entrega->crear();
 
             $destinatario->setDni($datos['dni_destinatario']);

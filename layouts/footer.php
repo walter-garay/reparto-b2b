@@ -5,7 +5,7 @@
             <div class="footer-container">
                 <div class="footer-main">
                     <div class="footer-col footer-logo-col">
-                        <img class="footer-logo" src="../assets/img/LogoF.png" alt="Confi Courier Logo">
+                        <img class="footer-logo" src="/reparto-b2b/assets/img/LogoF.png" alt="Confi Courier Logo">
                         <p class="footer-description">
                             Sistema integral de gestión de repartos para optimizar 
                             tus entregas. Eficiencia, seguimiento en tiempo real y satisfacción garantizada.

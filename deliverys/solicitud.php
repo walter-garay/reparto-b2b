@@ -1,4 +1,5 @@
 <?php
+session_start();
 require_once "../layouts/header.php";
 require_once "../controladores/DeliveryControlador.php";
 
@@ -6,7 +7,7 @@ $dc = new DeliveryControlador();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $datos = [
-        'id_cliente' => 1,
+        'id_cliente' => $_SESSION['usuario_id'],
         'descripcion' => $_POST['descripcion'],
 
         'direccion_recojo' => $_POST['direccion_recojo'],

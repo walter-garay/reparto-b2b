@@ -4,7 +4,14 @@ require_once "../controladores/DeliveryControlador.php";
 require_once "../layouts/header.php";
 
 $dc = new DeliveryControlador();
-$deliverys = $dc->obtenerDeliverysDetallados();
+$deliverys = [];
+
+if ($_SESSION['usuario_tipo'] === 'Cliente') {
+    $id_cliente = $_SESSION['usuario_id'];
+    $deliverys = $dc->obtenerDeliverysDetalladosPorCliente($id_cliente);
+} else {
+    $deliverys = $dc->obtenerDeliverysDetallados();
+}
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['eliminar_id'])) {
     $id = $_POST['eliminar_id'];
@@ -16,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['eliminar_id'])) {
 <div class="py-4 ">
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h1 class="fs-5 mb-0">Deliverys</h1>
-        <a href="s.php" class="rounded-2 btn btn-primary btn-sm">Agregar delivery</a>
+        <a href="solicitud.php" class="rounded-2 btn btn-primary btn-sm">Agregar delivery</a>
     </div>
     <div class="table-responsive table-bordered">
         <table class="table rounded-circle">
@@ -59,7 +66,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['eliminar_id'])) {
                     // Recojo and Entrega styling
                     $estado_classes = [
                         'Repartidor asignado' => 'badge text-bg-success',
-                        'Sin repartidor asignado' => 'badge text-bg-warning',
+                        'Sin repartidor' => 'badge text-bg-warning',
                         'Completado' => 'badge text-bg-secondary'
                     ];
 
@@ -79,7 +86,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['eliminar_id'])) {
                         <td class="fw-light"><?php echo $delivery['pago']->getMonto(); ?></td>
                         <td class="fw-light"><span class="<?php echo $contraentrega_class; ?>"><?php echo $contraentrega_text; ?></span></td>
                         <td class="fw-light"><?php echo $delivery['destinatario']->getNombres() . " " . $delivery['destinatario']->getApellidos(); ?></td>
-                        <td class="d-flex gap-1">
+                        <td class="d-flex">
                             <a href="editar.php?id=<?php echo $delivery['delivery']->getId(); ?>" class="btn rounded-circle p-0 btn-custom edit">
                                 <i class="bi bi-pencil icon edit d-flex justify-content-center align-items-center"></i>                                
                             </a>
