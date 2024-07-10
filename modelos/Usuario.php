@@ -146,6 +146,16 @@ class Usuario
         return $resultado;
     }
 
+    //Login
+    public function login($email){
+        $conn = new Conexion();
+        $conexion = $conn->conectar();
+        $sql = "SELECT * FROM usuario WHERE email = '$email'";
+        $resultado = $conexion->query($sql);
+        $conn->cerrar();
+        return $resultado;
+    }
+
     // Getters y setters
 
     public function getId()
