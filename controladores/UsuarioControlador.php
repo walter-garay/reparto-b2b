@@ -1,9 +1,9 @@
 <?php
 
-require_once "../modelos/Usuario.php";
-require_once "../modelos/Repartidor.php";
-require_once "../modelos/EmpresaCliente.php";
-require_once "../modelos/Administrador.php";
+require_once "../../modelos/Usuario.php";
+require_once "../../modelos/Repartidor.php";
+require_once "../../modelos/EmpresaCliente.php";
+require_once "../../modelos/Administrador.php";
 
 class UsuarioControlador
 {
