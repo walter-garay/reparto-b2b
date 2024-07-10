@@ -22,6 +22,15 @@ class Recojo
         $this->id_inconveniente = $id_inconveniente;
     }
 
+    public function asignarRecojo($id, $repartidorId)
+    {
+        $conn = new Conexion();
+        $conexion = $conn->conectar();
+        $sql = "UPDATE Recojo SET estado = 'Repartidor asignado', id_repartidor = $repartidorId WHERE id = $id";
+        $conexion->exec($sql);
+        $conn->cerrar();
+    }
+
     public function obtenerTodos()
     {
         $conn = new Conexion();
@@ -101,9 +110,6 @@ class Recojo
             return null;
         }
     }
-
-
-    
 
 
     public function actualizar()

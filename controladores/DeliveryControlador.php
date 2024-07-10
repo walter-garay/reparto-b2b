@@ -23,6 +23,26 @@ class DeliveryControlador
         return $this->delivery->obtenerTodos();
     }
 
+    
+    public function eliminarDelivery($id)
+    {
+        return $this->delivery->eliminar($id);
+    }
+
+    public function asignarRecojo($deliveryId, $repartidorId)
+    {
+        $delivery = $this->obtenerDeliveryPorId($deliveryId);
+        $recojo = new Recojo();
+        $recojo->asignarRecojo($delivery->getIdRecojo(), $repartidorId);
+    }
+
+    public function asignarEntrega($deliveryId, $repartidorId)
+    {
+        $delivery = $this->obtenerDeliveryPorId($deliveryId);
+        $entrega = new Entrega();
+        $entrega->asignarEntrega($delivery->getIdEntrega(), $repartidorId);
+    }
+
     public function obtenerDeliverysDetallados()
     {
         $deliverys = $this->delivery->obtenerTodos();
@@ -149,48 +169,96 @@ class DeliveryControlador
 
         return $deliverysDetallados;
     }
+    
+    // Función para validar y ajustar los costos de contraentrega
+    private function validarTipoContraentrega($tipoContraentrega, $costoPedido, $costoDelivery) {
+        switch ($tipoContraentrega) {
+            case 'no_cobrar':
+                $costoPedido = 0;
+                $costoDelivery = 0;
+                break;
+            case 'solo_pedido':
+                $costoDelivery = 0;
+                break;
+            case 'solo_delivery':
+                $costoPedido = 0;
+                break;
+            case 'cobrar_ambos':
+                break;
+            default:
+                $costoPedido = 0;
+                $costoDelivery = 0;
+                break;
+        }
+        return [
+            'costo_pedido' => $costoPedido,
+            'costo_delivery' => $costoDelivery
+        ];
+    }
 
+    function validarDatos($datos) {
+        foreach ($datos as $key => $value) {
+            if (is_null($value) || $value === '') {
+                $datos[$key] = 'NULL';
+            } elseif (is_string($value)) {
+                $datos[$key] = "'$value'";
+            }
+        }
+        return $datos;
+    }
 
-    public function crearDelivery($datos) {
-        $delivery = new Delivery();
-        $recojo = new Recojo();
-        $entrega = new Entrega();
-        $destinatario = new Destinatario();
-        $pago = new Pago();
-        $contraentrega = new Contraentrega();
-
+    public function crearDelivery($datos) 
+    {
         try {
-            // Insertar datos en las tablas relacionadas
+            // Formatear los valores de los datos
+            $datos = $this->validarDatos($datos);
+
+            // Crear objetos para las entidades relacionadas
+            $recojo = new Recojo();
+            $entrega = new Entrega();
+            $destinatario = new Destinatario();
+            $pago = new Pago();
+            $contraentrega = new Contraentrega();
+
+            // Configurar recojo
             $recojo->setDireccion($datos['direccion_recojo']);
             $recojo->setFecha($datos['fecha_recojo']);
             $recojo->setHora($datos['hora_recojo']);
             $recojo->setEstado("Sin repartidor");
             $id_recojo = $recojo->crear();
 
+            // Configurar entrega
             $entrega->setDireccion($datos['direccion_entrega']);
             $entrega->setFecha($datos['fecha_entrega']);
             $entrega->setHora($datos['hora_entrega']);
             $entrega->setEstado("Sin repartidor");
             $id_entrega = $entrega->crear();
 
+            // Configurar destinatario
             $destinatario->setDni($datos['dni_destinatario']);
             $destinatario->setNombres($datos['nombres_destinatario']);
             $destinatario->setApellidos($datos['apellidos_destinatario']);
             $destinatario->setCelular($datos['celular_destinatario']);
             $id_destinatario = $destinatario->crear();
 
+            // Configurar pago
             $pago->setMonto($datos['monto_pago']);
             $pago->setEstado('Pendiente');
             $pago->setMetodo($datos['metodo_pago']);
             $id_pago = $pago->crear();
 
-            $contraentrega->setCostoDelivery($datos['costo_delivery']);
-            $contraentrega->setCostoPedido($datos['costo_pedido']);
+            // Validar y ajustar costos de contraentrega
+            $costosContraentrega = $this->validarTipoContraentrega($datos['tipo_contraentrega'], $datos['costo_pedido'], $datos['costo_delivery']);
+
+            // Configurar contraentrega
+            $contraentrega->setCostoDelivery($costosContraentrega['costo_delivery']);
+            $contraentrega->setCostoPedido($costosContraentrega['costo_pedido']);
             $id_contraentrega = $contraentrega->crear();
 
-            // Insertar el delivery
+            // Configurar delivery
+            $delivery = new Delivery();
             $delivery->setDescripcion($datos['descripcion']);
-            $delivery->setCodSeguimiento($this->generarCodigoSeguimiento());
+            $delivery->setCodSeguimiento(uniqid());
             $delivery->setFechaSolicitud(date('Y-m-d H:i:s'));
             $delivery->setIdCliente($datos['id_cliente']);
             $delivery->setIdRecojo($id_recojo);
@@ -199,29 +267,18 @@ class DeliveryControlador
             $delivery->setIdPago($id_pago);
             $delivery->setIdContraentrega($id_contraentrega);
             $delivery->crear();
-
-            echo 'Registro completo';
+            return true;
 
         } catch (Exception $e) {
-            // Revertir transacción en caso de error
-            echo''. $e->getMessage() .'';
+            echo $e->getMessage();
             throw $e;
-        }
-    }
-
-    private function generarCodigoSeguimiento() {
-        return uniqid();
+        } 
     }
 
     public function actualizarDelivery($id, $deliveryDetalles)
     {
-        $conn = new Conexion();
-        $conexion = $conn->conectar();
-
         try {
-            $conexion->beginTransaction();
-
-            // Actualizar Delivery
+            // Actualizar objetos para las entidades relacionadas
             $delivery = new Delivery();
             $delivery->obtenerPorId($id);
             $delivery->setDescripcion($deliveryDetalles['delivery']['descripcion']);
@@ -267,37 +324,22 @@ class DeliveryControlador
             $pago->setMetodo($deliveryDetalles['pago']['metodo']);
             $pago->actualizar();
 
+            // Validar y ajustar costos de contraentrega
+            $costosContraentrega = $this->validarTipoContraentrega($deliveryDetalles['delivery']['id_contraentrega'], $deliveryDetalles['contraentrega']['costo_pedido'], $deliveryDetalles['contraentrega']['costo_delivery']);
+
             // Actualizar Contraentrega
             $contraentrega = new Contraentrega();
-            $contraentrega->obtenerPorId($delivery->getIdContraentrega());
-            $contraentrega->setCostoDelivery($deliveryDetalles['contraentrega']['costo_delivery']);
-            $contraentrega->setCostoPedido($deliveryDetalles['contraentrega']['costo_pedido']);
+            $contraentrega->obtenerPorId($deliveryDetalles['delivery']['id_contraentrega']);
+            $contraentrega->setCostoDelivery($costosContraentrega['costo_delivery']);
+            $contraentrega->setCostoPedido($costosContraentrega['costo_pedido']);
             $contraentrega->actualizar();
+            return true;
 
-            // Actualizar Destinatario
-            $destinatario = new Destinatario();
-            $destinatario->obtenerPorId($delivery->getIdDestinatario());
-            $destinatario->setDni($deliveryDetalles['destinatario']['dni']);
-            $destinatario->setNombres($deliveryDetalles['destinatario']['nombres']);
-            $destinatario->setApellidos($deliveryDetalles['destinatario']['apellidos']);
-            $destinatario->setCelular($deliveryDetalles['destinatario']['celular']);
-            $destinatario->actualizar();
-
-            $conexion->commit();
         } catch (Exception $e) {
-            $conexion->rollBack();
             throw $e;
-        }
-
-        $conn->cerrar();
-
-        return true;
+        } 
     }
 
-    public function eliminarDelivery($id)
-    {
-        return $this->delivery->eliminar($id);
-    }
-
+    
     
 }

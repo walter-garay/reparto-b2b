@@ -26,6 +26,15 @@ class Entrega
         $this->id_calificacion = $id_calificacion;
     }
 
+    public function asignarEntrega($id, $repartidorId)
+    {
+        $conn = new Conexion();
+        $conexion = $conn->conectar();
+        $sql = "UPDATE Entrega SET estado = 'Repartidor asignado', id_repartidor = $repartidorId WHERE id = $id";
+        $conexion->exec($sql);
+        $conn->cerrar();
+    }
+
     public function obtenerTodos()
     {
         $conn = new Conexion();

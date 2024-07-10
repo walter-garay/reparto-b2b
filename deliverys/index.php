@@ -1,7 +1,6 @@
 <?php
 session_start();
 require_once "../controladores/DeliveryControlador.php";
-require_once "../layouts/header.php";
 
 $dc = new DeliveryControlador();
 $deliverys = [];
@@ -17,10 +16,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['eliminar_id'])) {
     $id = $_POST['eliminar_id'];
     $dc->eliminarDelivery($id);
     header('Location: index.php');
+    exit; // Asegúrate de terminar el script después de redirigir
 }
+
+require_once "../layouts/header.php";
 ?>
 
-<div class="py-4 ">
+<div class="py-4">
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h1 class="fs-5 mb-0">Deliverys</h1>
         <a href="solicitud.php" class="rounded-2 btn btn-primary btn-sm">Agregar delivery</a>
