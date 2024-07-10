@@ -1,6 +1,7 @@
 <?php
-require_once "../../layouts/header.php";
-require_once "../../controladores/EmpresaClienteControlador.php";
+session_start();
+require_once "../layouts/header.php";
+require_once "../controladores/EmpresaClienteControlador.php";
 
 $ecc = new EmpresaClienteControlador();
 $id = $_GET['id'];
@@ -80,5 +81,5 @@ $empresaCliente = $ecc->obtenerEmpresaClientePorId($id);
 </div>
 
 <?php
-    require_once "../../layouts/footer.php";
+    require_once "../layouts/footer.php";
 ?>

@@ -27,8 +27,8 @@ class UsuarioControlador
 
     public function obtenerClientes()
     {
-        $repartidor = new EmpresaCliente();
-        return $repartidor->obtenerTodos();
+        $clientes = new EmpresaCliente();
+        return $clientes->obtenerTodos();
     }
 
     public function obtenerUsuarioPorId($id)

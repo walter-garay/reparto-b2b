@@ -1,9 +1,9 @@
 <?php
 session_start();
 require_once "../layouts/header.php";
-require_once "../controladores/RepartidorControlador.php";
+require_once "../controladores/UsuarioControlador.php";
 
-$rc = new RepartidorControlador();
+$uc = new UsuarioControlador();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $datos = [
@@ -14,10 +14,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         'celular' => $_POST['celular'],
         'dni_ruc' => $_POST['dni_ruc'],
         'tipo_transporte' => $_POST['tipo_transporte'],
+        'tipo' => 'Repartidor', 
         'placa' => $_POST['placa']
     ];
 
-    $rc->crearRepartidor($datos);
+    $uc->crearUsuario($datos);
 
     header("Location: index.php");
     exit;
@@ -44,7 +45,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
             <div class="mb-3">
                 <label for="password">Contraseña</label>
-                <input type="password" class="form-control" id="password" name="password" required>
+                <div class="input-group">
+                    <input type="password" class="form-control" id="password" name="password">
+                    <button class="btn btn-outline-secondary" type="button" onclick="this.previousElementSibling.type = this.previousElementSibling.type === 'password' ? 'text' : 'password'">
+                        <i class="bi bi-eye"></i>
+                    </button>
+                </div>
             </div>
             <div class="mb-3 w-100">
                 <label for="celular">Celular</label>

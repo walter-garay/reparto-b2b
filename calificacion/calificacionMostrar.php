@@ -1,6 +1,6 @@
 <?php
-require_once "../../layouts/header.php";
-require_once "../../controladores/CalificacionController.php";
+require_once "../layouts/header.php";
+require_once "../controladores/CalificacionController.php";
 
 $cc = new CalificacionController();
 $calificaciones = $cc->mostrar();

@@ -1,14 +1,14 @@
 <?php
 session_start();
-require_once "../controladores/EmpresaClienteControlador.php";
+require_once "../controladores/UsuarioControlador.php";
 require_once "../layouts/header.php";
 
-$ec = new EmpresaClienteControlador();
-$empresasClientes = $ec->mostrarEmpresasClientes();
+$uc = new UsuarioControlador();
+$empresasClientes = $uc->obtenerClientes();
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['eliminar_id'])) {
     $id = $_POST['eliminar_id'];
-    $ec->eliminarEmpresaCliente($id);
+    $uc->eliminarUsuario($id);
     header('Location: index.php');
 }
 ?>
@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['eliminar_id'])) {
 <div class="container pt-4">
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h1 class="fs-5 mb-0">Empresas Clientes</h1>
-        <a href="crear.php" class="rounded-2 btn btn-primary btn-sm">Agregar Empresa Cliente</a>
+        <a href="crear.php" class="rounded-2 btn btn-primary btn-sm">Agregar cliente</a>
     </div>
 
     <div class="table-responsive table-bordered">
