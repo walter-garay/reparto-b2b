@@ -50,9 +50,18 @@
 
             <div class="text-center">
                <a class="font-italic isai5" href="">Olvidé mi contraseña</a>
-               <a class="font-italic isai5" href="">Registrarse</a>
+               <a class="font-italic isai5" href="register.php">Registrarse</a>
             </div>
             <input name="btningresar" class="btn" type="submit" value="INICIAR SESION">
+            <?php
+            if(isset($_POST["btningresar"])){
+               $email = $_POST["email"];
+               $password = $_POST["password"];
+               require_once "../../controladores/LoginControlador.php";
+               $uc = new LoginControlador();
+               $uc->login($email, $password);
+            }
+            ?>
          </form>
       </div>
    </div>
