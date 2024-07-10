@@ -57,8 +57,8 @@
             if(isset($_POST["btningresar"])){
                $email = $_POST["email"];
                $password = $_POST["password"];
-               require_once "C://xampp/htdocs/reparto-b2b/controladores/UsuarioControlador.php";
-               $uc = new UsuarioControlador();
+               require_once "../../controladores/LoginControlador.php";
+               $uc = new LoginControlador();
                $uc->login($email, $password);
             }
             ?>
