@@ -95,9 +95,9 @@ class Usuario
     $conn->cerrar();
 
     if ($data) {
+        $this->id = $data['id'];
         $this->nombres = $data['nombres'];
         $this->apellidos = $data['apellidos'];
-        $this->email = $data['email'];
         $this->password = $data['password'];
         $this->celular = $data['celular'];
         $this->tipo = $data['tipo'];
