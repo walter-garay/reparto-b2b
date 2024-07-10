@@ -10,6 +10,7 @@
                 
                 <ul class="nav w-100 justify-content-end">
                     <li class="nav-item">
+
                         <a class="nav-link active" aria-current="page" href="../main.php">Inicio</a>
                     </li>
                     <li class="nav-item">
@@ -29,6 +30,7 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="../modelos/Logout.php">Log out</a>
+                        <a class="nav-link">Log out</a>
                     </li>
                 </ul>
             </div>

@@ -1,40 +1,7 @@
 <?php
 require_once "../controladores/DeliveryControlador.php";
-$uc = new DeliveryControlador();
-$usuarios = $uc->listarDeliverys();
-
-?>
-<table border=1>
-    <tr>
-        <th>nombres</th>
-        <th>apellidos</th>
-        <th>email</th>
-        <th>password</th>
-        <th>celular</th>
-        <th>tipo</th>
-        <th>dni_ruc</th>
-    </tr>
-    <?php
-    foreach($usuarios as $usuario){
-        echo"<tr>
-                <td>".$usuario["nombres"]."</td>
-                <td>".$usuario["apellidos"]."</td>
-                <td>".$usuario["email"]."</td>
-                <td>".$usuario["password"]."</td>
-                <td>".$usuario["celular"]."</td>
-                <td>".$usuario["tipo"]."</td>
-                <td>".$usuario["dni_ruc"]."</td>
-            </tr>";
-    }
-    echo "";
-    ?>
-</table>
-
-<?php
-require_once "DeliveryController.php";
 
 $controller = new DeliveryControlador();
-
 $deliveries = $controller->listarDeliverys();
 ?>
 
