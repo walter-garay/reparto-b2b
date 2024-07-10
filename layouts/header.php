@@ -18,7 +18,8 @@
         }
         main {
             background-color: #F8F9FA;
-            height: calc(100% - 55.97px) !important;
+            margin-top: 63.98px;
+            height: calc(100% - 63.98px);
         }
     </style>
 
@@ -27,5 +28,7 @@
             <?php require_once "navbar.php"; ?>
         </header>
         <main class="" >
+            <div class="container h-100">
+
     
 

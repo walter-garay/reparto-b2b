@@ -1,3 +1,4 @@
+            </div>
         </main>
 
         <footer class="footer">
@@ -51,9 +52,9 @@
             </div>
             <div class="footer-bottom">
                 <div class="footer-payment-methods">
-                    <img src="../assets/img/social/Visa.png" alt="Visa">
-                    <img src="../assets/img/social/Mastercard.png" alt="Mastercard">
-                    <img src="../assets/img/social/Express.png" alt="American Express">
+                    <img src="/reparto-b2b/assets/img/social/Visa.png" alt="Visa">
+                    <img src="/reparto-b2b/assets/img/social/Mastercard.png" alt="Mastercard">
+                    <img src="/reparto-b2b/assets/img/social/Express.png" alt="American Express">
                 </div>
                 <p class="footer-copyright">
                     &copy; 2024 Confi Courier. Todos los derechos reservados.

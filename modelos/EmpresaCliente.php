@@ -8,7 +8,7 @@ class EmpresaCliente extends Usuario
     private $direccion;
     private $razon_social;
 
-    public function __construct($id = null, $direccion = "", $razon_social = "")
+    public function __construct($id = null, $direccion = null, $razon_social = null)
     {
         $this->id = $id;
         $this->direccion = $direccion;

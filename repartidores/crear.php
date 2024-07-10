@@ -1,4 +1,5 @@
 <?php
+session_start();
 require_once "../layouts/header.php";
 require_once "../controladores/RepartidorControlador.php";
 

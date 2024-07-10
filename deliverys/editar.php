@@ -1,4 +1,5 @@
 <?php
+session_start();
 require_once "../layouts/header.php";
 require_once "../controladores/DeliveryControlador.php";
 
@@ -204,7 +205,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 
 <?php
-require_once "../layouts/footer.php";
+require_once "./layouts/footer.php";
 ?>
 
 

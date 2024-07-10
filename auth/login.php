@@ -44,22 +44,23 @@
                   <input type="password" id="input" class="input" name="password">
                </div>
             </div>
-            <div class="view">
-               <div class="fas fa-eye verPassword" onclick="vista()" id="verPassword"></div>
+            <div class="view ">
+               <div class="fas fa-eye verPassword " onclick="vista()" id="verPassword"></div>
             </div>
 
             <div class="text-center">
-               <a class="font-italic isai5" href="">Olvidé mi contraseña</a>
-               <a class="font-italic isai5" href="register.php">Registrarse</a>
+               <a class="font-italic isai5" href="registro.php">Olvidé mi contraseña</a>
+               <a class="font-italic isai5" href="registro.php">Registrarse</a>
             </div>
-            <input name="btningresar" class="btn" type="submit" value="INICIAR SESION">
+            <input name="login" class="btn" type="submit" value="INICIAR SESION">
             <?php
-            if(isset($_POST["btningresar"])){
+            if(isset($_POST["login"])){
                $email = $_POST["email"];
                $password = $_POST["password"];
-               require_once "../../controladores/LoginControlador.php";
-               $uc = new LoginControlador();
-               $uc->login($email, $password);
+               require_once "../controladores/UsuarioControlador.php";
+               $uc = new UsuarioControlador();
+               $resultado = $uc->login($email, $password);
+            
             }
             ?>
          </form>
