@@ -23,12 +23,10 @@ class PagoControlador
 
     public function crearPago($datos)
     {
-        $pago = new Pago(
-            $datos['monto'],
-            $datos['estado'],
-            $datos['metodo']
-        );
-        return $pago->crear();
+        $this->pago->setMonto($datos['monto']);
+        $this->pago->setEstado($datos['estado']);
+        $this->pago->setEstado($datos['metodo']);
+        return $this->pago->crear();
     }
 
     public function actualizarPago($id, $datos)
@@ -37,7 +35,6 @@ class PagoControlador
         if (!$pago) {
             return false;
         }
-
         $pago->setMonto($datos['monto']);
         $pago->setEstado($datos['estado']);
         $pago->setMetodo($datos['metodo']);

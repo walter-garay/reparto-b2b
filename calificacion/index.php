@@ -2,8 +2,8 @@
 require_once "../layouts/header.php";
 require_once "../controladores/CalificacionController.php";
 
-$cc = new CalificacionController();
-$calificaciones = $cc->mostrar();
+$cc = new CalificacionControlador();
+$calificaciones = $cc->obtenerCalificaciones();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id'])) {
     $resultado = $cc->eliminar($_POST['id']);
