@@ -29,7 +29,7 @@
                         <a class="nav-link" href="#">Clientes</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="../modelos/Logout.php">Log out</a>
+                        <a class="nav-link" href="../reparto-b2b/modelos/Logout.php">Log out</a>
                     </li>
                 </ul>
             </div>
