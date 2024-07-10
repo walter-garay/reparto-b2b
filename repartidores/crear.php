@@ -1,6 +1,6 @@
 <?php
-require_once "../../layouts/header.php";
-require_once "../../controladores/RepartidorControlador.php";
+require_once "../layouts/header.php";
+require_once "../controladores/RepartidorControlador.php";
 
 $rc = new RepartidorControlador();
 
@@ -77,5 +77,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </div>
 
 <?php
-    require_once "../../layouts/footer.php";
+    require_once "../layouts/footer.php";
 ?>

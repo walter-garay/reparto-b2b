@@ -1,7 +1,7 @@
 <?php
 session_start();
-require_once "../../controladores/RepartidorControlador.php";
-require_once "../../layouts/header.php";
+require_once "../controladores/RepartidorControlador.php";
+require_once "../layouts/header.php";
 
     $rc = new RepartidorControlador();
     $repartidores = $rc->obtenerRepartidores();
@@ -61,4 +61,4 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['eliminar_id'])) {
     </div>
 </div>
 
-<?php require_once "../../layouts/footer.php"; ?>
+<?php require_once "../layouts/footer.php"; ?>

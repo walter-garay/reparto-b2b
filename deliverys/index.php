@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['eliminar_id'])) {
 <div class="py-4 px-5">
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h1 class="fs-5 mb-0">Deliverys</h1>
-        <a href="solicitud.php" class="rounded-2 btn btn-primary btn-sm">Agregar delivery</a>
+        <a href="s.php" class="rounded-2 btn btn-primary btn-sm">Agregar delivery</a>
     </div>
     <div class="table-responsive table-bordered">
         <table class="table rounded-circle">
