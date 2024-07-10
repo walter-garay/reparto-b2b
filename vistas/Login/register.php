@@ -34,7 +34,7 @@
                     </div>
                     <div class="div">
                         <h5>Nombres</h5>
-                        <input type="text" class="input" name="nombres" >
+                        <input type="text" class="input" name="nombres" required>
                     </div>
                 </div>
                 <div class="input-div one">
@@ -43,7 +43,7 @@
                     </div>
                     <div class="div">
                         <h5>Apellidos</h5>
-                        <input type="text" class="input" name="apellidos" >
+                        <input type="text" class="input" name="apellidos" required>
                     </div>
                 </div>
                 <div class="input-div one">
@@ -52,7 +52,7 @@
                     </div>
                     <div class="div">
                         <h5>Email</h5>
-                        <input type="email" class="input" name="email" >
+                        <input type="email" class="input" name="email" required>
                     </div>
                 </div>
                 <div class="input-div pass">
@@ -61,7 +61,7 @@
                     </div>
                     <div class="div">
                         <h5>Contraseña</h5>
-                        <input type="password" class="input" name="password" >
+                        <input type="password" class="input" name="password" required>
                     </div>
                 </div>
                 <div class="input-div one">
@@ -70,7 +70,7 @@
                     </div>
                     <div class="div">
                         <h5>Celular</h5>
-                        <input type="text" class="input" name="celular" >
+                        <input type="text" class="input" name="celular" required>
                     </div>
                 </div>
                 <div class="input-div one">
@@ -90,10 +90,10 @@
                 <!-- Campo repartidor-->
                 <div id="campos_repartidor" style="display: none;" class="input-div one">
                     <div class="div" >
-                        <input type="text" name="tipo_transporte" placeholder="Tipo de Transporte">
+                        <input type="text" name="tipo_transporte" placeholder="Tipo de Transporte" required>
                     </div>
                     <div class="div">
-                        <input type="text" name="placa" placeholder="Placa">
+                        <input type="text" name="placa" placeholder="Placa" required>
                     </div>
                 </div>
 
@@ -101,10 +101,10 @@
                 <div id="campos_empresa_cliente" style="display: none;" class="input-div one">
                     <div class="div" >
                         <h5></h5>
-                        <input type="text" name="direccion" placeholder="Direccion" class="input">
+                        <input type="text" name="direccion" placeholder="Direccion" class="input" required>
                     </div>
                     <div class="div">
-                        <input type="text" name="razon_social" placeholder="Razon social" class="input">
+                        <input type="text" name="razon_social" placeholder="Razon social" class="input" required>
                     </div>
                 </div>
 
@@ -114,7 +114,7 @@
                     </div>
                     <div class="div">
                         <h5>DNI o RUC</h5>
-                        <input type="text" class="input" name="dni_ruc" >
+                        <input type="text" class="input" name="dni_ruc" required>
                     </div>
                 </div>
                 <div class="text-center">
