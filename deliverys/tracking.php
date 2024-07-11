@@ -12,11 +12,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['cod_seguimiento'])) {
 
 <div class="container d-flex flex-column justify-content-center align-items-center w-100 h-100 my-4">
     <div class="container rounded-4 shadow-sm col-lg-6 col-md-12 p-4" style="background-color: white;">
-        <h1 class="mb-4 fs-5">Buscar Delivery</h1>
         <form id="searchForm" method="GET" action="">
             <div class="mb-3">
-                <label for="cod_seguimiento">Código de Seguimiento</label>
-                <div class="d-flex gap-x-2">
+                <label for="cod_seguimiento">Ingrese su código de seguimiento</label>
+                <div class="d-flex gap-2">
                     <input type="text" class="form-control" id="cod_seguimiento" name="cod_seguimiento" required>
                     <button type="submit" class="btn btn-primary">Buscar</button>
                 </div>
@@ -63,7 +62,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['cod_seguimiento'])) {
                     <input type="text" class="form-control" id="contraentrega" value="<?php echo 'Delivery: S/ ' . $deliveryDetallado['contraentrega']->getCostoDelivery() . ', Pedido: S/ ' . $deliveryDetallado['contraentrega']->getCostoPedido(); ?>" disabled>
                 </div>
                 <div class="d-flex justify-content-end pt-4 ">
-                    <button type="button" class="btn btn-success">Confirmar Entrega</button>
+                    <a href="confirmar-delivery.php?id=<?php echo $deliveryDetallado['delivery']->getId(); ?>" class="btn btn-success">Confirmar Entrega</a>
                 </div>
             </form>
         </div>

@@ -348,5 +348,43 @@ class DeliveryControlador
         }
         return null;
     }
+
+
+    public function confirmarEntrega($id, $id_repartidor, $foto_entrega = null, $calificacion = null) {
+        $entrega = new Entrega();
+        $entrega = $entrega->obtenerPorId($id);
+        
+        if ($entrega) {
+            $entrega->setIdRepartidor($id_repartidor);
+            $entrega->setEstado('Entregado');
+            
+            if ($foto_entrega !== null) {
+                $entrega->setFotoEntrega($foto_entrega);
+            }
+    
+            $entrega->actualizar();
+    
+            if ($calificacion) {
+                $this->guardarCalificacion($id, $calificacion);
+            }
+    
+            return true;
+        }
+    
+        return false;
+    }
+    
+    private function guardarCalificacion($id_entrega, $calificacion) {
+        $cal = new Calificacion($calificacion['puntaje'], $calificacion['comentario']);
+        $id_calificacion = $cal->crear();
+        
+        $entrega = new Entrega();
+        $entrega = $entrega->obtenerPorId($id_entrega);
+        if ($entrega) {
+            $entrega->setIdCalificacion($id_calificacion);
+            $entrega->actualizar();
+        }
+    }
+    
     
 }
