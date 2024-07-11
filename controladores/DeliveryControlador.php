@@ -89,16 +89,6 @@ class DeliveryControlador
         return $this->delivery->obtenerPorId($id);
     }
 
-    public function eliminarDelivery($id) {}
-    
-    public function buscarDeliveryPorCodigo($codigo) {
-        $delivery = $this->delivery->obtenerPorCodigo($codigo);
-        if ($delivery) {
-            return $this->obtenerDeliveryDetalladoPorId($delivery->getId());
-        }
-        return null;
-    }
-
     public function obtenerDeliveryDetalladoPorId($id) {
         $delivery = new Delivery();
         $delivery = $delivery->obtenerPorId($id);
@@ -138,9 +128,46 @@ class DeliveryControlador
         return $deliveryDetallado;
     }
 
-    public function crearDelivery($descripcion, $cod_seguimiento, $fecha_solicitud, $id_cliente, $id_repartidor, $id_pago, $id_contraentrega, $id_destinatario) {
-        $delivery = new Delivery($descripcion, $cod_seguimiento, $fecha_solicitud, $id_cliente, $id_repartidor, $id_pago, $id_contraentrega, $id_destinatario);
-        $delivery->crear();
+    public function obtenerDeliverysDetalladosPorCliente($id_cliente)
+    {
+        $deliverys = $this->delivery->obtenerTodos();
+        $deliverysDetallados = [];
+
+        foreach ($deliverys as $delivery) {
+            if ($delivery->getIdCliente() == $id_cliente) {
+                $empresaCliente = new EmpresaCliente();
+                $empresaCliente->obtenerPorId($delivery->getIdCliente());
+
+                $recojo = new Recojo();
+                $recojo->obtenerPorId($delivery->getIdRecojo());
+
+                $entrega = new Entrega();
+                $entrega->obtenerPorId($delivery->getIdEntrega());
+
+                $pago = new Pago();
+                $pago->obtenerPorId($delivery->getIdPago());
+
+                $contraentrega = new Contraentrega();
+                $contraentrega->obtenerPorId($delivery->getIdContraentrega());
+
+                $destinatario = new Destinatario();
+                $destinatario->obtenerPorId($delivery->getIdDestinatario());
+
+                $deliveryDetallado = [
+                    'delivery' => $delivery,
+                    'cliente' => $empresaCliente,
+                    'recojo' => $recojo,
+                    'entrega' => $entrega,
+                    'pago' => $pago,
+                    'contraentrega' => $contraentrega,
+                    'destinatario' => $destinatario
+                ];
+
+                $deliverysDetallados[] = $deliveryDetallado;
+            }
+        }
+
+        return $deliverysDetallados;
     }
     
     // Función para validar y ajustar los costos de contraentrega
@@ -314,6 +341,12 @@ class DeliveryControlador
         } 
     }
 
-    
+    public function buscarDeliveryPorCodigo($codigo) {
+        $delivery = $this->delivery->obtenerPorCodigo($codigo);
+        if ($delivery) {
+            return $this->obtenerDeliveryDetalladoPorId($delivery->getId());
+        }
+        return null;
+    }
     
 }
