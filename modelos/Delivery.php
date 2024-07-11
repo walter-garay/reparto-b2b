@@ -179,12 +179,9 @@ class Delivery
         $sql = "DELETE FROM Delivery WHERE id = $id";
         $resultado = $conexion->exec($sql);
         $conn->cerrar();
-
-        return $resultado;
     }
 
-    // Getters y setters
-
+    // Getters
     public function getId()
     {
         return $this->id;
@@ -195,19 +192,9 @@ class Delivery
         return $this->descripcion;
     }
 
-    public function setDescripcion($descripcion)
-    {
-        $this->descripcion = $descripcion;
-    }
-
     public function getCodSeguimiento()
     {
         return $this->cod_seguimiento;
-    }
-
-    public function setCodSeguimiento($cod_seguimiento)
-    {
-        $this->cod_seguimiento = $cod_seguimiento;
     }
 
     public function getFechaSolicitud()
@@ -215,19 +202,9 @@ class Delivery
         return $this->fecha_solicitud;
     }
 
-    public function setFechaSolicitud($fecha_solicitud)
-    {
-        $this->fecha_solicitud = $fecha_solicitud;
-    }
-
     public function getIdCliente()
     {
         return $this->id_cliente;
-    }
-
-    public function setIdCliente($id_cliente)
-    {
-        $this->id_cliente = $id_cliente;
     }
 
     public function getIdRecojo()
@@ -235,19 +212,9 @@ class Delivery
         return $this->id_recojo;
     }
 
-    public function setIdRecojo($id_recojo)
-    {
-        $this->id_recojo = $id_recojo;
-    }
-
     public function getIdEntrega()
     {
         return $this->id_entrega;
-    }
-
-    public function setIdEntrega($id_entrega)
-    {
-        $this->id_entrega = $id_entrega;
     }
 
     public function getIdPago()
@@ -255,19 +222,9 @@ class Delivery
         return $this->id_pago;
     }
 
-    public function setIdPago($id_pago)
-    {
-        $this->id_pago = $id_pago;
-    }
-
     public function getIdContraentrega()
     {
         return $this->id_contraentrega;
-    }
-
-    public function setIdContraentrega($id_contraentrega)
-    {
-        $this->id_contraentrega = $id_contraentrega;
     }
 
     public function getIdDestinatario()
@@ -275,11 +232,55 @@ class Delivery
         return $this->id_destinatario;
     }
 
+    // Setters
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
+    public function setDescripcion($descripcion)
+    {
+        $this->descripcion = $descripcion;
+    }
+
+    public function setCodSeguimiento($cod_seguimiento)
+    {
+        $this->cod_seguimiento = $cod_seguimiento;
+    }
+
+    public function setFechaSolicitud($fecha_solicitud)
+    {
+        $this->fecha_solicitud = $fecha_solicitud;
+    }
+
+    public function setIdCliente($id_cliente)
+    {
+        $this->id_cliente = $id_cliente;
+    }
+
+    public function setIdRecojo($id_recojo)
+    {
+        $this->id_recojo = $id_recojo;
+    }
+
+    public function setIdEntrega($id_entrega)
+    {
+        $this->id_entrega = $id_entrega;
+    }
+
+    public function setIdPago($id_pago)
+    {
+        $this->id_pago = $id_pago;
+    }
+
+    public function setIdContraentrega($id_contraentrega)
+    {
+        $this->id_contraentrega = $id_contraentrega;
+    }
+
     public function setIdDestinatario($id_destinatario)
     {
         $this->id_destinatario = $id_destinatario;
     }
+
 }
-
-
-?>
