@@ -1,4 +1,4 @@
-@ -21,16 +21,20 @@
+
             <img src="img/bg.webp">
         </div>
         <div class="login-content">
@@ -21,7 +21,6 @@
                     </div>
                 </div>
                 <div class="input-div one">
-@ -39,7 +43,7 @@
                     </div>
                     <div class="div">
                         <h5>Apellidos</h5>
@@ -30,7 +29,6 @@
                     </div>
                 </div>
                 <div class="input-div one">
-@ -48,7 +52,7 @@
                     </div>
                     <div class="div">
                         <h5>Email</h5>
@@ -39,7 +37,6 @@
                     </div>
                 </div>
                 <div class="input-div pass">
-@ -57,7 +61,7 @@
                     </div>
                     <div class="div">
                         <h5>Contraseña</h5>
@@ -48,7 +45,6 @@
                     </div>
                 </div>
                 <div class="input-div one">
-@ -66,31 +70,67 @@
                     </div>
                     <div class="div">
                         <h5>Celular</h5>
@@ -120,6 +116,9 @@
             document.getElementById('campos_empresa_cliente').style.display = this.value === 'empresa_cliente' ? 'block' : 'none';
         });
     </script>
-    <script src="js/fontawesome.js"></script>
-    <script src="js/main.js"></script>
-    <script src="js/main2.js"></script>
+    <script src="../assets/js/fontawesome.js"></script>
+   <script src="../assets/js/main.js"></script>
+   <script src="../assets/js/main2.js"></script>
+   <script src="../assets/js/jquery.min.js"></script>
+   <script src="../assets/js/bootstrap.js"></script>
+   <script src="../assets/js/bootstrap.bundle.js"></script>

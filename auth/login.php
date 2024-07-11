@@ -49,8 +49,8 @@
             </div>
 
             <div class="text-center">
-               <a class="font-italic isai5" href="registro.php">Olvidé mi contraseña</a>
-               <a class="font-italic isai5" href="registro.php">Registrarse</a>
+               <a class="font-italic isai5" href="register.php">Olvidé mi contraseña</a>
+               <a class="font-italic isai5" href="register.php">Registrarse</a>
             </div>
             <input name="login" class="btn" type="submit" value="INICIAR SESION">
             <?php
