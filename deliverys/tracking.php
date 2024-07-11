@@ -62,7 +62,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['cod_seguimiento'])) {
                     <input type="text" class="form-control" id="contraentrega" value="<?php echo 'Delivery: S/ ' . $deliveryDetallado['contraentrega']->getCostoDelivery() . ', Pedido: S/ ' . $deliveryDetallado['contraentrega']->getCostoPedido(); ?>" disabled>
                 </div>
                 <div class="d-flex justify-content-end pt-4 ">
-                    <a href="confirmar-delivery.php?id=<?php echo $deliveryDetallado['delivery']->getId(); ?>" class="btn btn-success">Confirmar Entrega</a>
+                    <a href="confirmar.php?id=<?php echo $deliveryDetallado['delivery']->getId(); ?>" class="btn btn-success">Confirmar Entrega</a>
                 </div>
             </form>
         </div>

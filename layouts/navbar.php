@@ -40,7 +40,7 @@
                 </li> -->
                 <?php if (isset($_SESSION['usuario_id'])): ?>
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="/reparto-b2b/vistas/tracking/tracking.php">Tracking</a>
+                        <a class="nav-link active" aria-current="page" href="/reparto-b2b/deliverys/tracking.php">Tracking</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="solicitud.php">Solicitar delivery</a>
@@ -53,10 +53,6 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link active" href="/reparto-b2b/clientes/">Clientes</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Clientes</a>
-                    
                     </li>
 
                 </ul>
