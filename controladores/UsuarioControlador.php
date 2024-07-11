@@ -126,6 +126,7 @@ class UsuarioControlador
 
         return $usuario->actualizar();
     }
+    
 
 
     private function generarCodigoAdmin() {
