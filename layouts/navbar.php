@@ -20,7 +20,7 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="d-flex ms-3 me-4 w-100">
         <img src="/reparto-b2b/assets/img/logo.png" alt="Logo de Confi Courier" width="60px">
-        <a class="navbar-brand fw-bolder align-items-center d-flex" href="#">Confi Courier</a>
+        <a class="navbar-brand fw-bolder align-items-center d-flex" href="/reparto-b2b/index.php">Confi Courier</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -40,15 +40,13 @@
                 </li> -->
                 <?php if (isset($_SESSION['usuario_id'])): ?>
                     <li class="nav-item">
-
-                        <a class="nav-link active" aria-current="page" href="../main.php">Inicio</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="../reparto-b2b/vistas/tracking/tracking.php">Trackeo</a>
+                        <a class="nav-link active" aria-current="page" href="/reparto-b2b/vistas/tracking/tracking.php">Tracking</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="solicitud.php">Solicitar delivery</a>
-                        <a class="nav-link active" href="/reparto-b2b/deliverys/">Deliverys</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/reparto-b2b/deliverys/">Deliverys</a>                
                     </li>
                     <li class="nav-item">
                         <a class="nav-link active" href="/reparto-b2b/repartidores/">Repartidores</a>
@@ -60,9 +58,7 @@
                         <a class="nav-link" href="#">Clientes</a>
                     
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="../reparto-b2b/modelos/Logout.php">Log out</a>
-                    </li>
+
                 </ul>
                 <?php endif; ?>
             </ul>

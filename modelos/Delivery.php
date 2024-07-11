@@ -96,14 +96,16 @@ class Delivery
     {
         $conn = new Conexion();
         $conexion = $conn->conectar();
+        $codigo = $conexion->quote($codigo); // Aseguramos que el código esté entre comillas
         $sql = "SELECT * FROM Delivery WHERE cod_seguimiento = $codigo";
         $resultado = $conexion->query($sql);
-        $data = $resultado->fetch();
+        $data = $resultado->fetch(PDO::FETCH_ASSOC);
         $conn->cerrar();
 
         if ($data) {
             $this->id = $data['id'];
             $this->descripcion = $data['descripcion'];
+            $this->cod_seguimiento = $data['cod_seguimiento'];
             $this->fecha_solicitud = new DateTime($data['fecha_solicitud']);
             $this->id_cliente = $data['id_cliente'];
             $this->id_recojo = $data['id_recojo'];
@@ -116,6 +118,7 @@ class Delivery
             return null;
         }
     }
+
 
     public function crear()
     {

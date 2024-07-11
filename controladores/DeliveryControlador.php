@@ -341,7 +341,7 @@ class DeliveryControlador
         } 
     }
 
-    public function buscarDeliveryPorCodigo($codigo) {
+    public function obtenerDeliveryDetalladoPorCodigo($codigo) {
         $delivery = $this->delivery->obtenerPorCodigo($codigo);
         if ($delivery) {
             return $this->obtenerDeliveryDetalladoPorId($delivery->getId());
