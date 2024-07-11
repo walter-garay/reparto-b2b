@@ -98,5 +98,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['eliminar_id'])) {
 </div>
 
 <?php 
-    require_once "../../layouts/footer.php"; 
+    require_once "../../layouts/footer.php";
+
 ?>
+
