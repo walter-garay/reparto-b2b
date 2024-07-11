@@ -40,6 +40,14 @@
                 </li> -->
                 <?php if (isset($_SESSION['usuario_id'])): ?>
                     <li class="nav-item">
+
+                        <a class="nav-link active" aria-current="page" href="../main.php">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="../reparto-b2b/vistas/tracking/tracking.php">Trackeo</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="solicitud.php">Solicitar delivery</a>
                         <a class="nav-link active" href="/reparto-b2b/deliverys/">Deliverys</a>
                     </li>
                     <li class="nav-item">
@@ -48,6 +56,14 @@
                     <li class="nav-item">
                         <a class="nav-link active" href="/reparto-b2b/clientes/">Clientes</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Clientes</a>
+                    
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../reparto-b2b/modelos/Logout.php">Log out</a>
+                    </li>
+                </ul>
                 <?php endif; ?>
             </ul>
             <div class="navbar-nav">

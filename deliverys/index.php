@@ -1,31 +1,22 @@
 <?php
 session_start();
-require_once "../controladores/DeliveryControlador.php";
+require_once "../../controladores/DeliveryControlador.php";
+require_once "../../layouts/header.php";
 
 $dc = new DeliveryControlador();
-$deliverys = [];
-
-if ($_SESSION['usuario_tipo'] === 'Cliente') {
-    $id_cliente = $_SESSION['usuario_id'];
-    $deliverys = $dc->obtenerDeliverysDetalladosPorCliente($id_cliente);
-} else {
-    $deliverys = $dc->obtenerDeliverysDetallados();
-}
+$deliverys = $dc->obtenerDeliverysDetallados();
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['eliminar_id'])) {
     $id = $_POST['eliminar_id'];
     $dc->eliminarDelivery($id);
     header('Location: index.php');
-    exit; // Asegúrate de terminar el script después de redirigir
 }
-
-require_once "../layouts/header.php";
 ?>
 
-<div class="py-4">
+<div class="py-4 px-5">
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h1 class="fs-5 mb-0">Deliverys</h1>
-        <a href="solicitud.php" class="rounded-2 btn btn-primary btn-sm">Agregar delivery</a>
+        <a href="crear.php" class="rounded-2 btn btn-primary btn-sm">Agregar delivery</a>
     </div>
     <div class="table-responsive table-bordered">
         <table class="table rounded-circle">
@@ -68,7 +59,7 @@ require_once "../layouts/header.php";
                     // Recojo and Entrega styling
                     $estado_classes = [
                         'Repartidor asignado' => 'badge text-bg-success',
-                        'Sin repartidor' => 'badge text-bg-warning',
+                        'Sin repartidor asignado' => 'badge text-bg-warning',
                         'Completado' => 'badge text-bg-secondary'
                     ];
 
@@ -88,7 +79,7 @@ require_once "../layouts/header.php";
                         <td class="fw-light"><?php echo $delivery['pago']->getMonto(); ?></td>
                         <td class="fw-light"><span class="<?php echo $contraentrega_class; ?>"><?php echo $contraentrega_text; ?></span></td>
                         <td class="fw-light"><?php echo $delivery['destinatario']->getNombres() . " " . $delivery['destinatario']->getApellidos(); ?></td>
-                        <td class="d-flex">
+                        <td class="d-flex gap-1">
                             <a href="editar.php?id=<?php echo $delivery['delivery']->getId(); ?>" class="btn rounded-circle p-0 btn-custom edit">
                                 <i class="bi bi-pencil icon edit d-flex justify-content-center align-items-center"></i>                                
                             </a>
@@ -107,5 +98,5 @@ require_once "../layouts/header.php";
 </div>
 
 <?php 
-    require_once "../layouts/footer.php"; 
+    require_once "../../layouts/footer.php"; 
 ?>
