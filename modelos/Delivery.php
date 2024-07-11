@@ -119,6 +119,32 @@ class Delivery
         }
     }
 
+    public function obtenerPorCliente($id_cliente)
+    {
+        $conn = new Conexion();
+        $conexion = $conn->conectar();
+        $sql = "SELECT * FROM Delivery WHERE id_cliente = $id_cliente";
+        $resultado = $conexion->query($sql);
+        $data = $resultado->fetch();
+        $conn->cerrar();
+
+        if ($data) {
+            $this->id = $data['id'];
+            $this->descripcion = $data['descripcion'];
+            $this->cod_seguimiento = $data['cod_seguimiento'];
+            $this->fecha_solicitud = new DateTime($data['fecha_solicitud']);
+            $this->id_recojo = $data['id_recojo'];
+            $this->id_entrega = $data['id_entrega'];
+            $this->id_pago = $data['id_pago'];
+            $this->id_contraentrega = $data['id_contraentrega'];
+            $this->id_destinatario = $data['id_destinatario'];
+            return $this;
+        } else {
+            return null;
+        }
+    }
+
+    
 
     public function crear()
     {
@@ -142,11 +168,11 @@ class Delivery
 
         if ($result) {
             $this->id = $conexion->lastInsertId();
+            $conn->cerrar();
+        }else{
+            $conn->cerrar();
+            return false;
         }
-
-        $conn->cerrar();
-
-        return $result;
     }
 
     public function actualizar()

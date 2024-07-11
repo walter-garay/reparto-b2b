@@ -94,19 +94,20 @@ class Usuario
     $data = $stmt->fetch(PDO::FETCH_ASSOC);
     $conn->cerrar();
 
-    if ($data) {
-        $this->id = $data['id'];
-        $this->nombres = $data['nombres'];
-        $this->apellidos = $data['apellidos'];
-        $this->password = $data['password'];
-        $this->celular = $data['celular'];
-        $this->tipo = $data['tipo'];
-        $this->dni_ruc = $data['dni_ruc'];
-        return $this;
-    } else {
-        return null;
-    }   
-}
+        if ($data) {
+            $this->id = $data['id'];
+            $this->nombres = $data['nombres'];
+            $this->apellidos = $data['apellidos'];
+            $this->email = $data['email'];
+            $this->password = $data['password'];
+            $this->celular = $data['celular'];
+            $this->tipo = $data['tipo'];
+            $this->dni_ruc = $data['dni_ruc'];
+            return $this;
+        } else {
+            return null;
+        }   
+    }
 
     public function crear()
     {
