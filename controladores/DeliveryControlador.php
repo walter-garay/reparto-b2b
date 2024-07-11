@@ -18,7 +18,7 @@ class DeliveryControlador
         $this->delivery = new Delivery();
     }
 
-    public function obtenerDeliveries()
+    public function obtenerDeliverysDetallados()
     {
         return $this->delivery->obtenerTodos();
     }
@@ -286,6 +286,11 @@ class DeliveryControlador
         } catch (Exception $e) {
             throw $e;
         } 
+    }
+
+    public function eliminarDelivery($id)
+    {
+        return $this->delivery->eliminar($id);
     }
 
     

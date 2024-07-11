@@ -1,6 +1,7 @@
 <?php
 session_start();
 require_once "../controladores/DeliveryControlador.php";
+require_once "../controladores/RecojoControlador.php";
 
 $dc = new DeliveryControlador();
 $deliverys = $dc->obtenerDeliverysDetallados();
