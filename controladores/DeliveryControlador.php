@@ -346,7 +346,4 @@ class DeliveryControlador
             throw $e;
         } 
     }
-
-    
-    
 }
