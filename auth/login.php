@@ -6,7 +6,7 @@
    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
    <link rel="stylesheet" href="css/bootstrap.css">
-   <link rel="stylesheet" type="text/css" href="css/style.css">
+   <link rel="stylesheet" type="text/css" href="../assets/css/auth/style.css">
    <link href="https://fonts.googleapis.com/css?family=Poppins:600&display=swap" rel="stylesheet">
    <!-- <link rel="stylesheet" href="css/all.min.css"> -->
    <!-- <link rel="stylesheet" href="css/fontawesome.min.css"> -->
@@ -15,14 +15,14 @@
 </head>
 
 <body>
-   <img class="wave" src="img/wave.png">
+   <img class="wave" src="../assets/img/auth/wave.png">
    <div class="container">
       <div class="img">
-         <img src="img/bg.webp">
+         <img src="../assets/img/auth/bg.webp">
       </div>
       <div class="login-content">
          <form method="post" action="">
-            <img src="img/avatar.svg">
+            <img src="../assets/img/auth/avatar.svg">
             <h2 class="title">BIENVENIDO</h2>
             <?php 
             ?>
@@ -44,33 +44,34 @@
                   <input type="password" id="input" class="input" name="password">
                </div>
             </div>
-            <div class="view">
-               <div class="fas fa-eye verPassword" onclick="vista()" id="verPassword"></div>
+            <div class="view ">
+               <div class="fas fa-eye verPassword " onclick="vista()" id="verPassword"></div>
             </div>
 
             <div class="text-center">
-               <a class="font-italic isai5" href="">Olvidé mi contraseña</a>
-               <a class="font-italic isai5" href="register.php">Registrarse</a>
+               <a class="font-italic isai5" href="registro.php">Olvidé mi contraseña</a>
+               <a class="font-italic isai5" href="registro.php">Registrarse</a>
             </div>
-            <input name="btningresar" class="btn" type="submit" value="INICIAR SESION">
+            <input name="login" class="btn" type="submit" value="INICIAR SESION">
             <?php
-            if(isset($_POST["btningresar"])){
+            if(isset($_POST["login"])){
                $email = $_POST["email"];
                $password = $_POST["password"];
-               require_once "../../controladores/LoginControlador.php";
-               $uc = new LoginControlador();
-               $uc->login($email, $password);
+               require_once "../controladores/UsuarioControlador.php";
+               $uc = new UsuarioControlador();
+               $resultado = $uc->login($email, $password);
+            
             }
             ?>
          </form>
       </div>
    </div>
-   <script src="js/fontawesome.js"></script>
-   <script src="js/main.js"></script>
-   <script src="js/main2.js"></script>
-   <script src="js/jquery.min.js"></script>
-   <script src="js/bootstrap.js"></script>
-   <script src="js/bootstrap.bundle.js"></script>
+   <script src="../assets/js/fontawesome.js"></script>
+   <script src="../assets/js/main.js"></script>
+   <script src="../assets/js/main2.js"></script>
+   <script src="../assets/js/jquery.min.js"></script>
+   <script src="../assets/js/bootstrap.js"></script>
+   <script src="../assets/js/bootstrap.bundle.js"></script>
 
 </body>
 

@@ -1,10 +1,11 @@
+            </div>
         </main>
 
         <footer class="footer">
             <div class="footer-container">
                 <div class="footer-main">
                     <div class="footer-col footer-logo-col">
-                        <img class="footer-logo" src="../../assets/img/LogoF.png" alt="Confi Courier Logo">
+                        <img class="footer-logo" src="/reparto-b2b/assets/img/LogoF.png" alt="Confi Courier Logo">
                         <p class="footer-description">
                             Sistema integral de gestión de repartos para optimizar 
                             tus entregas. Eficiencia, seguimiento en tiempo real y satisfacción garantizada.
@@ -51,9 +52,9 @@
             </div>
             <div class="footer-bottom">
                 <div class="footer-payment-methods">
-                    <img src="../../assets/img/social/Visa.png" alt="Visa">
-                    <img src="../../assets/img/social/Mastercard.png" alt="Mastercard">
-                    <img src="../../assets/img/social/Express.png" alt="American Express">
+                    <img src="/reparto-b2b/assets/img/social/Visa.png" alt="Visa">
+                    <img src="/reparto-b2b/assets/img/social/Mastercard.png" alt="Mastercard">
+                    <img src="/reparto-b2b/assets/img/social/Express.png" alt="American Express">
                 </div>
                 <p class="footer-copyright">
                     &copy; 2024 Confi Courier. Todos los derechos reservados.

@@ -8,7 +8,7 @@ class EmpresaCliente extends Usuario
     private $direccion;
     private $razon_social;
 
-    public function __construct($id = null, $direccion = "", $razon_social = "")
+    public function __construct($id = null, $direccion = null, $razon_social = null)
     {
         $this->id = $id;
         $this->direccion = $direccion;
@@ -28,6 +28,39 @@ class EmpresaCliente extends Usuario
 
         return $resultado;
     }
+
+    public function obtenerTodos()
+    {
+        $conn = new Conexion();
+        $conexion = $conn->conectar();
+        
+        $sql = "SELECT u.*, ec.direccion, ec.razon_social 
+                FROM Usuario u 
+                INNER JOIN EmpresaCliente ec ON u.id = ec.id 
+                WHERE u.tipo = 'cliente'";
+        
+        $resultado = $conexion->query($sql);
+        $data = $resultado->fetchAll(PDO::FETCH_ASSOC);
+        $conn->cerrar();
+
+        $clientes = [];
+        foreach ($data as $row) {
+            $cliente = new EmpresaCliente();
+            $cliente->setId($row['id']);
+            $cliente->setNombres($row['nombres']);
+            $cliente->setApellidos($row['apellidos']);
+            $cliente->setEmail($row['email']);
+            $cliente->setCelular($row['celular']);
+            $cliente->setDniRuc($row['dni_ruc']);
+            $cliente->setDireccion($row['direccion']);
+            $cliente->setRazonSocial($row['razon_social']);
+            
+            $clientes[] = $cliente;
+        }
+
+        return $clientes;
+    }
+
 
     public function obtenerPorId($id)
     {
