@@ -275,6 +275,7 @@ class DeliveryControlador
         } 
     }
 
+    
     public function actualizarDelivery($id, $deliveryDetalles)
     {
         try {
